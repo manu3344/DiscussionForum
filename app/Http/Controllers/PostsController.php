@@ -9,8 +9,8 @@ use App\Models\Posts;
 class PostsController extends Controller
 {
     public function index(){
-        $posts = Posts::all();
-        return $posts;
+        $posts = Posts::find(1);
+        return $posts->topics;
     }
 
     public function store(Request $request){

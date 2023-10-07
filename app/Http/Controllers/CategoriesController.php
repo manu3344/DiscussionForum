@@ -9,13 +9,14 @@ use App\Models\Categories;
 class CategoriesController extends Controller
 {
     public function index(){
-        $categories = Categories::all();
-        return $categories;
+        $categories = Categories::find(1);
+        return $categories->genre;
     }
 
     public function store(Request $request){
         $categories = Categories::create([
-            "name"=>$request->name
+            "name"=>$request->name, 
+            "genre_id"=>$request->genre_id
         ]);
         $categories->save(); 
         return $request;
@@ -34,6 +35,7 @@ class CategoriesController extends Controller
     public function update(Request $request, $id){
         $categories = Categories::findOrFail($id); 
         $categories->name = $request->input('name');
+        $categories->genre_id=$request->genre_id;
         $categories->save(); 
         return $categories;
     }

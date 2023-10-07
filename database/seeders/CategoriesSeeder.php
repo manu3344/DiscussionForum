@@ -15,6 +15,7 @@ class CategoriesSeeder extends Seeder
     {
         $categories = new Categories(); 
         $categories->name = "Anime"; 
+        $categories->genre_id=1; 
         $categories->save(); 
     }
 }

@@ -10,7 +10,8 @@ class TopicsController extends Controller
 {
     public function index(){
         $topics = Topics::find(1);
-        return $topics->posts;
+        return $topics->categories;
+        //        return $topics->posts;
     }
 
     public function store(Request $request){

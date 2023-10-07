@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Categories extends Model
 {
     use HasFactory;
-    protected $fillable = ["name", "categories_id"]; 
+    protected $fillable = ["name", "categories_id", "genre_id"]; 
 
     public function topics(): HasMany{
         return $this->hasMany(Topics::class, 'categories_id'); 
     }
-
-    public function genres():BelongsToMany{
-        return $this->belongsToMany(Genres::class);
+    public function genre(): BelongsTo{
+        return $this->belongsTo(Genres::class);
     }
+    
 }
