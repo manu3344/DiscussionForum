@@ -1,0 +1,134 @@
+/* Login y Registro */
+
+body{
+    background-color:#f0f2f5;
+}
+header{
+  padding: 10px 32px 32px 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+footer{
+    padding: 10px 32px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+.title{
+    text-align: center;
+    padding: 1rem;
+}
+.container{
+    margin: 10% auto;
+    padding: 50px 0;
+}
+.card{
+    width: 50%;
+    margin: auto;
+}
+.form-group{
+    padding: 10px;
+}
+
+.btn:hover{
+    cursor: pointer;
+    transform: translateY(-1.5px);
+    box-shadow: 0 3px 2px black;
+}
+
+/* Main Page */
+/* Menu */
+.rowCategories{
+    padding: 20px 32px;
+    text-align: center;
+}
+.colCategories{
+    height: 75px;
+    background-color: #176B87;
+    margin: 0 2px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 1px 1px black;
+}
+.colCategories:hover{
+    background-color: #115268;
+    cursor: pointer;
+    transform: translateY(-1.5px);
+    box-shadow: 0 3px 2px black;
+}
+.colName{
+    margin: 5% auto;
+    color: white;
+}
+.card-group{
+    padding: 30px;
+}
+.card:hover{
+    cursor: pointer;
+    transform: translateY(-1px);
+    box-shadow: 0 1px 2px rgb(126, 126, 126);
+}
+/* Categories */
+.rounded-circle{
+    margin: 0 auto;
+    background-color: #dfdfdf;
+    width: 110px;
+    height: 110px;
+}
+.img_rounded_circle{
+    width: 80px;
+    margin: 15% auto;
+}
+.rounded-circle:hover{
+    cursor: pointer;
+    transform: translateY(-1px);
+    box-shadow: 0 1px 2px rgb(126, 126, 126);
+}
+/* DiscussionForum */
+.sectionContainer{
+    width: 30%;
+}
+.asideContainer{
+    width: 70%;
+}
+.asideForum, .sectionForum{
+    border-radius: 1rem;
+    margin: 5px;
+    padding: 5px;
+    background-color: #dfdfdf;
+  }
+  .sectionComments{
+    margin: 10px 3rem;
+    padding: 5px;
+    background-color: #dfdfdf;
+    border: 1px solid #9b9b9b;
+  }
+.sectionForum:hover{
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 1px 2px rgb(126, 126, 126);
+}
+.middleContainer {
+  display: flex;
+}
+@media screen and (max-width: 768px) {
+    .middleContainer {
+      flex-direction: column;
+    }
+    .sectionContainer,
+    .asideContainer {
+      width: 100%;
+      margin: 0;
+    }
+    
+}
+.imageForum{
+    border-radius: 1rem;
+    width: 100%;
+}
+.custom-icon{
+    font-size: 30px;
+    color: #176B87;
+}
+.custom-icon:hover{
+    color: #115268;
+    cursor: pointer;
+    transform: translateY(-1.5px);
+}
