@@ -10,10 +10,6 @@ class PostsController extends Controller
 {
     public function index(){
         $posts = Posts::all();
-        foreach ($posts as $post) {
-            $topic = $post->topic;
-            // Hacer algo con $topic si es necesario
-        }
         return $posts;
     }
 

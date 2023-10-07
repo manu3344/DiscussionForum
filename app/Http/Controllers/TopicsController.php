@@ -9,12 +9,8 @@ use App\Models\Topics;
 class TopicsController extends Controller
 {
     public function index(){
-        $topics = Topics::all();
-        foreach ($topics as $topic) {
-            $categories = $topic->categories;
-            // Hacer algo con $topic si es necesario
-        }
-        return $topics;
+        $topics = Topics::find(1);
+        return $topics->posts;
     }
 
     public function store(Request $request){
