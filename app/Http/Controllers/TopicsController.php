@@ -9,8 +9,8 @@ use App\Models\Topics;
 class TopicsController extends Controller
 {
     public function index(){
-        $topics = Topics::find(1);
-        return $topics->categories;
+        $topics = Topics::all();
+        return $topics;
         //        return $topics->posts;
     }
 

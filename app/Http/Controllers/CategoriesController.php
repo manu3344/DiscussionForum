@@ -9,8 +9,8 @@ use App\Models\Categories;
 class CategoriesController extends Controller
 {
     public function index(){
-        $categories = Categories::find(1);
-        return $categories->genre;
+        $categories = Categories::all();
+        return $categories;
     }
 
     public function store(Request $request){
