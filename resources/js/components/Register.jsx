@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs"
+
 
 
 function Register(){
+
+    const [showPasswordR, setShowPasswordR] = useState(false); 
+    const [showCPasswordR, setShowCPasswordR] = useState(false); 
+
+    function showOrHide(){
+        let x = document.getElementById("passwordRegister"); 
+        if(x.type==="password"){
+            x.type = "text";
+        }else{
+            x.type="password"
+        }
+        setShowPasswordR(!showPasswordR); 
+    }
+    function showOrHideC(){
+        let x = document.getElementById("c_passwordRegister"); 
+        if(x.type==="password"){
+            x.type = "text";
+        }else{
+            x.type="password"
+        }
+        setShowCPasswordR(!showCPasswordR); 
+    }
+
     return (
         <div>
             <div className="container mt-5">
@@ -12,19 +37,37 @@ function Register(){
                             <form>
                                 <div className='form-group'>
                                     <label for="name">Nombre</label>
-                                    <input type="text" name="name" placeholder='Ingresa tu nombre' className='form-control'/>
+                                    <input type="text" name="name" placeholder='Ingresa tu nombre' className='form-control' required/>
                                 </div>
                                 <div className="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" className="form-control" name="email" placeholder='Ingresa tu email'></input>
+                                    <input type="email" className="form-control" name="email" placeholder='Ingresa tu email' required></input>
                                 </div>
                                 <div className="form-group">
                                     <label for="password">Contraseña</label>
-                                    <input type="password" className="form-control" name="password" placeholder='Ingresa tu contraseña'/>
+                                    <div className='row'>
+                                        <div className='col-9'>
+                                        <input type="password" id="passwordRegister" className="form-control" name="password" placeholder='Ingresa tu contraseña' required/>
+                                        </div>
+                                        <div className='col-3'>
+                                            <Button style={{backgroundColor:"#176B87" }} onClick={showOrHide}>
+                                            {showPasswordR ? <BsEyeFill />: <BsEyeSlashFill />}
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label for="c_password">Confirmar contraseña</label>
-                                    <input type="password" className="form-control" name="c_password" placeholder='Ingresa tu contraseña de nuevo'/>
+                                    <div className='row'>
+                                        <div className='col-9'>
+                                        <input type="password" id="c_passwordRegister" className="form-control" name="password" placeholder='Ingresa tu contraseña de nuevo' required/>
+                                        </div>
+                                        <div className='col-3'>
+                                            <Button style={{backgroundColor:"#176B87" }} onClick={showOrHideC}>
+                                            {showCPasswordR ? <BsEyeFill />: <BsEyeSlashFill />}
+                                            </Button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className='row'>
                                     <div className='col' style={{textAlign:"center"}}>

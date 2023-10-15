@@ -41,11 +41,13 @@ if(!categoriesData.length){
         <div>
           <div style={{ textAlign: "center" }}>
             <h1>Categorias</h1>
+            <div className="card-group">
             {categoriesData.map(category=>(
               <Category_C 
                 category = {category}
               />
             ))}
+            </div>
           </div>
         </div>
     );

@@ -93,6 +93,15 @@ footer{
     margin: 5px;
     padding: 5px;
     background-color: #dfdfdf;
+    
+  }
+  .comments{
+    margin: 10px 3rem;
+    padding: 5px;
+    background-color: white;
+    box-shadow: 0 1px 2px rgb(126, 126, 126);
+    border: 1px solid #9b9b9b;
+    border-radius: 1rem;
   }
   .sectionComments{
     margin: 10px 3rem;

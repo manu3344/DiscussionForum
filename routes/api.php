@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\TopicsController;
+use App\Http\Controllers\PostsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,8 @@ Route::post('register',[RegisterController::class, 'register']);
 Route::post('login',[RegisterController::class, 'login']);
 Route::get('/categories_index', [CategoriesController::class, 'index']);
 Route::get('/topic_index', [TopicsController::class, 'index']);
+Route::get('/post_index', [PostsController::class, 'index']);
+
 
 
 //Estas son rutas no permitidas. 
