@@ -88,7 +88,8 @@ if(!commentData.length){
           </div>
             {commentData.map(comment=>(
               <Comments 
-                comment = {comment}
+                key = {comment.id}
+                postContent = {comment.postContent}
               />
             ))}
           <div>

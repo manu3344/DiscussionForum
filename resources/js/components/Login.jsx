@@ -20,7 +20,7 @@ function Login(){
 
     return (
         <div>
-            <div className="container mt-5">
+            <div className="containerBody mt-5">
             <h1 className='title'>Inicio de sesión</h1>
                     <div className="card">
                         <div className="card-body">
@@ -47,7 +47,7 @@ function Login(){
                                     <Button variant='dark' type='submit'>Iniciar sesion</Button>
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12' style={{textAlign:"center",padding:"5px"}}>
-                                        <a href="/register">No tienes cuenta, puedes crear aqui una</a>
+                                        <a href="register">No tienes cuenta, puedes crear aqui una</a>
                                     </div>
                                 </div>
                             </form>

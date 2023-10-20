@@ -44,7 +44,9 @@ if(!categoriesData.length){
             <div className="card-group">
             {categoriesData.map(category=>(
               <Category_C 
-                category = {category}
+                key = {category.id}
+                name = {category.name}
+                genre_id = {category.genre_id}
               />
             ))}
             </div>

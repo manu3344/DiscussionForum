@@ -16,9 +16,8 @@ use App\Http\Controllers\GenresController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/{path}','welcome')->where('path','.*'); 
+
 
 //Routes for posts
 Route::get('/post', [PostsController::class, 'index']);

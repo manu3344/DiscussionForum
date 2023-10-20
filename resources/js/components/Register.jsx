@@ -30,7 +30,7 @@ function Register(){
 
     return (
         <div>
-            <div className="container mt-5">
+            <div className="containerBody mt-5">
             <h1 className='title'>Registro</h1>
                     <div className="card">
                         <div className="card-body">

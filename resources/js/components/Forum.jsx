@@ -44,7 +44,10 @@ if(!forumData.length){
         <div className="card-group">
           {forumData.map(forum=>(
           <Forum_C 
-          forum = {forum}
+          key = {forum.id}
+          title = {forum.title}
+          description = {forum.description}
+          categories_id = {forum.categories_id}
         />
           ))}
 

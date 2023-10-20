@@ -4,7 +4,10 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
+import  ReactDOM from 'react-dom/client';
 import './bootstrap';
+import { BrowserRouter } from 'react-router-dom';
+import Main from "./components/Main";
 
 /**
  * Next, we will create a fresh React component instance and attach it to
@@ -12,4 +15,10 @@ import './bootstrap';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import './components/App';
+import './css/styles.css'
+
+ReactDOM.createRoot(document.getElementById('app')).render(
+    <BrowserRouter>
+        <Main />
+    </BrowserRouter>
+)
