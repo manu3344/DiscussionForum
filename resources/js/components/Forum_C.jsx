@@ -6,7 +6,7 @@ export default function Forum_C(props) {
     const forumDescription = props.description; 
     const forumCategory = props.categories_id;
     return (
-      <div>
+      <div style={{padding:"5px"}}>
         <Card style={{ width: "16rem", height:"28rem" }}>
             <Card.Body>
                 <Card.Img

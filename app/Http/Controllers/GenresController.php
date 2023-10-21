@@ -9,7 +9,7 @@ use App\Models\Genres;
 class GenresController extends Controller
 {
     public function index(){
-        $genres = Genres::find(1);
+        $genres = Genres::all();
         return $genres;
     }
 

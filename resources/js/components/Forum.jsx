@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ReactDOM from 'react-dom/client';
-import { Spinner} from 'react-bootstrap';
+import { Spinner, Button} from 'react-bootstrap';
+import {BsFillPlusCircleFill} from "react-icons/bs";
 import Forum_C from "./Forum_C";
 import axios from "axios";
 
@@ -39,7 +40,19 @@ if(!forumData.length){
     return (
       <div>
         <div style={{ textAlign: "center" }}>
-          <h1>Foro de discusiones actuales</h1>
+          <div className="row">
+            <div className="col-lg-12">
+            <h1>Foro de discusiones actuales</h1>
+            </div>
+            <div className="col-lg-12">
+              <a href="topicsForm">
+              <Button type="submit" id="addTopics">
+                <BsFillPlusCircleFill style={{fontSize:"1.5rem"}}/>
+              </Button>
+              </a>
+            </div>
+          </div>
+
         </div>
         <div className="card-group">
           {forumData.map(forum=>(

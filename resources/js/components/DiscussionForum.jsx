@@ -76,7 +76,7 @@ if(!commentData.length){
                     <label htmlFor="commentButton">Agrega un comentario</label>
                     </div>
                     <div>
-                    <Button type="submit" id="commentButton" style={{backgroundColor: "#176B87", borderRadius:"2rem"}}>
+                    <Button type="submit" id="commentButton" style={{ borderRadius:"2rem"}}>
                       <BsFillPatchPlusFill style={{fontSize:"1.8rem"}}/>
                     </Button>
                     </div>

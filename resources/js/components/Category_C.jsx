@@ -5,7 +5,7 @@ export default function Category_C(props) {
     const categoryName = props.name;
     const categoryGenre = props.genre_id;
     return (
-        <div style={{padding: "0px 5px"}}>
+        <div style={{padding: "5px"}}>
             <Card style={{ width: "14rem", height:"16rem"}}>
                 <Card.Img
                     src="images/rom.png"
