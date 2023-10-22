@@ -7,6 +7,15 @@ export default function Forum_C(props) {
     const forumTitle = props.title;
     const forumDescription = props.description; 
     const forumCategory = props.categories_id;
+
+    const onDeleteTopics = props.onDeleteTopics;
+    const topicId = props.topicId;
+
+    const handleDeleteClick = () => {
+        // Llama a la función de eliminación con el ID del comentario
+        onDeleteTopics(topicId);
+      };
+
     return (
       <div style={{padding:"5px"}}>
         <Card style={{ width: "16rem", height:"28rem" }}>
@@ -30,7 +39,7 @@ export default function Forum_C(props) {
                             </a>
                         </div>
                         <div className="col">
-                            <Button variant="danger"><BsTrashFill /></Button>
+                            <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
                         </div>
                     </div>
             </Card.Body>

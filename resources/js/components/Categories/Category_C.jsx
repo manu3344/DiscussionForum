@@ -5,6 +5,15 @@ import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
 export default function Category_C(props) {
     const categoryName = props.name;
     const categoryGenre = props.genre_id;
+
+    const onDeleteCategories = props.onDeleteCategories;
+    const categoryId = props.categoryId;
+
+    const handleDeleteClick = () => {
+        // Llama a la función de eliminación con el ID del comentario
+        onDeleteCategories(categoryId);
+      };
+
     return (
         <div style={{padding: "5px"}}>
             <Card style={{ width: "14rem", height:"16rem"}}>
@@ -22,7 +31,7 @@ export default function Category_C(props) {
                             </a>
                         </div>
                         <div className="col">
-                            <Button variant="danger"><BsTrashFill /></Button>
+                            <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
                         </div>
                     </div>
             </Card>

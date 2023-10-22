@@ -35,6 +35,12 @@ export default function Categories() {
         );
     }
 
+    //Function para borrar desde el frontend
+const handleDeleteCategories = (categoryId) => {
+    const updatedCategories = categoriesData.filter((category) => category.id !== categoryId);
+    setCategoriesData(updatedCategories);
+  };
+
     return (
         <div>
             <div style={{ textAlign: "center" }}>
@@ -58,6 +64,8 @@ export default function Categories() {
                             key={category.id}
                             name={category.name}
                             genre_id={category.genre_id}
+                            onDeleteCategories={handleDeleteCategories}
+                            categoryId = {category.id}
                         />
                     ))}
                 </div>

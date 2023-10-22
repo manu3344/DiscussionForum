@@ -6,6 +6,7 @@ import Comments from "./Comments"
 export default function DiscussionForum() {
   
   const [commentData, setCommentData] = useState([]);
+  const [textAreaContent, setTextAreaContent] = useState(""); 
 
   useEffect(()=>{ 
     const getComments = async () =>{
@@ -33,6 +34,12 @@ if(!commentData.length){
 </Spinner>
   )
 }
+
+//Function para borrar desde el frontend
+const handleDeleteComment = (commentId) => {
+  const updatedComments = commentData.filter((comment) => comment.id !== commentId);
+  setCommentData(updatedComments);
+};
 
 
     return (
@@ -67,6 +74,7 @@ if(!commentData.length){
                     onResize="none"
                     required
                     style={{ maxWidth: "100%" }}
+                    defaultValue={textAreaContent}
                   ></textarea>
                 </div>
                 <div style={{padding: "5px 2rem"}}>
@@ -85,6 +93,9 @@ if(!commentData.length){
                 key = {comment.id}
                 postContent = {comment.postContent}
                 topic_id = {comment.topic_id}
+                updateTextArea = {setTextAreaContent}
+                onDeleteComment={handleDeleteComment}
+                commentId = {comment.id}
               />
             ))}
           </div>

@@ -4,6 +4,23 @@ import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
 export default function Comments(props) {
     const postContent = props.postContent;
     const topic_id = props.topic_id;
+    
+    // Esto es para actualizar el comentario, que salga el contenido en el TextArea
+    const updateTextArea = props.updateTextArea;
+
+    //Esto para que se borre solamente en el frontend
+    const onDeleteComment = props.onDeleteComment;
+    const commentId = props.commentId;
+
+    const handleEditClick = () =>{
+        updateTextArea(postContent);
+    }
+
+    const handleDeleteClick = () => {
+        // Llama a la función de eliminación con el ID del comentario
+        onDeleteComment(commentId);
+      };
+
     return (
         <div>
             <div className="comments row mb-auto">
@@ -13,10 +30,10 @@ export default function Comments(props) {
                 </div>
                 <div className="col-2 mb-auto">
                     <div className="row mb-auto" style={{padding:"10px"}}>
-                    <Button variant="warning"><BsPencilSquare /></Button>
+                    <Button variant="warning" onClick={handleEditClick} ><BsPencilSquare/></Button>
                     </div>
                     <div className="row mb-auto" style={{padding:"10px"}}>
-                    <Button variant="danger"><BsTrashFill /></Button>
+                    <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
                     </div>
                 </div>
                

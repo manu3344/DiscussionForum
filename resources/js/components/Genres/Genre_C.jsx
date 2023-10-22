@@ -4,6 +4,15 @@ import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
 
 export default function Genre_C(props) {
     const genreName = props.name;
+
+    const onDeleteGenres = props.onDeleteGenres;
+    const genreId = props.genreId;
+
+    const handleDeleteClick = () => {
+        // Llama a la función de eliminación con el ID del comentario
+        onDeleteGenres(genreId);
+      };
+
     return (
         <div>
             <div style={{ padding: "5px" }}>
@@ -21,7 +30,7 @@ export default function Genre_C(props) {
                             </a>
                         </div>
                         <div className="col">
-                            <Button variant="danger"><BsTrashFill /></Button>
+                            <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
                         </div>
                     </div>
                 </Card>

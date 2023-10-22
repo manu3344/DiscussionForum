@@ -37,6 +37,12 @@ export default function Genres(){
         );
     }
 
+    const handleDeleteGenres = (genreId) => {
+        const updatedGenres = genresData.filter((genre) => genre.id !== genreId);
+        setGenresData(updatedGenres);
+      };
+      
+
 
 
 
@@ -62,6 +68,8 @@ export default function Genres(){
                         <Genre_C
                             key={genre.id}
                             name={genre.name}
+                            onDeleteGenres={handleDeleteGenres}
+                            genreId = {genre.id}
                         />
                     ))}
                 </div>

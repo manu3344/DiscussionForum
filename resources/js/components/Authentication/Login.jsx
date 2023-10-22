@@ -26,11 +26,11 @@ function Login(){
                         <div className="card-body">
                             <form>
                                 <div className="form-group">
-                                    <label for="email">Email</label>
+                                    <label htmlFor="email">Email</label>
                                     <input type="email" className="form-control" name="email" placeholder='Ingresa tu email' required></input>
                                 </div>
                                 <div className="form-group">
-                                    <label for="password">Contraseña</label>
+                                    <label htmlFor="password">Contraseña</label>
                                     <div className='row'>
                                         <div className='col-9'>
                                         <input type="password" id="password" className="form-control" name="password" placeholder='Ingresa tu contraseña' required/>
@@ -44,10 +44,10 @@ function Login(){
                                 </div>
                                 <div className='row'>
                                     <div className='col-lg-6 col-md-12 col-sm-12' style={{textAlign:"center"}}>
-                                    <Button variant='dark' type='submit'>Iniciar sesion</Button>
+                                    <Button variant='dark' type='submit'>Iniciar sesión</Button>
                                     </div>
                                     <div className='col-lg-6 col-md-12 col-sm-12' style={{textAlign:"center",padding:"5px"}}>
-                                        <a href="register">No tienes cuenta, puedes crear aqui una</a>
+                                        <a href="register" style={{ textDecoration:"none"}}>¿No tienes cuenta, puedes crear aqui una?</a>
                                     </div>
                                 </div>
                             </form>

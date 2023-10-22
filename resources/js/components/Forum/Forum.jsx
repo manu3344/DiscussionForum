@@ -36,6 +36,11 @@ if(!forumData.length){
   )
 }
 
+const handleDeleteTopics = (topicId) => {
+  const updatedTopics = forumData.filter((topic) => topic.id !== topicId);
+  setForumData(updatedTopics);
+};
+
 
     return (
       <div>
@@ -61,6 +66,8 @@ if(!forumData.length){
           title = {forum.title}
           description = {forum.description}
           categories_id = {forum.categories_id}
+          onDeleteTopics={handleDeleteTopics}
+          topicId = {forum.id}
         />
           ))}
 

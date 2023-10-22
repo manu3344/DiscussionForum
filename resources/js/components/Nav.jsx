@@ -17,6 +17,7 @@ function NavMenu() {
             <Nav.Link as={Link}  to="categories">Categorías</Nav.Link>
             <Nav.Link as={Link}  to="topics">Foro de Discusiones Actuales</Nav.Link>
             <Nav.Link as={Link} to="posts">Comentarios</Nav.Link>
+            {/* Aqui podria poner el usuario */}
             <NavDropdown title="Cuenta" id='basic-nav-dropdown'>
                 <NavDropdown.Item href='login'>Iniciar Sesión</NavDropdown.Item>
                 <NavDropdown.Item href='logout'>Salir de la sesión</NavDropdown.Item>

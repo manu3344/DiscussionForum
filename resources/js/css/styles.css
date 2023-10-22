@@ -36,6 +36,9 @@ footer{
     transform: translateY(-1.5px);
     box-shadow: 0 3px 2px black;
 }
+a:hover{
+    color: blue;
+}
 
 /* Main Page */
 /* Menu */

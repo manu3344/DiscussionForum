@@ -36,15 +36,15 @@ function Register(){
                         <div className="card-body">
                             <form action='register' method='POST'>
                                 <div className='form-group'>
-                                    <label for="name">Nombre</label>
+                                    <label htmlFor="name">Nombre</label>
                                     <input type="text" name="name" placeholder='Ingresa tu nombre' className='form-control' required/>
                                 </div>
                                 <div className="form-group">
-                                    <label for="email">Email</label>
+                                    <label htmlFor="email">Email</label>
                                     <input type="email" className="form-control" name="email" placeholder='Ingresa tu email' required></input>
                                 </div>
                                 <div className="form-group">
-                                    <label for="password">Contraseña</label>
+                                    <label htmlFor="password">Contraseña</label>
                                     <div className='row'>
                                         <div className='col-9'>
                                         <input type="password" id="passwordRegister" className="form-control" name="password" placeholder='Ingresa tu contraseña' required/>
@@ -57,7 +57,7 @@ function Register(){
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label for="c_password">Confirmar contraseña</label>
+                                    <label htmlFor="c_password">Confirmar contraseña</label>
                                     <div className='row'>
                                         <div className='col-9'>
                                         <input type="password" id="c_passwordRegister" className="form-control" name="password" placeholder='Ingresa tu contraseña de nuevo' required/>
