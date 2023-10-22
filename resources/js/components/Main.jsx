@@ -1,17 +1,17 @@
 import React from "react";
-import Categories from "./Categories";
-import Genres from "./Genres";
+import Categories from "./Categories/Categories";
+import Genres from "./Genres/Genres";
 import Nav from "./Nav"; 
 import {Routes, Route, Navigate} from "react-router-dom"; 
-import Forum from "./Forum";
-import DiscussionForum from "./DiscussionForum";
+import Forum from "./Forum/Forum";
+import DiscussionForum from "./Posts/DiscussionForum";
 import Header from "../partials/Header";
 import Footer from "../partials/Footer";
-import Login from "./Login";
-import Register from "./Register";
-import GenresForm from "./GenresForm";
-import CategoriesForm from "./CategoriesForm";
-import TopicsForm from "./TopicsForm";
+import Login from "./Authentication/Login";
+import Register from "./Authentication/Register";
+import GenresForm from "./Genres/GenresForm";
+import CategoriesForm from "./Categories/CategoriesForm";
+import TopicsForm from "./Forum/TopicsForm";
 import Home from "./Home";
 
 function Main(){

@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Spinner, Button } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import Category_C from "./Category_C";
 import axios from "axios";
+import Genre_C from "./Genre_C";
 
-export default function Categories() {
-    const [categoriesData, setCategoriesData] = useState([]);
+
+export default function Genres(){
+    
+    const [genresData, setGenresData] = useState([]);
 
     useEffect(() => {
-        const getCategories = async () => {
+        const getGenres = async () => {
             await axios
-                .get("http://localhost/forum/public/api/categories_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
+                .get("http://localhost/forum/public/api/genres_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
                 .then(function (response) {
                     //Handle success
                     console.log(response.data);
-                    setCategoriesData(response.data);
+                    setGenresData(response.data);
                 })
                 .catch(function (error) {
                     //Handle Error
@@ -24,10 +26,10 @@ export default function Categories() {
                     //Always Executed
                 });
         };
-        getCategories();
+        getGenres();
     }, []);
 
-    if (!categoriesData.length) {
+    if (!genresData.length) {
         return (
             <Spinner animation="border" role="status">
                 <span className="visually-hidden">Loading...</span>
@@ -35,16 +37,19 @@ export default function Categories() {
         );
     }
 
+
+
+
     return (
         <div>
             <div style={{ textAlign: "center" }}>
                 <div className="row">
                     <div className="col=lg-12">
-                        <h1>Categorias</h1>
+                        <h1>Géneros</h1>
                     </div>
                     <div className="col-lg-12">
-                        <a href="categoriesForm">
-                            <Button type="submit" id="addCategories">
+                        <a href="genresForm">
+                            <Button type="submit" id="addGenres">
                                 <BsFillPlusCircleFill
                                     style={{ fontSize: "1.5rem" }}
                                 />
@@ -53,15 +58,14 @@ export default function Categories() {
                     </div>
                 </div>
                 <div className="card-group">
-                    {categoriesData.map((category) => (
-                        <Category_C
-                            key={category.id}
-                            name={category.name}
-                            genre_id={category.genre_id}
+                    {genresData.map((genre) => (
+                        <Genre_C
+                            key={genre.id}
+                            name={genre.name}
                         />
                     ))}
                 </div>
             </div>
         </div>
-    );
+    )
 }

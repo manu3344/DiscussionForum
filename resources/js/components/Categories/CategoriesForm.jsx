@@ -4,7 +4,7 @@ export default function CategoriesForm() {
     return (
         <div>
             <div className="containerBody">
-                <h1 className="title">Agregar Categoria</h1>
+                <h1 className="title">Agregar Categoría</h1>
                 <div className="card cardForm">
                     <div className="card-body">
                         <form>
@@ -14,7 +14,7 @@ export default function CategoriesForm() {
                                     type="text"
                                     className="form-control"
                                     name="name"
-                                    placeholder="Ingresa el nombre de la categoria"
+                                    placeholder="Ingresa el nombre de la categoría"
                                     required
                                 />
                             </div>
@@ -24,7 +24,7 @@ export default function CategoriesForm() {
                                     type="number"
                                     className="form-control"
                                     name="genre_id"
-                                    placeholder="Selecciona el Genero al que pertenece"
+                                    placeholder="Selecciona el Género al que pertenece"
                                 />
                             </div>
                         </form>
@@ -42,7 +42,7 @@ export default function CategoriesForm() {
                     <div className="col">
                         <a href="categories">
                             <Button type="submit" variant="dark">
-                                Registrar Categoria
+                                Registrar Categoría
                             </Button>
                         </a>
                     </div>

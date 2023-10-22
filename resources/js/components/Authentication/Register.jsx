@@ -34,7 +34,7 @@ function Register(){
             <h1 className='title'>Registro</h1>
                     <div className="card">
                         <div className="card-body">
-                            <form>
+                            <form action='register' method='POST'>
                                 <div className='form-group'>
                                     <label for="name">Nombre</label>
                                     <input type="text" name="name" placeholder='Ingresa tu nombre' className='form-control' required/>

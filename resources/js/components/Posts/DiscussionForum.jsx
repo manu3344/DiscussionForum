@@ -1,7 +1,6 @@
 import { useState, useEffect} from "react";
 import { Button } from "react-bootstrap";
 import { Spinner} from 'react-bootstrap';
-import {BsFillPatchPlusFill} from "react-icons/bs";
 import Comments from "./Comments"
 
 export default function DiscussionForum() {
@@ -56,7 +55,6 @@ if(!commentData.length){
               <aside className="asideForum">
                 <div>
                   <h4 style={{ margin: "0" }}>Hunter x Hunter</h4>
-                  <p style={{color:"grey"}}>Creado por Manuel Alejandro Alvarado Ibarra</p>
                 </div>
                 <div>
                   <textarea
@@ -65,20 +63,15 @@ if(!commentData.length){
                     cols="120"
                     rows="10"
                     maxLength="250"
-                    placeholder="Inicia la discusion"
+                    placeholder="Inicia la discusión"
                     onResize="none"
                     required
                     style={{ maxWidth: "100%" }}
                   ></textarea>
                 </div>
-                <div style={{padding: "0px 2rem"}}>
-                    <div style={{padding:"5px"}}>
-                    <label htmlFor="commentButton">Agrega un comentario</label>
-                    </div>
+                <div style={{padding: "5px 2rem"}}>
                     <div>
-                    <Button type="submit" id="commentButton" style={{ borderRadius:"2rem"}}>
-                      <BsFillPatchPlusFill style={{fontSize:"1.8rem"}}/>
-                    </Button>
+                    <Button variant='dark' type='submit' >Registrar comentario</Button>
                     </div>
                 </div>
               </aside>
@@ -86,42 +79,16 @@ if(!commentData.length){
 
             </div>
           </div>
-            {commentData.map(comment=>(
+          <div style={{textAlign:"center"}}>
+          {commentData.map(comment=>(
               <Comments 
                 key = {comment.id}
                 postContent = {comment.postContent}
+                topic_id = {comment.topic_id}
               />
             ))}
-          <div>
-            <form>
-            <section className="sectionComments">
-              <div className="row">
-                <div className="col-lg-6 col-md-6 col-sm-6">
-                  <div className="imageUser">Aqui iria foto?</div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6">
-                  <div className="forumComment">Aranzazu Jimena Messa Sanchez</div>
-                </div>
-              </div>
-              <div>
-                  <textarea
-                    name="discussion"
-                    id="discussion"
-                    cols="150"
-                    rows="5"
-                    placeholder="Escribe un comentario"
-                    onResize="none"
-                    style={{ maxWidth: "100%"}}
-                    required
-                  ></textarea>
-              </div>
-              <div>
-              <Button variant='dark' type='submit' >Registrar comentario</Button>
-              </div>
-            </section>
-            </form>
-
           </div>
+            
         </div>
       </div>
     );

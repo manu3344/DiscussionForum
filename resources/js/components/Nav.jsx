@@ -13,13 +13,13 @@ function NavMenu() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="genres">Generos</Nav.Link>
-            <Nav.Link as={Link}  to="categories">Categorias</Nav.Link>
+            <Nav.Link as={Link} to="genres">Géneros</Nav.Link>
+            <Nav.Link as={Link}  to="categories">Categorías</Nav.Link>
             <Nav.Link as={Link}  to="topics">Foro de Discusiones Actuales</Nav.Link>
             <Nav.Link as={Link} to="posts">Comentarios</Nav.Link>
             <NavDropdown title="Cuenta" id='basic-nav-dropdown'>
-                <NavDropdown.Item href='login'>Iniciar Sesion</NavDropdown.Item>
-                <NavDropdown.Item href='logout'>Salir de la sesion</NavDropdown.Item>
+                <NavDropdown.Item href='login'>Iniciar Sesión</NavDropdown.Item>
+                <NavDropdown.Item href='logout'>Salir de la sesión</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           </Navbar.Collapse>

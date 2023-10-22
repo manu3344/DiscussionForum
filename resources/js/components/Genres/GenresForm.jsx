@@ -4,7 +4,7 @@ export default function GenresForm() {
     return (
         <div>
             <div className="containerBody">
-                <h1 className="title">Agregar Genero</h1>
+                <h1 className="title">Agregar Género</h1>
                 <div className="card cardForm">
                     <div className="card-body">
                         <form>
@@ -14,7 +14,7 @@ export default function GenresForm() {
                                     type="text"
                                     className="form-control"
                                     name="name"
-                                    placeholder="Ingresa el nombre del genero"
+                                    placeholder="Ingresa el nombre del género"
                                     required
                                 />
                             </div>
@@ -33,7 +33,7 @@ export default function GenresForm() {
                         <div className="col">
                             <a href="genres">
                                 <Button type="submit" variant="dark">
-                                    Registrar Genero
+                                    Registrar Género
                                 </Button>
                             </a>
                         </div>
