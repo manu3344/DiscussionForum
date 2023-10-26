@@ -4,107 +4,102 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
-export default function CategoriesForm() {
-    const [categoriesValue, setCategoriesValue] = useState({
-        name: "",
-        genre_id: "",
-    });
-    const [genresData, setGenresData] = useState([]);
+export default function PostsForm() {
 
+    const [forumData, setForumData] = useState([]); 
+
+    const [postsValue, setPostsValue] = useState({
+        postContent: "",
+        topic_id: "",
+    });
     const navigate = useNavigate();
 
     const onChange = (e) => {
         e.persist();
-        setCategoriesValue({
-            ...categoriesValue,
-            [e.target.name]: e.target.value,
-        });
+        setPostsValue({ ...postsValue, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = (e) => {
         if (e && e.preventDefault()) e.preventDefault();
         const formData = new FormData();
-        formData.append("name", categoriesValue.name);
-        formData.append("genre_id", categoriesValue.genre_id);
+        formData.append("postContent", postsValue.postContent);
+        formData.append("topic_id", postsValue.topic_id);
         axios
-            .post(
-                "http://localhost/forum/public/api/categoriesForm",
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        Accept: "application/json",
-                    },
-                }
-            )
+            .post("http://localhost/forum/public/api/postsForm", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Accept: "application/json",
+                },
+            })
             .then((response) => {
                 console.log("response: ");
                 console.log(response);
-                navigate("/forum/public/categories");
+                navigate("/forum/public/posts");
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
-    useEffect(() => {
-        const getGenres = async () => {
-            await axios
-                .get("http://localhost/forum/public/api/genres_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
-                .then(function (response) {
-                    //Handle success
-                    console.log(response.data);
-                    setGenresData(response.data);
-                })
-                .catch(function (error) {
-                    //Handle Error
-                    console.log(error);
-                })
-                .finally(function () {
-                    //Always Executed
-                });
-        };
-        getGenres();
-    }, []);
+
+
+    // Funcion para mostrar los datos
+    useEffect(()=>{ 
+      const getForums = async () =>{
+          await  axios.get("http://localhost/forum/public/api/topic_index")  //"http://localhost:8000/20238/topicosWeb/api/user_index
+          .then(function(response){
+              //Handle success
+              console.log(response.data);
+              setForumData(response.data);
+          })
+          .catch(function(error){
+              //Handle Error
+              console.log(error);
+          })
+          .finally(function(){
+              //Always Executed
+          });        
+      };
+      getForums();
+  },[]);
 
     return (
         <div>
             <div className="containerBody">
-                <h1 className="title">Agregar Categoría</h1>
+                <h1 className="title">Agregar Comentario</h1>
                 <div className="card cardForm">
                     <div className="card-body">
                         <Form onSubmit={handleSubmit}>
                             <Form.Group className="form-group">
-                                <Form.Label for="name">Nombre: </Form.Label>
+                                <Form.Label for="postContent">
+                                    Comentario:{" "}
+                                </Form.Label>
                                 <Form.Control
                                     type="text"
                                     className="form-control"
-                                    name="name"
-                                    placeholder="Ingresa el nombre de la categoría"
+                                    name="postContent"
+                                    placeholder="Ingresa un comentario"
                                     required
-                                    value={categoriesValue.name}
+                                    value={postsValue.postContent}
                                     onChange={onChange}
                                 />
                             </Form.Group>
                             <Form.Group className="form-group">
-                                <Form.Label for="genre_id">Género</Form.Label>
+                                <Form.Label for="topic_id">Tema</Form.Label>
                                 <Form.Control
                                     as="select"
-                                    name="genre_id"
-                                    value={categoriesValue.genre_id}
+                                    name="topic_id"
+                                    value={postsValue.topic_id}
                                     onChange={onChange}
                                 >
-                                    <option value="">
-                                        Selecciona un género
-                                    </option>
-                                    {genresData.map((genre) => (
-                                        <option key={genre.id} value={genre.id}>
-                                            {genre.name}
+                                    <option value="">Selecciona un tema</option>
+                                    {forumData.map((topic) => (
+                                        <option key={topic.id} value={topic.id}>
+                                            {topic.title}
                                         </option>
                                     ))}
                                 </Form.Control>
                             </Form.Group>
-
                             <Form.Group>
                                 <div
                                     style={{
@@ -114,7 +109,7 @@ export default function CategoriesForm() {
                                 >
                                     <div className="row">
                                         <div className="col">
-                                            <a href="categories">
+                                            <a href="posts">
                                                 <Button variant="danger">
                                                     Cancelar
                                                 </Button>
@@ -125,7 +120,7 @@ export default function CategoriesForm() {
                                                 type="submit"
                                                 variant="dark"
                                             >
-                                                Registrar Categoría
+                                                Registrar
                                             </Button>
                                         </div>
                                     </div>

@@ -92,6 +92,10 @@ a:hover{
 .sectionContainer{
     width: 30%;
 }
+.sectionContainerButton{
+    width: 30%;
+    height: 400px;
+}
 .asideContainer{
     width: 70%;
 }

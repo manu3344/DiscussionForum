@@ -9,6 +9,7 @@ export default function Genres(){
     
     const [genresData, setGenresData] = useState([]);
 
+    // Funcion para mostrar los datos
     useEffect(() => {
         const getGenres = async () => {
             await axios
@@ -29,19 +30,28 @@ export default function Genres(){
         getGenres();
     }, []);
 
-    if (!genresData.length) {
+    //Funcion para editar los datos.
+
+    // Funcion para borrar los datos
+    const handleDeleteGenres = (genreId) => {
+        const updatedGenres = genresData.filter((genre) => genre.id !== genreId);
+        axios.delete(`http://localhost/forum/public/api/genres_delete/${genreId}`)
+        .then(function(response){
+            setGenresData(updatedGenres);
+            alert("Genero eliminado exitosamente");
+        }).catch(function(error){
+            console.log(error);
+        });
+      };
+      
+    //  Spinner
+      if (!genresData.length) {
         return (
             <Spinner animation="border" role="status">
                 <span className="visually-hidden">Loading...</span>
             </Spinner>
         );
     }
-
-    const handleDeleteGenres = (genreId) => {
-        const updatedGenres = genresData.filter((genre) => genre.id !== genreId);
-        setGenresData(updatedGenres);
-      };
-      
 
 
 

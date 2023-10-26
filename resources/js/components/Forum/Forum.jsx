@@ -9,6 +9,7 @@ export default function Forum() {
 
   const [forumData, setForumData] = useState([]); 
 
+  // Funcion para mostrar los datos
   useEffect(()=>{ 
     const getForums = async () =>{
         await  axios.get("http://localhost/forum/public/api/topic_index")  //"http://localhost:8000/20238/topicosWeb/api/user_index
@@ -28,6 +29,21 @@ export default function Forum() {
     getForums();
 },[]);
 
+
+
+  // Funcion para borrar los datos
+const handleDeleteTopics = (topicId) => {
+  const updatedTopics = forumData.filter((topic) => topic.id !== topicId);
+  axios.delete(`http://localhost/forum/public/api/topics_delete/${topicId}`)
+  .then(function(response){
+      setForumData(updatedTopics);
+      alert("Tema eliminado exitosamente");
+  }).catch(function(error){
+      console.log(error);
+  });
+};
+
+// Spinner
 if(!forumData.length){
   return (
   <Spinner animation="border" role="status">
@@ -35,11 +51,6 @@ if(!forumData.length){
 </Spinner>
   )
 }
-
-const handleDeleteTopics = (topicId) => {
-  const updatedTopics = forumData.filter((topic) => topic.id !== topicId);
-  setForumData(updatedTopics);
-};
 
 
     return (

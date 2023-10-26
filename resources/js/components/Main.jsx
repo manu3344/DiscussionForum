@@ -12,6 +12,7 @@ import Register from "./Authentication/Register";
 import GenresForm from "./Genres/GenresForm";
 import CategoriesForm from "./Categories/CategoriesForm";
 import TopicsForm from "./Forum/TopicsForm";
+import PostsForm from "./Posts/PostsForm";
 import Home from "./Home";
 
 function Main(){
@@ -30,6 +31,7 @@ function Main(){
                 <Route path="genresForm" element ={<GenresForm />}/>
                 <Route path="categoriesForm" element ={<CategoriesForm />}/>
                 <Route path="topicsForm" element={<TopicsForm />} />
+                <Route path="postsForm" element={<PostsForm />} />
             </Route>
         </Routes>
         <Footer />

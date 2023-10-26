@@ -7,6 +7,7 @@ import axios from "axios";
 export default function Categories() {
     const [categoriesData, setCategoriesData] = useState([]);
 
+    // Funcion para mostrar los datos
     useEffect(() => {
         const getCategories = async () => {
             await axios
@@ -27,19 +28,30 @@ export default function Categories() {
         getCategories();
     }, []);
 
-    if (!categoriesData.length) {
-        return (
-            <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-        );
-    }
+    
 
     //Function para borrar desde el frontend
 const handleDeleteCategories = (categoryId) => {
     const updatedCategories = categoriesData.filter((category) => category.id !== categoryId);
-    setCategoriesData(updatedCategories);
+    axios.delete(`http://localhost/forum/public/api/categories_delete/${categoryId}`)
+    .then(function(response){
+        setCategoriesData(updatedCategories);
+        alert("Categoria eliminada exitosamente");
+    }).catch(function(error){
+        console.log(error);
+    });
   };
+
+//   Spinner
+  if (!categoriesData.length) {
+    return (
+        <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    );
+}
+
+
 
     return (
         <div>

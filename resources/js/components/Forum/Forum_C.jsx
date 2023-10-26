@@ -16,6 +16,8 @@ export default function Forum_C(props) {
         onDeleteTopics(topicId);
       };
 
+      
+
     return (
       <div style={{padding:"5px"}}>
         <Card style={{ width: "16rem", height:"28rem" }}>
