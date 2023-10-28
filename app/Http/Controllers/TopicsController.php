@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Topics;
+use Validator; 
 
 class TopicsController extends Controller
 {
@@ -15,9 +16,33 @@ class TopicsController extends Controller
     }
 
     public function store(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'title'=> 'required|string|max:100', 
+            'description'=>'required|string',
+            'image_path'=>'required|file',
+            'categories_id'=> 'required|exists:categories,id'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError("Validation Error.", $validator->errors());
+        }
+
+        if($validator->fails()){
+            return $this->sendError("Validation Error.", $validator->errors());
+        }
+
+        if($request->hasFile('image_path')){
+            $file = $request->file("image_path"); 
+            $destinationPath = "images/"; 
+            $filename = time() .'-' .$file->getClientOriginalName();
+            $uploadSuccess = $request ->file('image_path')->move($destinationPath,$filename);
+        }
+
         $topics = Topics::create([
             "title"=>$request->title,
             "description"=>$request->description, 
+            "image_path" =>$destinationPath . $filename,
             "categories_id"=>$request->categories_id
         ]);
         $topics->save(); 

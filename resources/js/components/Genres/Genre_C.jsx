@@ -3,13 +3,14 @@ import { Card, Button} from "react-bootstrap";
 import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
 
 export default function Genre_C(props) {
+
     const genreName = props.name;
-
-    const onDeleteGenres = props.onDeleteGenres;
+    const genreImage = props.image_path; 
     const genreId = props.genreId;
+    const onDeleteGenres = props.onDeleteGenres;
 
+    // Funcion que llama la funcion para borrar segun el id solicitado. 
     const handleDeleteClick = () => {
-        // Llama a la función de eliminación con el ID del comentario
         onDeleteGenres(genreId);
       };
 
@@ -18,8 +19,8 @@ export default function Genre_C(props) {
             <div style={{ padding: "5px" }}>
                 <Card style={{ width: "14rem", height: "18rem" }}>
                     <Card.Img
-                        src="images/pis.png"
-                        alt=""
+                        src={genreImage}
+                        alt={genreName}
                         className="img_rounded_circle mb-auto"
                     />
                     <Card.Text className="mb-auto">{genreName}</Card.Text>

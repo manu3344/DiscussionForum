@@ -14,7 +14,8 @@ class CategoriesSeeder extends Seeder
     public function run(): void
     {
         $categories = new Categories(); 
-        $categories->name = "Anime"; 
+        $categories->name = "Peliculas"; 
+        $categories->image_path = "images/movies.png";
         $categories->genre_id=1; 
         $categories->save(); 
     }

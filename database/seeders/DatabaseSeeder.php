@@ -18,16 +18,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        Genres::factory(5)->create();
-        Categories::factory(5)->create();
-        Topics::factory(5)->create();
-        Posts::factory(5)->create();
-        User::factory(5)->create(); 
         $this->call(GenresSeeder::class);
         $this->call(CategoriesSeeder::class);
         $this->call(TopicsSeeder::class);
         $this->call(PostsSeeder::class);
         $this->call(UsersSeeder::class);
+        Genres::factory(5)->create();
+        Categories::factory(5)->create();
+        Topics::factory(5)->create();
+        Posts::factory(5)->create();
+        User::factory(5)->create(); 
+
 
     }
 }

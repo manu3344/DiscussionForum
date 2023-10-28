@@ -8,7 +8,8 @@ export default function TopicsForm() {
     const [topicsValue, setTopicsValue] = useState({
         title: "",
         description: "",
-        categories_id: "",
+        image_path: "", 
+        categories_id: ""
     });
     const [categoriesData, setCategoriesData] = useState([]);
 
@@ -16,14 +17,20 @@ export default function TopicsForm() {
 
     const onChange = (e) => {
         e.persist();
-        setTopicsValue({ ...topicsValue, [e.target.name]: e.target.value });
+        if(e.target.type==="file"){
+            setTopicsValue({...topicsValue, image_path: e.target.files[0]});
+        }else{
+            setTopicsValue({ ...topicsValue, [e.target.name]: e.target.value });
+        }
     };
 
+    // Funcion para anadir datos. 
     const handleSubmit = (e) => {
         if (e && e.preventDefault()) e.preventDefault();
         const formData = new FormData();
         formData.append("title", topicsValue.title);
         formData.append("description", topicsValue.description);
+        formData.append("image_path", topicsValue.image_path)
         formData.append("categories_id", topicsValue.categories_id);
         axios
             .post("http://localhost/forum/public/api/topicsForm", formData, {
@@ -42,7 +49,7 @@ export default function TopicsForm() {
             });
     };
 
-    // Funcion para mostrar las categorias a las que pertenecen los temas
+    // Funcion para mostrar las categorias a las que pertenecen los temas en el formulario
     useEffect(() => {
         const getCategories = async () => {
             await axios
@@ -97,6 +104,15 @@ export default function TopicsForm() {
                                     onChange={onChange}
                                     style={{ maxWidth: "100%" }}
                                 ></textarea>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label htmlFor="image">Imagen: </Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    name="image_path"
+                                    accept="images/*"
+                                    onChange={onChange}
+                                />
                             </Form.Group>
                             <Form.Group className="form-group">
                                 <Form.Label for="categories_id">

@@ -20,6 +20,7 @@ class CategoriesFactory extends Factory
     {
         return [
             "name"=>fake()->sentence(),
+            "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Categories'),
             "genre_id"=>Genres::all()->random()->id
         ];
     }

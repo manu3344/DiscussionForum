@@ -19,6 +19,7 @@ export default function PostsForm() {
         setPostsValue({ ...postsValue, [e.target.name]: e.target.value });
     };
 
+    // Funcion para anadir datos. 
     const handleSubmit = (e) => {
         if (e && e.preventDefault()) e.preventDefault();
         const formData = new FormData();
@@ -43,7 +44,7 @@ export default function PostsForm() {
 
 
 
-    // Funcion para mostrar los datos
+    // Funcion para mostrar los temas a los que pertenecen los comentarios en el formulario
     useEffect(()=>{ 
       const getForums = async () =>{
           await  axios.get("http://localhost/forum/public/api/topic_index")  //"http://localhost:8000/20238/topicosWeb/api/user_index

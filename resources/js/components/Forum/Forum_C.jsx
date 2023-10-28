@@ -6,6 +6,7 @@ import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
 export default function Forum_C(props) {
     const forumTitle = props.title;
     const forumDescription = props.description; 
+    const topicImage = props.image_path;
     const forumCategory = props.categories_id;
 
     const onDeleteTopics = props.onDeleteTopics;
@@ -23,7 +24,8 @@ export default function Forum_C(props) {
         <Card style={{ width: "16rem", height:"28rem" }}>
             <Card.Body className="d-flex flex-column">
                 <Card.Img
-                    src="images/kaguya.jpg"
+                    src={topicImage}
+                    alt={forumTitle}
                     style={{ height: "200px", objectFit: "cover" }}
                     className="mb-auto"
                 />

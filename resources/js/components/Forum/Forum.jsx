@@ -76,6 +76,7 @@ if(!forumData.length){
           key = {forum.id}
           title = {forum.title}
           description = {forum.description}
+          image_path = {forum.image_path}
           categories_id = {forum.categories_id}
           onDeleteTopics={handleDeleteTopics}
           topicId = {forum.id}

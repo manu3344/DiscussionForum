@@ -76,6 +76,8 @@ const handleDeleteCategories = (categoryId) => {
                             key={category.id}
                             name={category.name}
                             genre_id={category.genre_id}
+                            image_path = {category.image_path}
+                            genre_name ={category.genre_name}
                             onDeleteCategories={handleDeleteCategories}
                             categoryId = {category.id}
                         />

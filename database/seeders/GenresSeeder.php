@@ -14,7 +14,8 @@ class GenresSeeder extends Seeder
     public function run(): void
     {
         $genres = new Genres(); 
-        $genres->name = "Accion"; 
+        $genres->name = "Comedia"; 
+        $genres->image_path = "images/com.png";
         $genres->save(); 
 
     }

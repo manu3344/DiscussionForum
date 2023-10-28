@@ -16,6 +16,7 @@ use App\Http\Controllers\GenresController;
 |
 */
 
+
 Route::view('/{path}','welcome')->where('path','.*'); 
 
 

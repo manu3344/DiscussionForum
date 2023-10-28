@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Categories;
+use Validator; 
 
 class CategoriesController extends Controller
 {
@@ -14,8 +15,27 @@ class CategoriesController extends Controller
     }
 
     public function store(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'name'=> 'required|string|max:100', 
+            'image_path'=>'required|file',
+            'genre_id'=> 'required|exists:genres,id'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError("Validation Error.", $validator->errors());
+        }
+
+        if($request->hasFile('image_path')){
+            $file = $request->file("image_path"); 
+            $destinationPath = "images/"; 
+            $filename = time() .'-' .$file->getClientOriginalName();
+            $uploadSuccess = $request ->file('image_path')->move($destinationPath,$filename);
+        }
+
         $categories = Categories::create([
             "name"=>$request->name, 
+            "image_path" =>$destinationPath . $filename,
             "genre_id"=>$request->genre_id
         ]);
         $categories->save(); 
@@ -48,4 +68,11 @@ class CategoriesController extends Controller
     public function token(){
         return csrf_token(); 
     }
+    public function categoriesByGenre($genreId)
+{
+    // Filtrar las categorías por el ID del género
+    $categories = Categories::where('genre_id', $genreId)->get();
+
+    return $categories;
+}
 }

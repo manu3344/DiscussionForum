@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Posts;
+use Validator; 
 
 class PostsController extends Controller
 {
@@ -14,6 +15,17 @@ class PostsController extends Controller
     }
 
     public function store(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'postContent'=> 'required|string', 
+            'topic_id'=> 'required|exists:topics,id'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError("Validation Error.", $validator->errors());
+        }
+
+
         $posts = Posts::create([
             "postContent"=>$request->postContent,
             "topic_id"=>$request->topic_id

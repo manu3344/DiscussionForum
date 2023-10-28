@@ -10,10 +10,6 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 export default function DiscussionForum() {
     const [commentData, setCommentData] = useState([]);
     const [textAreaContent, setTextAreaContent] = useState("");
-    const [commentsValue, setCommentsValue] = useState({
-        postContent: "",
-        topic_id: "",
-    });
     const navigate = useNavigate();
 
     //Funcion para mostrar los datos.

@@ -6,24 +6,32 @@ import { Button, Form } from "react-bootstrap";
 
 export default function GenresForm() {
 
-    const [genreValue, setGenreValue] = useState({name:''}); 
+    const [genreValue, setGenreValue] = useState({name:'', image_path:''}); 
     const navigate = useNavigate(); 
 
-    const onChange = (e)=>{
-        e.persist(); 
-        setGenreValue({...genreValue, [e.target.name]: e.target.value}); 
-    }
+    // Si el evento es de tipo file se actualiza el estado genreValue con el archivo seleccionado, si no con los valores de entrada. 
+    const onChange = (e) => {
+        e.persist();
+        if (e.target.type === 'file') {
+            setGenreValue({ ...genreValue, image_path: e.target.files[0] });
+        } else {
+            setGenreValue({ ...genreValue, [e.target.name]: e.target.value });
+        }
+    };
 
+    // Funcion para anadir datos 
     const handleSubmit = (e)=>{
         if(e && e.preventDefault()) e.preventDefault();
         const formData = new FormData(); 
         formData.append("name", genreValue.name)
+        formData.append("image_path", genreValue.image_path)
         axios.post("http://localhost/forum/public/api/genresForm",
         formData,
         {headers: {'Content-Type': 'multipart/form-data',
         'Accept':'application/json'}}
         ).then(response => {
             console.log('response: ');
+            alert("Genero registrado correctamente")
             console.log(response);
             navigate('/forum/public/genres');
         }).catch(error => {
@@ -42,7 +50,7 @@ export default function GenresForm() {
                     <div className="card-body">
                         <Form onSubmit={handleSubmit}>
                             <Form.Group className="form-group">
-                                <Form.Label for="name">Nombre: </Form.Label>
+                                <Form.Label htmlFor="name">Nombre: </Form.Label>
                                 <Form.Control
                                     type="text"
                                     className="form-control"
@@ -50,6 +58,15 @@ export default function GenresForm() {
                                     placeholder="Ingresa el nombre del género"
                                     required
                                     value={genreValue.name}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label htmlFor="image">Imagen: </Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    name="image_path"
+                                    accept="images/*"
                                     onChange={onChange}
                                 />
                             </Form.Group>

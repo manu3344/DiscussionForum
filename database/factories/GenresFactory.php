@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Genres; 
 
 
+
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Genres>
  */
@@ -18,8 +20,10 @@ class GenresFactory extends Factory
      */
     public function definition(): array
     {
+        
         return [
-            "name"=>fake()->sentence()
+            "name"=>fake()->sentence(),
+            "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Genres')
         ];
     }
 }

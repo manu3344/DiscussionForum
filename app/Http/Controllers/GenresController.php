@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Genres;
+use Validator; 
 
 class GenresController extends Controller
 {
@@ -14,8 +15,26 @@ class GenresController extends Controller
     }
 
     public function store(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name'=> 'required|string|max:100', 
+            'image_path'=>'required|file'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError("Validation Error.", $validator->errors());
+        }
+
+        if($request->hasFile('image_path')){
+            $file = $request->file("image_path"); 
+            $destinationPath = "images/"; 
+            $filename = time() .'-' .$file->getClientOriginalName();
+            $uploadSuccess = $request ->file('image_path')->move($destinationPath,$filename);
+        }
+
         $genres = Genres::create([
-            "name"=>$request->name
+            "name"=>$request->name, 
+            "image_path" =>$destinationPath . $filename
+            
         ]);
         $genres->save(); 
         return $request;

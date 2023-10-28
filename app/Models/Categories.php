@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Categories extends Model
 {
     use HasFactory;
-    protected $fillable = ["name", "categories_id", "genre_id"]; 
+    protected $fillable = ["name", "categories_id", "image_path", "genre_id"]; 
 
     public function topics(): HasMany{
         return $this->hasMany(Topics::class, 'categories_id'); 

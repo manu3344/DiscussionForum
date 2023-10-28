@@ -30,7 +30,6 @@ export default function Genres(){
         getGenres();
     }, []);
 
-    //Funcion para editar los datos.
 
     // Funcion para borrar los datos
     const handleDeleteGenres = (genreId) => {
@@ -78,6 +77,7 @@ export default function Genres(){
                         <Genre_C
                             key={genre.id}
                             name={genre.name}
+                            image_path = {genre.image_path}
                             onDeleteGenres={handleDeleteGenres}
                             genreId = {genre.id}
                         />

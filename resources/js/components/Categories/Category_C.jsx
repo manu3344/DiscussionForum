@@ -3,14 +3,15 @@ import { Card, Button } from "react-bootstrap";
 import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
 
 export default function Category_C(props) {
+    
     const categoryName = props.name;
+    const categoryImage = props.image_path; 
     const categoryGenre = props.genre_id;
-
-    const onDeleteCategories = props.onDeleteCategories;
     const categoryId = props.categoryId;
+    const onDeleteCategories = props.onDeleteCategories;
 
+    // Llama a la función de eliminación con el ID de la categoria. 
     const handleDeleteClick = () => {
-        // Llama a la función de eliminación con el ID del comentario
         onDeleteCategories(categoryId);
       };
 
@@ -18,8 +19,8 @@ export default function Category_C(props) {
         <div style={{padding: "5px"}}>
             <Card style={{ width: "14rem", height:"16rem"}}>
                 <Card.Img
-                    src="images/rom.png"
-                    alt=""
+                    src={categoryImage}
+                    alt={categoryName}
                     className="img_rounded_circle mb-auto"
                 />
                 <Card.Text className="mb-auto">{categoryName}</Card.Text>

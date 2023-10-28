@@ -5,26 +5,37 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
 export default function CategoriesForm() {
+
     const [categoriesValue, setCategoriesValue] = useState({
         name: "",
+        image_path: "",
         genre_id: "",
     });
     const [genresData, setGenresData] = useState([]);
 
     const navigate = useNavigate();
 
+    // Si el evento es de tipo file se actualiza el estado genreValue con el archivo seleccionado, si no con los valores de entrada. 
     const onChange = (e) => {
         e.persist();
-        setCategoriesValue({
-            ...categoriesValue,
-            [e.target.name]: e.target.value,
-        });
+        if(e.target.type==="file"){
+            setCategoriesValue({...categoriesValue,image_path: e.target.files[0]}); 
+        }else{
+            setCategoriesValue({
+                ...categoriesValue,
+                [e.target.name]: e.target.value,
+            });
+        }
     };
 
+    
+
+    // Funcion para anadir datos
     const handleSubmit = (e) => {
         if (e && e.preventDefault()) e.preventDefault();
         const formData = new FormData();
         formData.append("name", categoriesValue.name);
+        formData.append("image_path",categoriesValue.image_path)
         formData.append("genre_id", categoriesValue.genre_id);
         axios
             .post(
@@ -47,6 +58,7 @@ export default function CategoriesForm() {
             });
     };
 
+    // Funcion para mostrar el genero al que pertenece la categoria en el formulario
     useEffect(() => {
         const getGenres = async () => {
             await axios
@@ -83,6 +95,15 @@ export default function CategoriesForm() {
                                     placeholder="Ingresa el nombre de la categoría"
                                     required
                                     value={categoriesValue.name}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label htmlFor="image">Imagen: </Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    name="image_path"
+                                    accept="images/*"
                                     onChange={onChange}
                                 />
                             </Form.Group>
