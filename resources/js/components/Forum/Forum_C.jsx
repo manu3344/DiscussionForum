@@ -38,7 +38,7 @@ export default function Forum_C(props) {
                 <Card.Text className="mb-auto">{"Categoria: " + forumCategory}</Card.Text>
                 <div className="row" style={{padding:"0 0 10px"}}>
                         <div className="col">
-                            <a href="topicsForm">
+                            <a href={`topicsForm/${topicId}`}>
                             <Button variant="warning"><BsPencilSquare /></Button>
                             </a>
                         </div>

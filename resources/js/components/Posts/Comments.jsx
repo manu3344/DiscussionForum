@@ -12,9 +12,6 @@ export default function Comments(props) {
     const onDeleteComment = props.onDeleteComment;
     const commentId = props.commentId;
 
-    const handleEditClick = () =>{
-        updateTextArea(postContent);
-    }
 
     const handleDeleteClick = () => {
         // Llama a la función de eliminación con el ID del comentario
@@ -30,7 +27,9 @@ export default function Comments(props) {
                 </div>
                 <div className="col-2 mb-auto">
                     <div className="row mb-auto" style={{padding:"10px"}}>
-                    <Button variant="warning" onClick={handleEditClick} ><BsPencilSquare/></Button>
+                        <a href={`postsForm/${commentId}`}>
+                        <Button variant="warning" ><BsPencilSquare/></Button>
+                        </a>
                     </div>
                     <div className="row mb-auto" style={{padding:"10px"}}>
                     <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>

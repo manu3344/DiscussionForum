@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
 export default function TopicsForm() {
@@ -14,6 +14,9 @@ export default function TopicsForm() {
     const [categoriesData, setCategoriesData] = useState([]);
 
     const navigate = useNavigate();
+
+    const { id } = useParams(); //Obtener el ID del tema de discusion de la URL
+
 
     const onChange = (e) => {
         e.persist();
@@ -32,7 +35,8 @@ export default function TopicsForm() {
         formData.append("description", topicsValue.description);
         formData.append("image_path", topicsValue.image_path)
         formData.append("categories_id", topicsValue.categories_id);
-        axios
+        if(!id){
+            axios
             .post("http://localhost/forum/public/api/topicsForm", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -41,12 +45,32 @@ export default function TopicsForm() {
             })
             .then((response) => {
                 console.log("response: ");
+                alert("Tema registrado correctamente");
                 console.log(response);
                 navigate("/forum/public/topics");
             })
             .catch((error) => {
                 console.log(error);
             });
+        }else{
+            axios
+            .post(`http://localhost/forum/public/api/topicsForm/${id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Accept: "application/json",
+                },
+            })
+            .then((response) => {
+                alert("Tema actualizado correctamente");
+                console.log("response: ");
+                console.log(response);
+                navigate("/forum/public/topics");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+       
     };
 
     // Funcion para mostrar las categorias a las que pertenecen los temas en el formulario
@@ -73,7 +97,7 @@ export default function TopicsForm() {
     return (
         <div>
             <div className="containerBody">
-                <h1 className="title">Agregar Tema de Discusión</h1>
+                <h1 className="title">{id?"Editar Tema de Discusión":"Agregar Tema de Discusión"}</h1>
                 <div className="card cardForm">
                     <div className="card-body">
                         <Form onSubmit={handleSubmit}>
@@ -146,18 +170,18 @@ export default function TopicsForm() {
                                 >
                                     <div className="row">
                                         <div className="col">
-                                            <a href="topics">
+                                            <Link to="/forum/public/topics">
                                                 <Button variant="danger">
                                                     Cancelar
                                                 </Button>
-                                            </a>
+                                            </Link>
                                         </div>
                                         <div className="col">
                                             <Button
                                                 type="submit"
                                                 variant="dark"
                                             >
-                                                Registrar
+                                                {id?"Guardar cambios":"Registrar"}
                                             </Button>
                                         </div>
                                     </div>

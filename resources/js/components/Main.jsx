@@ -29,9 +29,13 @@ function Main(){
                 <Route path="topics" element={<Forum />} />
                 <Route path="posts" element={<DiscussionForum />} />
                 <Route path="genresForm" element ={<GenresForm />}/>
+                <Route  path="genresForm/:id" element={<GenresForm />}/>
                 <Route path="categoriesForm" element ={<CategoriesForm />}/>
+                <Route path="categoriesForm/:id" element ={<CategoriesForm />}/>
                 <Route path="topicsForm" element={<TopicsForm />} />
+                <Route path="topicsForm/:id" element={<TopicsForm />} />
                 <Route path="postsForm" element={<PostsForm />} />
+                <Route path="postsForm/:id" element={<PostsForm />} />
             </Route>
         </Routes>
         <Footer />

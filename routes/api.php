@@ -28,7 +28,7 @@ Route::get('/categories_index', [CategoriesController::class, 'index']);
 Route::get('/topic_index', [TopicsController::class, 'index']);
 Route::get('/post_index', [PostsController::class, 'index']);
 
-// Crear Formularios
+// Insertar datos
 Route::post('/genresForm', [GenresController::class, 'store']);
 Route::post('/categoriesForm', [CategoriesController::class, 'store']);
 Route::post('/topicsForm', [TopicsController::class, 'store']);
@@ -40,7 +40,11 @@ Route::delete('/categories_delete/{id}', [CategoriesController::class, 'destroy'
 Route::delete('/topics_delete/{id}', [TopicsController::class, 'destroy']);
 Route::delete('/posts_delete/{id}', [PostsController::class, 'destroy']);
 
-
+//Editar datos. 
+Route::post('/genresForm/{id}', [GenresController::class, 'update']);
+Route::post('/categoriesForm/{id}', [CategoriesController::class, 'update']);
+Route::post('/topicsForm/{id}', [TopicsController::class, 'update']);
+Route::post('/postsForm/{id}', [PostsController::class, 'update']);
 
 //Estas son rutas no permitidas. 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

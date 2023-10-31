@@ -46,7 +46,19 @@ class PostsController extends Controller
 
     public function update(Request $request, $id){
         $posts = Posts::findOrFail($id); 
+
+        $validator = Validator::make($request->all(),[
+            'postContent'=> 'required|string', 
+            'topic_id'=> 'required|exists:topics,id'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError("Validation Error.", $validator->errors());
+        }
+
         $posts->postContent = $request->input('postContent');
+        $posts->topic_id=$request->topic_id;
+
         $posts->save(); 
         return $posts;
     }

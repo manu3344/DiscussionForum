@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
 export default function PostsForm() {
@@ -14,6 +14,9 @@ export default function PostsForm() {
     });
     const navigate = useNavigate();
 
+    const { id } = useParams(); //Obtener el ID del post de la URL
+
+
     const onChange = (e) => {
         e.persist();
         setPostsValue({ ...postsValue, [e.target.name]: e.target.value });
@@ -25,7 +28,8 @@ export default function PostsForm() {
         const formData = new FormData();
         formData.append("postContent", postsValue.postContent);
         formData.append("topic_id", postsValue.topic_id);
-        axios
+        if(!id){
+            axios
             .post("http://localhost/forum/public/api/postsForm", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -33,6 +37,7 @@ export default function PostsForm() {
                 },
             })
             .then((response) => {
+                alert("Comentario registrado correctamente"); 
                 console.log("response: ");
                 console.log(response);
                 navigate("/forum/public/posts");
@@ -40,6 +45,25 @@ export default function PostsForm() {
             .catch((error) => {
                 console.log(error);
             });
+        }else{
+            axios
+            .post(`http://localhost/forum/public/api/postsForm/${id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Accept: "application/json",
+                },
+            })
+            .then((response) => {
+                alert("Comentario actualizado correctamente");
+                console.log("response: ");
+                console.log(response);
+                navigate("/forum/public/posts");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+       
     };
 
 
@@ -67,7 +91,7 @@ export default function PostsForm() {
     return (
         <div>
             <div className="containerBody">
-                <h1 className="title">Agregar Comentario</h1>
+                <h1 className="title">{id?"Editar Comentario":"Agregar Comentario"}</h1>
                 <div className="card cardForm">
                     <div className="card-body">
                         <Form onSubmit={handleSubmit}>
@@ -110,18 +134,18 @@ export default function PostsForm() {
                                 >
                                     <div className="row">
                                         <div className="col">
-                                            <a href="posts">
+                                            <Link to="/forum/public/posts">
                                                 <Button variant="danger">
                                                     Cancelar
                                                 </Button>
-                                            </a>
+                                            </Link>
                                         </div>
                                         <div className="col">
                                             <Button
                                                 type="submit"
                                                 variant="dark"
                                             >
-                                                Registrar
+                                                {id?"Guardar cambios":"Registrar"}
                                             </Button>
                                         </div>
                                     </div>

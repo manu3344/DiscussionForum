@@ -1,51 +1,85 @@
-import React from 'react'
-import { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
 export default function GenresForm() {
+    const [genreValue, setGenreValue] = useState({ name: "", image_path: "" });
+    const navigate = useNavigate();
 
-    const [genreValue, setGenreValue] = useState({name:'', image_path:''}); 
-    const navigate = useNavigate(); 
+    const { id } = useParams(); //Obtener el ID del genero de la URL
 
-    // Si el evento es de tipo file se actualiza el estado genreValue con el archivo seleccionado, si no con los valores de entrada. 
+    // Si el evento es de tipo file se actualiza el estado genreValue con el archivo seleccionado, si no con los valores de entrada.
     const onChange = (e) => {
         e.persist();
-        if (e.target.type === 'file') {
+        if (e.target.type === "file") {
             setGenreValue({ ...genreValue, image_path: e.target.files[0] });
         } else {
             setGenreValue({ ...genreValue, [e.target.name]: e.target.value });
         }
     };
 
-    // Funcion para anadir datos 
-    const handleSubmit = (e)=>{
-        if(e && e.preventDefault()) e.preventDefault();
-        const formData = new FormData(); 
-        formData.append("name", genreValue.name)
-        formData.append("image_path", genreValue.image_path)
-        axios.post("http://localhost/forum/public/api/genresForm",
-        formData,
-        {headers: {'Content-Type': 'multipart/form-data',
-        'Accept':'application/json'}}
-        ).then(response => {
-            console.log('response: ');
-            alert("Genero registrado correctamente")
-            console.log(response);
-            navigate('/forum/public/genres');
-        }).catch(error => {
-            console.log(error);
-        });
+    // Funcion para anadir o editar  datos
+    const handleSubmit = (e) => {
+        if (e && e.preventDefault()) e.preventDefault();
+        const formData = new FormData();
+        formData.append("name", genreValue.name);
+        formData.append("image_path", genreValue.image_path);
+        //Si no hay un id quiere decir que es la ruta de formulario normal, pero si si hay, entonces se editara un registro.
+        if (!id) {
+            axios
+                .post(
+                    "http://localhost/forum/public/api/genresForm",
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            Accept: "application/json",
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log("response: ");
+                    alert("Genero registrado correctamente");
+                    console.log(response);
+                    navigate("/forum/public/genres");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            axios
+                .post(
+                    `http://localhost/forum/public/api/genresForm/${id}`,
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            Accept: "application/json",
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log("response: ");
+                    alert("Genero actualizado correctamente");
+                    console.log(response);
+                    navigate("/forum/public/genres");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     };
-    
 
 
 
     return (
         <div>
             <div className="containerBody">
-                <h1 className="title">Agregar Género</h1>
+                <h1 className="title">
+                    {id ? "Editar Genero" : "Agregar Genero"}
+                </h1>
                 <div className="card cardForm">
                     <div className="card-body">
                         <Form onSubmit={handleSubmit}>
@@ -62,7 +96,9 @@ export default function GenresForm() {
                                 />
                             </Form.Group>
                             <Form.Group className="form-group">
-                                <Form.Label htmlFor="image">Imagen: </Form.Label>
+                                <Form.Label htmlFor="image">
+                                    Imagen:{" "}
+                                </Form.Label>
                                 <Form.Control
                                     type="file"
                                     name="image_path"
@@ -71,34 +107,33 @@ export default function GenresForm() {
                                 />
                             </Form.Group>
                             <Form.Group className="form-group">
-                            <div
-                                style={{
-                                    padding: "15px 0px",
-                                    textAlign: "center",
-                                }}
-                            >
-                                <div className="row">
-                                    <div className="col">
-                                        <a href="genres">
-                                            <Button
-                                                variant="danger"
-                                            >
-                                                Cancelar
-                                            </Button>
-                                        </a>
-                                    </div>
-                                    <div className="col">
+                                <div
+                                    style={{
+                                        padding: "15px 0px",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    <div className="row">
+                                        <div className="col">
+                                            <Link to="/forum/public/genres">
+                                                <Button variant="danger">
+                                                    Cancelar
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                        <div className="col">
                                             <Button
                                                 type="submit"
                                                 variant="dark"
                                             >
-                                                Registrar Género
+                                                {id
+                                                    ? "Guardar Cambios"
+                                                    : "Registrar Género"}
                                             </Button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </Form.Group>
-
                         </Form>
                     </div>
                 </div>

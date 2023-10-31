@@ -28,10 +28,6 @@ class TopicsController extends Controller
             return $this->sendError("Validation Error.", $validator->errors());
         }
 
-        if($validator->fails()){
-            return $this->sendError("Validation Error.", $validator->errors());
-        }
-
         if($request->hasFile('image_path')){
             $file = $request->file("image_path"); 
             $destinationPath = "images/"; 
@@ -61,8 +57,33 @@ class TopicsController extends Controller
 
     public function update(Request $request, $id){
         $topics = Topics::findOrFail($id); 
+
+        $validator = Validator::make($request->all(),[
+            'title'=> 'required|string|max:100', 
+            'description'=>'required|string',
+            'image_path'=>'required|file',
+            'categories_id'=> 'required|exists:categories,id'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError("Validation Error.", $validator->errors());
+        }
+
         $topics->title = $request->input('title');
         $topics->description = $request->input('description');
+        $topics->categories_id=$request->categories_id;
+
+        if ($request->hasFile('image_path')) {
+            $file = $request->file('image_path');
+            $destinationPath = "images/";
+            $filename = time() . '-' . $file->getClientOriginalName();
+            $uploadSuccess = $file->move($destinationPath, $filename);
+            if ($uploadSuccess) {
+                // Actualiza la ruta de la imagen en la base de datos
+                $topics->image_path = $destinationPath . $filename;
+            }
+        }
+
         $topics->save(); 
         return $topics;
     }

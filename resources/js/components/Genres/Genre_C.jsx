@@ -26,7 +26,7 @@ export default function Genre_C(props) {
                     <Card.Text className="mb-auto">{genreName}</Card.Text>
                     <div className="row" style={{padding:"0 0 10px"}}>
                         <div className="col">
-                            <a href="genresForm">
+                            <a href={`genresForm/${genreId}`}>
                             <Button variant="warning"><BsPencilSquare /></Button>
                             </a>
                         </div>
