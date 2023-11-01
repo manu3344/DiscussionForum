@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Spinner, Button } from "react-bootstrap";
-import { BsFillPlusCircleFill } from "react-icons/bs";
+import { Spinner, Button, Form, Row, Col } from "react-bootstrap";
+import { BsFillPlusCircleFill, BsSearch } from "react-icons/bs";
 import axios from "axios";
 import Genre_C from "./Genre_C";
 
-
-export default function Genres(){
-    
+export default function Genres() {
     const [genresData, setGenresData] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
     // Funcion para mostrar los datos
     useEffect(() => {
@@ -30,21 +29,26 @@ export default function Genres(){
         getGenres();
     }, []);
 
-
     // Funcion para borrar los datos
     const handleDeleteGenres = (genreId) => {
-        const updatedGenres = genresData.filter((genre) => genre.id !== genreId);
-        axios.delete(`http://localhost/forum/public/api/genres_delete/${genreId}`)
-        .then(function(response){
-            setGenresData(updatedGenres);
-            alert("Genero eliminado exitosamente");
-        }).catch(function(error){
-            console.log(error);
-        });
-      };
-      
+        const updatedGenres = genresData.filter(
+            (genre) => genre.id !== genreId
+        );
+        axios
+            .delete(
+                `http://localhost/forum/public/api/genres_delete/${genreId}`
+            )
+            .then(function (response) {
+                setGenresData(updatedGenres);
+                alert("Genero eliminado exitosamente");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
     //  Spinner
-      if (!genresData.length) {
+    if (!genresData.length) {
         return (
             <Spinner animation="border" role="status">
                 <span className="visually-hidden">Loading...</span>
@@ -52,14 +56,28 @@ export default function Genres(){
         );
     }
 
-
-
-
     return (
         <div>
             <div style={{ textAlign: "center" }}>
                 <div className="row">
-                    <div className="col=lg-12">
+                    {/* Aqui ira la barra de busqueda */}
+                    <div className="col-lg-12">
+                        <Form inline style={{ padding: "0 10px" }}>
+                            <Row style={{ textAlign: "center" }}>
+                                <Col xs="auto">
+                                    <Form.Control
+                                        type="search"
+                                        placeholder="Buscar Género"
+                                        className=" mr-sm-2"
+                                        onChange={(e) =>
+                                            setSearchText(e.target.value)
+                                        }
+                                    />
+                                </Col>
+                            </Row>
+                        </Form>
+                    </div>
+                    <div className="col-lg-12">
                         <h1>Géneros</h1>
                     </div>
                     <div className="col-lg-12">
@@ -73,17 +91,23 @@ export default function Genres(){
                     </div>
                 </div>
                 <div className="card-group">
-                    {genresData.map((genre) => (
-                        <Genre_C
-                            key={genre.id}
-                            name={genre.name}
-                            image_path = {genre.image_path}
-                            onDeleteGenres={handleDeleteGenres}
-                            genreId = {genre.id}
-                        />
-                    ))}
+                    {genresData
+                        .filter((genre) =>
+                            genre.name
+                                .toLowerCase()
+                                .includes(searchText.toLowerCase())
+                        )
+                        .map((genre) => (
+                            <Genre_C
+                                key={genre.id}
+                                name={genre.name}
+                                image_path={genre.image_path}
+                                onDeleteGenres={handleDeleteGenres}
+                                genreId={genre.id}
+                            />
+                        ))}
                 </div>
             </div>
         </div>
-    )
+    );
 }

@@ -1,16 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Button, Form, Card } from "react-bootstrap";
+import { Button, Form, Card, Row, Col} from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import Comments from "./Comments";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 
 export default function DiscussionForum() {
     const [commentData, setCommentData] = useState([]);
     const [textAreaContent, setTextAreaContent] = useState("");
-    const navigate = useNavigate();
+    const [searchText, setSearchText] = useState("");
 
     //Funcion para mostrar los datos.
     useEffect(() => {
@@ -60,6 +59,22 @@ export default function DiscussionForum() {
     return (
         <div>
             <div style={{ textAlign: "center" }}>
+            <div className="col-lg-12">
+                        <Form inline style={{ padding: "0 10px" }}>
+                            <Row style={{ textAlign: "center" }}>
+                                <Col xs="auto">
+                                    <Form.Control
+                                        type="search"
+                                        placeholder="Buscar Comentario"
+                                        className=" mr-sm-2"
+                                        onChange={(e) =>
+                                            setSearchText(e.target.value)
+                                        }
+                                    />
+                                </Col>
+                            </Row>
+                        </Form>
+                    </div>
                 <h1>Foro de Discusión</h1>
                 <div className="middleContainer">
                     <div className="sectionContainer">
@@ -107,7 +122,10 @@ export default function DiscussionForum() {
                     </div>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                    {commentData.map((comment) => (
+                    {commentData.filter((comment=>
+                        comment.postContent.toLowerCase().includes(searchText.toLowerCase())
+                    ))
+                    .map((comment) => (
                         <Comments
                             key={comment.id}
                             postContent={comment.postContent}

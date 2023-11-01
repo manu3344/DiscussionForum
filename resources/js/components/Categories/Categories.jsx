@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Spinner, Button } from "react-bootstrap";
+import { Spinner, Button, Form, Col, Row} from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Category_C from "./Category_C";
 import axios from "axios";
 
 export default function Categories() {
     const [categoriesData, setCategoriesData] = useState([]);
+    const [searchText, setSearchText] = useState("");
+
 
     // Funcion para mostrar los datos
     useEffect(() => {
@@ -57,6 +59,22 @@ const handleDeleteCategories = (categoryId) => {
         <div>
             <div style={{ textAlign: "center" }}>
                 <div className="row">
+                <div className="col-lg-12">
+                        <Form inline style={{ padding: "0 10px" }}>
+                            <Row style={{ textAlign: "center" }}>
+                                <Col xs="auto">
+                                    <Form.Control
+                                        type="search"
+                                        placeholder="Buscar Categoría"
+                                        className=" mr-sm-2"
+                                        onChange={(e) =>
+                                            setSearchText(e.target.value)
+                                        }
+                                    />
+                                </Col>
+                            </Row>
+                        </Form>
+                    </div>
                     <div className="col=lg-12">
                         <h1>Categorías</h1>
                     </div>
@@ -71,7 +89,10 @@ const handleDeleteCategories = (categoryId) => {
                     </div>
                 </div>
                 <div className="card-group">
-                    {categoriesData.map((category) => (
+                    {categoriesData.filter((category)=>
+                        category.name.toLowerCase().includes(searchText.toLowerCase())
+                    )
+                    .map((category) => (
                         <Category_C
                             key={category.id}
                             name={category.name}
