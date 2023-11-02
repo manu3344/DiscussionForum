@@ -6,6 +6,7 @@ import axios from "axios";
 
 export default function Categories() {
     const [categoriesData, setCategoriesData] = useState([]);
+    const [genresData, setGenresData] = useState([]);
     const [searchText, setSearchText] = useState("");
 
 
@@ -28,6 +29,27 @@ export default function Categories() {
                 });
         };
         getCategories();
+    }, []);
+
+     // Funcion para mostrar el genero al que pertenece la categoria. 
+     useEffect(() => {
+        const getGenres = async () => {
+            await axios
+                .get("http://localhost/forum/public/api/genres_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
+                .then(function (response) {
+                    //Handle success
+                    console.log(response.data);
+                    setGenresData(response.data);
+                })
+                .catch(function (error) {
+                    //Handle Error
+                    console.log(error);
+                })
+                .finally(function () {
+                    //Always Executed
+                });
+        };
+        getGenres();
     }, []);
 
     
@@ -53,6 +75,10 @@ const handleDeleteCategories = (categoryId) => {
     );
 }
 
+const getGenreName = (genreId) => {
+    const genre = genresData.find((genre) => genre.id === genreId);
+    return genre ? genre.name : "Desconocido";
+};
 
 
     return (
@@ -95,12 +121,11 @@ const handleDeleteCategories = (categoryId) => {
                     .map((category) => (
                         <Category_C
                             key={category.id}
-                            name={category.name}
-                            genre_id={category.genre_id}
-                            image_path = {category.image_path}
-                            genre_name ={category.genre_name}
-                            onDeleteCategories={handleDeleteCategories}
                             categoryId = {category.id}
+                            name={category.name}
+                            image_path = {category.image_path}
+                            genreName={getGenreName(category.genre_id)}
+                            onDeleteCategories={handleDeleteCategories}
                         />
                     ))}
                 </div>

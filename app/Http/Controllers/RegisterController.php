@@ -13,15 +13,17 @@ class RegisterController extends ResponseController
 {
     public function register(Request $request): JsonResponse {
         $validator = Validator::make($request->all(),[
-            'name'=> 'required', 
-            'email'=> 'required|email', 
-            'password' => 'required', 
-            'c_password' => 'required|same:password'
+            'name'=> 'required|min:2|max:100', 
+            'email'=> 'required|email|unique:users,email|max:255', 
+            'password' => 'required|min:8|max:255', 
+            'c_password' => 'required|same:password|max:255'
         ]);
 
         if($validator->fails()){
-            return $this->sendError("Validation Error.", $validator->errors());
-        }
+            return response()->json([
+                'error' => $validator->errors()
+            ], 422); 
+       }
 
         $input = $request->all(); 
         $input['password'] = bcrypt($input['password']); 
@@ -33,6 +35,17 @@ class RegisterController extends ResponseController
     }
 
     public function login(Request $request):JsonResponse{
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:8|max:255',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ], 422);
+        }
+
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user(); 
             $success['token'] = $user->createToken('MyApp')->accessToken; 
@@ -41,7 +54,9 @@ class RegisterController extends ResponseController
             return $this->sendResponse($success, "User login succesfully"); 
         
         }else{
-            return $this->sendError('Unauthorized', ['error'=>'Unauthorized']);
+            return response()->json([
+                'error' => 'Unauthorized'
+            ], 401); // 401 Unauthorized
         }
     }
 }

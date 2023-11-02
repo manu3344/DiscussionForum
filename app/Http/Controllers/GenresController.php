@@ -55,7 +55,7 @@ class GenresController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
-            'image_path' => 'file' // Puedes modificar las reglas de validación de imagen según tus necesidades
+            'image_path' => 'required|file'
         ]);
     
         if ($validator->fails()) {

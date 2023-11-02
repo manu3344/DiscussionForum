@@ -35,7 +35,7 @@ function Login(){
             console.log(response);
             navigate('/forum/public/');
         }).catch(error => {
-            alert("No se ha encontrado tu email ni contrasena"); 
+            alert("Tu email o contraseña son incorrectos"); 
             console.log(error);
         });
     };

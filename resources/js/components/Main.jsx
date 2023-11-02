@@ -14,6 +14,7 @@ import CategoriesForm from "./Categories/CategoriesForm";
 import TopicsForm from "./Forum/TopicsForm";
 import PostsForm from "./Posts/PostsForm";
 import Home from "./Home";
+import NotFound from "./NotFound";
 
 function Main(){
     return(
@@ -36,6 +37,7 @@ function Main(){
                 <Route path="topicsForm/:id" element={<TopicsForm />} />
                 <Route path="postsForm" element={<PostsForm />} />
                 <Route path="postsForm/:id" element={<PostsForm />} />
+                <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
         <Footer />

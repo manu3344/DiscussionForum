@@ -44,7 +44,17 @@ function Register(){
             alert("Registro exitoso"); 
             navigate('/forum/public/login');
         }).catch(error => {
-            console.log(error);
+            if (error.response) {
+                // La solicitud al servidor generó una respuesta de error
+                const validationErrors = error.response.data.error;
+                // Recorre los errores y muestra alertas diferentes para cada uno
+                for (const field in validationErrors) {
+                    alert(`Error en el campo ${field}: ${validationErrors[field]}`);
+                }
+            } else {
+                console.log(error);
+            }
+
         });
     };
 
