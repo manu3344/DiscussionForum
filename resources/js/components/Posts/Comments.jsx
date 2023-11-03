@@ -3,7 +3,7 @@ import { BsPencilSquare, BsTrashFill } from "react-icons/bs";
 
 export default function Comments(props) {
     const postContent = props.postContent;
-    const topic_id = props.topic_id;
+    const topicName = props.topicName;
 
     // Esto es para actualizar el comentario, que salga el contenido en el TextArea
     const updateTextArea = props.updateTextArea;
@@ -22,7 +22,7 @@ export default function Comments(props) {
             <div className="comments row mb-auto">
                 <div className="col-10 mb-auto">
                     {postContent}
-                    <div>{"Tema de discusion: " + topic_id}</div>
+                    <div>{"Tema de discusion: " + topicName}</div>
                 </div>
                 <div className="col-2 mb-auto">
                     <div className="row mb-auto" style={{ padding: "10px" }}>

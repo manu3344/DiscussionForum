@@ -10,6 +10,8 @@ export default function DiscussionForum() {
     const [commentData, setCommentData] = useState([]);
     const [textAreaContent, setTextAreaContent] = useState("");
     const [searchText, setSearchText] = useState("");
+    const [forumData, setForumData] = useState([]);
+
 
     //Funcion para mostrar los datos.
     useEffect(() => {
@@ -43,6 +45,33 @@ export default function DiscussionForum() {
             console.log(error);
         });
     };
+
+    // Funcion para mostrar los temas que pertenecen a los posts. 
+    useEffect(() => {
+        const getForums = async () => {
+            await axios
+                .get("http://localhost/forum/public/api/topic_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
+                .then(function (response) {
+                    //Handle success
+                    console.log(response.data);
+                    setForumData(response.data);
+                })
+                .catch(function (error) {
+                    //Handle Error
+                    console.log(error);
+                })
+                .finally(function () {
+                    //Always Executed
+                });
+        };
+        getForums();
+    }, []);
+
+        //Funcion para obtener la categoria a la que pertenecen los temas.
+const getForumsName = (topicId) => {
+    const topic = forumData.find((topic) => topic.id === topicId);
+    return topic ? topic.title : "Desconocido";
+};
 
 
     
@@ -129,7 +158,7 @@ export default function DiscussionForum() {
                         <Comments
                             key={comment.id}
                             postContent={comment.postContent}
-                            topic_id={comment.topic_id}
+                            topicName={getForumsName(comment.topic_id)}
                             updateTextArea={setTextAreaContent}
                             onDeleteComment={handleDeleteComment}
                             commentId={comment.id}

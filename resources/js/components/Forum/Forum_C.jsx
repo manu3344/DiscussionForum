@@ -7,7 +7,7 @@ export default function Forum_C(props) {
     const forumTitle = props.title;
     const forumDescription = props.description; 
     const topicImage = props.image_path;
-    const forumCategory = props.categories_id;
+    const forumCategory = props.categoriesName;
 
     const onDeleteTopics = props.onDeleteTopics;
     const topicId = props.topicId;

@@ -75,6 +75,7 @@ const handleDeleteCategories = (categoryId) => {
     );
 }
 
+//Funcion para obtener el genero al que pertenece la categoria.
 const getGenreName = (genreId) => {
     const genre = genresData.find((genre) => genre.id === genreId);
     return genre ? genre.name : "Desconocido";
@@ -124,6 +125,7 @@ const getGenreName = (genreId) => {
                             categoryId = {category.id}
                             name={category.name}
                             image_path = {category.image_path}
+                            genre_id={category.genreId}
                             genreName={getGenreName(category.genre_id)}
                             onDeleteCategories={handleDeleteCategories}
                         />

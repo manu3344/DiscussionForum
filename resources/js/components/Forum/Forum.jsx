@@ -7,6 +7,8 @@ import axios from "axios";
 
 export default function Forum() {
     const [forumData, setForumData] = useState([]);
+    const [categoriesData, setCategoriesData] = useState([]);
+
     const [searchText, setSearchText] = useState("");
 
     // Funcion para mostrar los datos
@@ -29,6 +31,33 @@ export default function Forum() {
         };
         getForums();
     }, []);
+
+    //Funcion para mostrar las categorias de los temas. 
+    useEffect(() => {
+        const getCategories = async () => {
+            await axios
+                .get("http://localhost/forum/public/api/categories_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
+                .then(function (response) {
+                    //Handle success
+                    console.log(response.data);
+                    setCategoriesData(response.data);
+                })
+                .catch(function (error) {
+                    //Handle Error
+                    console.log(error);
+                })
+                .finally(function () {
+                    //Always Executed
+                });
+        };
+        getCategories();
+    }, []);
+
+    //Funcion para obtener la categoria a la que pertenecen los temas.
+const getCategoryName = (categoryId) => {
+    const category = categoriesData.find((category) => category.id === categoryId);
+    return category ? category.name : "Desconocido";
+};
 
     // Funcion para borrar los datos
     const handleDeleteTopics = (topicId) => {
@@ -103,6 +132,7 @@ export default function Forum() {
                             description={forum.description}
                             image_path={forum.image_path}
                             categories_id={forum.categories_id}
+                            categoriesName={getCategoryName(forum.categories_id)}
                             onDeleteTopics={handleDeleteTopics}
                             topicId={forum.id}
                         />
