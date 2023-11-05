@@ -19,8 +19,8 @@ function NavMenu() {
             <Nav.Link as={Link} to="posts">Comentarios</Nav.Link>
             {/* Aqui podria poner el usuario */}
             <NavDropdown title="Cuenta" id='basic-nav-dropdown'>
-                <NavDropdown.Item href='login'>Iniciar Sesión</NavDropdown.Item>
-                <NavDropdown.Item href='logout'>Salir de la sesión</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='login'>Iniciar Sesión</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='logout'>Salir de la sesión</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           </Navbar.Collapse>

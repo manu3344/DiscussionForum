@@ -17,8 +17,7 @@ class CategoriesController extends Controller
 
     public function categoriesByGenres($genreId){
         // Filtrar las categorías por el ID del género
-        $categories = Categories::where('genre_id', $genreId)->get();
-    
+        $categories = Categories::with('genre')->where('genre_id', $genreId)->get();
         return $categories;
     }
 

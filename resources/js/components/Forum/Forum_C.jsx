@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
+import { Link } from "react-router-dom";
 
 
 export default function Forum_C(props) {
@@ -38,9 +39,9 @@ export default function Forum_C(props) {
                 <Card.Text className="mb-auto">{"Categoria: " + forumCategory}</Card.Text>
                 <div className="row" style={{padding:"0 0 10px"}}>
                         <div className="col">
-                            <a href={`topicsForm/${topicId}`}>
+                            <Link to={`/forum/public/topicsForm/${topicId}`}>
                             <Button variant="warning"><BsPencilSquare /></Button>
-                            </a>
+                            </Link>
                         </div>
                         <div className="col">
                             <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>

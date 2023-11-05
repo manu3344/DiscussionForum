@@ -19,13 +19,17 @@ export default function Category_C(props) {
     return (
         <div style={{padding: "5px"}}>
             <Card style={{ width: "14rem", height:"16rem"}}>
+                <Link to={`/forum/public/topicsByCategories/${categoryId}`}>
                 <Card.Img
                     src={categoryImage}
                     alt={categoryName}
                     className="img_rounded_circle mb-auto"
                 />
+                </Link>
+
                 <Card.Text className="mb-auto">{categoryName}</Card.Text>
                 <Card.Text className="mb-auto">{"Genero: "+genreName}</Card.Text>
+                
                 <div className="row" style={{padding:"0 0 10px"}}>
                         <div className="col">
                             <Link to={`/forum/public/categoriesForm/${categoryId}`}>

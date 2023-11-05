@@ -18,7 +18,7 @@ class UsersSeeder extends Seeder
         $users->name = "Manuel Alvarado"; 
         $users->email = "manualvaradoibarr@gmail.com";  
         $users->email_verified_at = now(); 
-        $users->password = "12345";
+        $users->password = "12345678";
         $users->remember_token = Str::random(10);
         $users->save(); 
     }

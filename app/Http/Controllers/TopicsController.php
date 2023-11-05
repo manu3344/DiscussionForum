@@ -15,6 +15,12 @@ class TopicsController extends Controller
         //        return $topics->posts;
     }
 
+    public function topicsByCategories($categoryId) {
+        // Filtrar los temas por el ID de la categoría
+        $topics = Topics::with('categories')->where('categories_id', $categoryId)->get();
+        return $topics;
+    }
+
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[

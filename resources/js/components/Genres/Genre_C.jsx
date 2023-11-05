@@ -26,7 +26,6 @@ export default function Genre_C(props) {
                         alt={genreName}
                         className="img_rounded_circle mb-auto"
                     />
-                    
                     </Link>
 
                     <Card.Text className="mb-auto">{genreName}</Card.Text>
