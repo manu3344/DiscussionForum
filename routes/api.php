@@ -28,6 +28,11 @@ Route::get('/categories_index', [CategoriesController::class, 'index']);
 Route::get('/topic_index', [TopicsController::class, 'index']);
 Route::get('/post_index', [PostsController::class, 'index']);
 
+//Generos de las categorias. 
+Route::get('/categoriesByGenres/{genreId}', [CategoriesController::class, 'categoriesByGenres']);
+
+
+
 // Insertar datos
 Route::post('/genresForm', [GenresController::class, 'store']);
 Route::post('/categoriesForm', [CategoriesController::class, 'store']);

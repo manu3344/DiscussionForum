@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Spinner, Button, Form, Col, Row} from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import Category_C from "./Category_C";
+import Category_C from "../Categories/Category_C";
 import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
-export default function Categories() {
+export default function CategoriesByGenre() {
     const [categoriesData, setCategoriesData] = useState([]);
     const [genresData, setGenresData] = useState([]); //Muestra el genero perteneciente. 
     const [searchText, setSearchText] = useState(""); //Busqueda. 
 
+    const {id} = useParams(); 
 
     // Funcion para mostrar todas las categorias
     useEffect(() => {
         const getCategories = async () => {
             await axios
-                .get("http://localhost/forum/public/api/categories_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
+                .get(`http://localhost/forum/public/api/categoriesByGenres/${id}`) //"http://localhost:8000/20238/topicosWeb/api/user_index
                 .then(function (response) {
                     //Handle success
                     console.log(response.data);
@@ -104,13 +106,13 @@ const getGenreName = (genreId) => {
                         <h1>Categorías</h1>
                     </div>
                     <div className="col-lg-12">
-                        <a href="categoriesForm">
+                        <Link to="/forum/public/categoriesForm">
                             <Button type="submit" id="addCategories">
                                 <BsFillPlusCircleFill
                                     style={{ fontSize: "1.5rem" }}
                                 />
                             </Button>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="card-group">

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
@@ -7,7 +7,6 @@ import { Button, Form } from "react-bootstrap";
 export default function GenresForm() {
     const [genreValue, setGenreValue] = useState({ name: "", image_path: "" });
     const navigate = useNavigate();
-
     const { id } = useParams(); //Obtener el ID del genero de la URL
 
     // Si el evento es de tipo file se actualiza el estado genreValue con el archivo seleccionado, si no con los valores de entrada.
@@ -20,7 +19,7 @@ export default function GenresForm() {
         }
     };
 
-    // Funcion para anadir o editar  datos
+    // Funcion para anadir o editar  datos.
     const handleSubmit = (e) => {
         if (e && e.preventDefault()) e.preventDefault();
         const formData = new FormData();
@@ -72,13 +71,13 @@ export default function GenresForm() {
         }
     };
 
-
+    
 
     return (
         <div>
             <div className="containerBody">
                 <h1 className="title">
-                    {id ? "Editar Genero" : "Agregar Genero"}
+                    {id ? "Editar Género" : "Agregar Genero"}
                 </h1>
                 <div className="card cardForm">
                     <div className="card-body">
@@ -107,12 +106,7 @@ export default function GenresForm() {
                                 />
                             </Form.Group>
                             <Form.Group className="form-group">
-                                <div
-                                    style={{
-                                        padding: "15px 0px",
-                                        textAlign: "center",
-                                    }}
-                                >
+                                <div style={{padding: "15px 0px", textAlign: "center"}} >
                                     <div className="row">
                                         <div className="col">
                                             <Link to="/forum/public/genres">
@@ -122,13 +116,8 @@ export default function GenresForm() {
                                             </Link>
                                         </div>
                                         <div className="col">
-                                            <Button
-                                                type="submit"
-                                                variant="dark"
-                                            >
-                                                {id
-                                                    ? "Guardar Cambios"
-                                                    : "Registrar Género"}
+                                            <Button type="submit" variant="dark" >
+                                                {id ? "Guardar Cambios" : "Registrar Género"}
                                             </Button>
                                         </div>
                                     </div>

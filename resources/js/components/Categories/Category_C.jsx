@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
+import { Link } from "react-router-dom";
 
 export default function Category_C(props) {
     
@@ -27,9 +28,9 @@ export default function Category_C(props) {
                 <Card.Text className="mb-auto">{"Genero: "+genreName}</Card.Text>
                 <div className="row" style={{padding:"0 0 10px"}}>
                         <div className="col">
-                            <a href={`categoriesForm/${categoryId}`}>
+                            <Link to={`/forum/public/categoriesForm/${categoryId}`}>
                             <Button variant="warning"><BsPencilSquare /></Button>
-                            </a>
+                            </Link>
                         </div>
                         <div className="col">
                             <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>

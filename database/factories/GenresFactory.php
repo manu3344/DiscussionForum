@@ -22,7 +22,7 @@ class GenresFactory extends Factory
     {
         
         return [
-            "name"=>fake()->sentence(),
+            "name"=>fake()->words(2,true),
             "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Genres')
         ];
     }

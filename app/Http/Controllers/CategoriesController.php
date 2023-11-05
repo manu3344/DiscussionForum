@@ -14,6 +14,14 @@ class CategoriesController extends Controller
         return $categories;
     }
 
+
+    public function categoriesByGenres($genreId){
+        // Filtrar las categorías por el ID del género
+        $categories = Categories::where('genre_id', $genreId)->get();
+    
+        return $categories;
+    }
+
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[
@@ -91,10 +99,5 @@ class CategoriesController extends Controller
     public function token(){
         return csrf_token(); 
     }
-    public function categoriesByGenre($genreId){
-    // Filtrar las categorías por el ID del género
-    $categories = Categories::where('genre_id', $genreId)->get();
 
-    return $categories;
-}
 }

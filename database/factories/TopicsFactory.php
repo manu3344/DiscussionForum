@@ -20,7 +20,7 @@ class TopicsFactory extends Factory
     {
         return [
             "title"=>fake()->sentence(),
-            "description"=>fake()->paragraph($nbSentences = 1), 
+            "description"=>fake()->words(5,true),
             "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Topics'),
             "categories_id"=>Categories::all()->random()->id
         ];

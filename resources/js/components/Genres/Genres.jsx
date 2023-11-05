@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Spinner, Button, Form, Row, Col } from "react-bootstrap";
-import { BsFillPlusCircleFill, BsSearch } from "react-icons/bs";
+import { BsFillPlusCircleFill } from "react-icons/bs";
 import axios from "axios";
 import Genre_C from "./Genre_C";
 
 export default function Genres() {
     const [genresData, setGenresData] = useState([]);
-    const [searchText, setSearchText] = useState("");
+    const [searchText, setSearchText] = useState(""); //Estado para buscar
 
-    // Funcion para mostrar los datos
+    // Funcion para mostrar todos los generos existentes
     useEffect(() => {
         const getGenres = async () => {
             await axios
@@ -29,7 +29,7 @@ export default function Genres() {
         getGenres();
     }, []);
 
-    // Funcion para borrar los datos
+    // Funcion para borrar los generos
     const handleDeleteGenres = (genreId) => {
         const updatedGenres = genresData.filter(
             (genre) => genre.id !== genreId
@@ -91,6 +91,7 @@ export default function Genres() {
                     </div>
                 </div>
                 <div className="card-group">
+                    {/* Aqui estamos filtrando los nombres para la barra de busqueda */}
                     {genresData
                         .filter((genre) =>
                             genre.name
