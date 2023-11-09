@@ -170,7 +170,7 @@ export default function TopicsForm() {
                                 >
                                     <div className="row">
                                         <div className="col">
-                                            <Link to="/forum/public/topics">
+                                            <Link to="#" onClick={()=>window.history.back()}>
                                                 <Button variant="danger">
                                                     Cancelar
                                                 </Button>

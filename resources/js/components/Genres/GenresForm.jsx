@@ -109,7 +109,7 @@ export default function GenresForm() {
                                 <div style={{padding: "15px 0px", textAlign: "center"}} >
                                     <div className="row">
                                         <div className="col">
-                                            <Link to="/forum/public/genres">
+                                            <Link to="#" onClick={()=>window.history.back()}>
                                                 <Button variant="danger">
                                                     Cancelar
                                                 </Button>

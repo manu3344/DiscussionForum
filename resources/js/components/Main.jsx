@@ -17,6 +17,7 @@ import Home from "./Home";
 import NotFound from "./NotFound";
 import CategoriesByGenre from "./DataBy/CategoriesByGenre";
 import TopicsByCategories from "./DataBy/TopicsByCategories";
+import PostsByTopics from "./DataBy/PostsByTopics";
 
 function Main(){
     return(
@@ -41,6 +42,7 @@ function Main(){
                 <Route path="postsForm/:id" element={<PostsForm />} />
                 <Route path="categoriesByGenres/:id" element={<CategoriesByGenre />} />
                 <Route path="topicsByCategories/:id" element={<TopicsByCategories />} />
+                <Route path="postsByTopics/:id" element={<PostsByTopics />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>

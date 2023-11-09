@@ -14,6 +14,12 @@ class PostsController extends Controller
         return $posts;
     }
 
+    public function postsByTopics($commentId) {
+        // Filtrar los comentatios por el ID del tema. 
+        $posts = Posts::with('topics')->where('topic_id', $commentId)->get();
+        return $posts;
+    }
+
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[

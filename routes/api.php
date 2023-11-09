@@ -31,6 +31,8 @@ Route::get('/post_index', [PostsController::class, 'index']);
 //Generos de las categorias. 
 Route::get('/categoriesByGenres/{genreId}', [CategoriesController::class, 'categoriesByGenres']);
 Route::get('/topicsByCategories/{categoryId}', [TopicsController::class, 'topicsByCategories']);
+Route::get('/postsByTopics/{commentId}', [PostsController::class, 'postsByTopics']);
+
 
 
 

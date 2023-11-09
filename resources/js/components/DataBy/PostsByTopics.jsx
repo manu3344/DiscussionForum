@@ -1,24 +1,25 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Button, Form, Card, Row, Col} from "react-bootstrap";
+import { Button, Form, Card, Row, Col } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
-import Comments from "./Comments";
+import { Link, useParams } from "react-router-dom";
+import Comments from "../Posts/Comments";
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
 
-export default function DiscussionForum() {
+export default function PostsByTopics() {
     const [commentData, setCommentData] = useState([]);
     const [textAreaContent, setTextAreaContent] = useState("");
     const [searchText, setSearchText] = useState("");
     const [forumData, setForumData] = useState([]);
 
+    const { id } = useParams();
 
     //Funcion para mostrar los datos.
     useEffect(() => {
         const getComments = async () => {
             await axios
-                .get("http://localhost/forum/public/api/post_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
+                .get(`http://localhost/forum/public/api/postsByTopics/${id}`) //"http://localhost:8000/20238/topicosWeb/api/user_index
                 .then(function (response) {
                     //Handle success
                     console.log(response.data);
@@ -37,17 +38,23 @@ export default function DiscussionForum() {
 
     //Function para borrar desde el frontend
     const handleDeleteComment = (commentId) => {
-        const updatedComments = commentData.filter((comment) => comment.id !== commentId);
-        axios.delete(`http://localhost/forum/public/api/posts_delete/${commentId}`)
-        .then(function(response){
-            setCommentData(updatedComments);
-            alert("Comentario eliminado exitosamente");
-        }).catch(function(error){
-            console.log(error);
-        });
+        const updatedComments = commentData.filter(
+            (comment) => comment.id !== commentId
+        );
+        axios
+            .delete(
+                `http://localhost/forum/public/api/posts_delete/${commentId}`
+            )
+            .then(function (response) {
+                setCommentData(updatedComments);
+                alert("Comentario eliminado exitosamente");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     };
 
-    // Funcion para mostrar los temas que pertenecen a los posts. 
+    // Funcion para mostrar los temas que pertenecen a los posts.
     useEffect(() => {
         const getForums = async () => {
             await axios
@@ -68,46 +75,43 @@ export default function DiscussionForum() {
         getForums();
     }, []);
 
-        //Funcion para obtener la categoria a la que pertenecen los temas.
-const getForumsName = (topicId) => {
-    const topic = forumData.find((topic) => topic.id === topicId);
-    return topic ? topic.title : "Desconocido";
-};
+    //Funcion para obtener la categoria a la que pertenecen los temas.
+    const getForumsName = (topicId) => {
+        const topic = forumData.find((topic) => topic.id === topicId);
+        return topic ? topic.title : "Desconocido";
+    };
 
-
-    
-
-        //Spinner
-        if (!commentData.length) {
-            return (
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
-            );
-        }
+    //Spinner
+    if (!commentData.length) {
+        return (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        );
+    }
 
     return (
         <div>
             <div style={{ textAlign: "center" }}>
-            <div className="col-lg-12">
-                        <Form inline style={{ padding: "0 10px" }}>
-                            <Row style={{ textAlign: "center" }}>
-                                <Col xs="auto">
-                                    <Form.Control
-                                        type="search"
-                                        placeholder="Buscar Comentario"
-                                        className="mb-2 rounded-pill"
-                                        onChange={(e) =>
-                                            setSearchText(e.target.value)
-                                        }
-                                    />
-                                </Col>
-                            </Row>
-                        </Form>
-                    </div>
+                <div className="col-lg-12">
+                    <Form inline style={{ padding: "0 10px" }}>
+                        <Row style={{ textAlign: "center" }}>
+                            <Col xs="auto">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Buscar Comentario"
+                                    className=" mr-sm-2"
+                                    onChange={(e) =>
+                                        setSearchText(e.target.value)
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                    </Form>
+                </div>
                 <h1>Foro de Discusión</h1>
                 <div className="middleContainer">
-                <Card>
+                    <Card>
                         <Card.Body>
                           <div>
                           <Card.Img src="/forum/public/images/hunter.jpg"  style={{
@@ -137,19 +141,22 @@ const getForumsName = (topicId) => {
                     </div>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                    {commentData.filter((comment=>
-                        comment.postContent.toLowerCase().includes(searchText.toLowerCase())
-                    ))
-                    .map((comment) => (
-                        <Comments
-                            key={comment.id}
-                            postContent={comment.postContent}
-                            topicName={getForumsName(comment.topic_id)}
-                            updateTextArea={setTextAreaContent}
-                            onDeleteComment={handleDeleteComment}
-                            commentId={comment.id}
-                        />
-                    ))}
+                    {commentData
+                        .filter((comment) =>
+                            comment.postContent
+                                .toLowerCase()
+                                .includes(searchText.toLowerCase())
+                        )
+                        .map((comment) => (
+                            <Comments
+                                key={comment.id}
+                                postContent={comment.postContent}
+                                topicName={getForumsName(comment.topic_id)}
+                                updateTextArea={setTextAreaContent}
+                                onDeleteComment={handleDeleteComment}
+                                commentId={comment.id}
+                            />
+                        ))}
                 </div>
             </div>
         </div>

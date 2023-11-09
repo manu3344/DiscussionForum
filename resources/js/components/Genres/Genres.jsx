@@ -68,7 +68,7 @@ export default function Genres() {
                                     <Form.Control
                                         type="search"
                                         placeholder="Buscar Género"
-                                        className=" mr-sm-2"
+                                        className="mb-2 rounded-pill"
                                         onChange={(e) =>
                                             setSearchText(e.target.value)
                                         }

@@ -134,7 +134,7 @@ export default function PostsForm() {
                                 >
                                     <div className="row">
                                         <div className="col">
-                                            <Link to="/forum/public/posts">
+                                            <Link to="#" onClick={()=>window.history.back()}>
                                                 <Button variant="danger">
                                                     Cancelar
                                                 </Button>

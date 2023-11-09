@@ -164,7 +164,7 @@ export default function CategoriesForm() {
                                 >
                                     <div className="row">
                                         <div className="col">
-                                            <Link to="/forum/public/categories">
+                                            <Link to="#" onClick={()=>window.history.back()}>
                                                 <Button variant="danger">
                                                     Cancelar
                                                 </Button>

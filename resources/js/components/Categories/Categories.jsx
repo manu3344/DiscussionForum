@@ -93,7 +93,7 @@ const getGenreName = (genreId) => {
                                     <Form.Control
                                         type="search"
                                         placeholder="Buscar Categoría"
-                                        className=" mr-sm-2"
+                                        className="mb-2 rounded-pill"
                                         onChange={(e) =>setSearchText(e.target.value)}
                                     />
                                 </Col>

@@ -4,7 +4,7 @@ import { Spinner, Button, Form, Col, Row } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Forum_C from "../Forum/Forum_C";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function TopicsByCategories() {
     const [forumData, setForumData] = useState([]);
@@ -111,13 +111,13 @@ const getCategoryName = (categoryId) => {
                         <h1>Foro de discusiones actuales</h1>
                     </div>
                     <div className="col-lg-12">
-                        <a href="topicsForm">
+                        <Link to="/forum/public/topicsForm">
                             <Button type="submit" id="addTopics">
                                 <BsFillPlusCircleFill
                                     style={{ fontSize: "1.5rem" }}
                                 />
                             </Button>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

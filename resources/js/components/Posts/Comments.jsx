@@ -29,7 +29,7 @@ export default function Comments(props) {
                         <Button
                             variant="warning"
                             onClick={() =>
-                                (window.location.href = `postsForm/${commentId}`)
+                                (window.location.href = `/forum/public/postsForm/${commentId}`)
                             }
                         >
                             <BsPencilSquare />
