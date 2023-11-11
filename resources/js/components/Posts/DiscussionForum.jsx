@@ -34,6 +34,7 @@ export default function DiscussionForum() {
         };
         getComments();
     }, []);
+    
 
     //Function para borrar desde el frontend
     const handleDeleteComment = (commentId) => {
@@ -127,7 +128,7 @@ const getForumsName = (topicId) => {
                     <div>
                         <div>
                             <Link to={`/forum/public/postsForm/`}>
-                                <Button type="submit" id="addCategories">
+                                <Button type="submit" id="addCategories" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
                                     <BsFillPlusCircleFill
                                         style={{ fontSize: "1.5rem" }}
                                     />

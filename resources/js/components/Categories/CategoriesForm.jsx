@@ -56,7 +56,7 @@ export default function CategoriesForm() {
                     alert("Categoria registrada correctamente");
                     console.log("response: ");
                     console.log(response);
-                    navigate("/forum/public/categories");
+                    window.history.back(); 
                 })
                 .catch((error) => {
                     console.log(error);
@@ -77,7 +77,7 @@ export default function CategoriesForm() {
                     alert("Categoria actualizada correctamente");
                     console.log("response: ");
                     console.log(response);
-                    navigate("/forum/public/categories");
+                    window.history.back(); 
                 })
                 .catch((error) => {
                     console.log(error);

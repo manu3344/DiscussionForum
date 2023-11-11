@@ -40,7 +40,7 @@ export default function PostsForm() {
                 alert("Comentario registrado correctamente"); 
                 console.log("response: ");
                 console.log(response);
-                navigate("/forum/public/posts");
+                window.history.back(); 
             })
             .catch((error) => {
                 console.log(error);
@@ -57,7 +57,7 @@ export default function PostsForm() {
                 alert("Comentario actualizado correctamente");
                 console.log("response: ");
                 console.log(response);
-                navigate("/forum/public/posts");
+                window.history.back(); 
             })
             .catch((error) => {
                 console.log(error);

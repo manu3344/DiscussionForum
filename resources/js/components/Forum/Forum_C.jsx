@@ -27,6 +27,7 @@ export default function Forum_C(props) {
                 <Link to={`/forum/public/postsByTopics/${topicId}`}>
                 <Card.Img
                     src={topicImage}
+                    onError={(e) => { e.target.src = `/forum/public/${topicImage}`;}}
                     alt={forumTitle}
                     style={{ height: "200px", objectFit: "cover" }}
                     className="mb-auto"

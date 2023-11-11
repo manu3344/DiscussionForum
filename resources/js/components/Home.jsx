@@ -6,6 +6,10 @@ export default function Home(){
             <div style={{textAlign:"center"}}>
             <h1>Bienvenido a nuestro foro de discusión</h1>
             <Image src='images/logo.jpeg' style={{width:"70rem"}} fluid/>
+            <h4>Deseamos que los usuarios de esta pagina creen y mantengan una comunidad activa 
+                donde pueden encontrar foros de discusión de su serie, pelicula o anime 
+                favorito proporcionando asi un espacio informativo y divertido para fomentar la 
+                participación entre internautas</h4>
             </div>
         </div>
     )

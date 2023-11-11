@@ -47,7 +47,7 @@ export default function TopicsForm() {
                 console.log("response: ");
                 alert("Tema registrado correctamente");
                 console.log(response);
-                navigate("/forum/public/topics");
+                window.history.back(); 
             })
             .catch((error) => {
                 console.log(error);
@@ -64,7 +64,7 @@ export default function TopicsForm() {
                 alert("Tema actualizado correctamente");
                 console.log("response: ");
                 console.log(response);
-                navigate("/forum/public/topics");
+                window.history.back(); 
             })
             .catch((error) => {
                 console.log(error);

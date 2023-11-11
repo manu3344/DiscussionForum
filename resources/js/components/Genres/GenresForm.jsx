@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
@@ -9,6 +9,10 @@ export default function GenresForm() {
     const navigate = useNavigate();
     const { id } = useParams(); //Obtener el ID del genero de la URL
 
+
+
+
+    
     // Si el evento es de tipo file se actualiza el estado genreValue con el archivo seleccionado, si no con los valores de entrada.
     const onChange = (e) => {
         e.persist();
@@ -42,7 +46,7 @@ export default function GenresForm() {
                     console.log("response: ");
                     alert("Genero registrado correctamente");
                     console.log(response);
-                    navigate("/forum/public/genres");
+                    window.history.back(); 
                 })
                 .catch((error) => {
                     console.log(error);
@@ -63,7 +67,7 @@ export default function GenresForm() {
                     console.log("response: ");
                     alert("Genero actualizado correctamente");
                     console.log(response);
-                    navigate("/forum/public/genres");
+                    window.history.back(); 
                 })
                 .catch((error) => {
                     console.log(error);
@@ -77,7 +81,7 @@ export default function GenresForm() {
         <div>
             <div className="containerBody">
                 <h1 className="title">
-                    {id ? "Editar Género" : "Agregar Genero"}
+                    {id ? "Editar Género" : "Agregar Género"}
                 </h1>
                 <div className="card cardForm">
                     <div className="card-body">

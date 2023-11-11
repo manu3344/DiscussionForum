@@ -23,6 +23,7 @@ export default function Category_C(props) {
                 <Card.Img
                     src={categoryImage}
                     alt={categoryName}
+                    onError={(e) => { e.target.src = `/forum/public/${categoryImage}`; }}
                     className="img_rounded_circle mb-auto"
                 />
                 </Link>

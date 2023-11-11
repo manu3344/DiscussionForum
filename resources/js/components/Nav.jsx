@@ -7,9 +7,19 @@ import { Link, Outlet} from 'react-router-dom';
 function NavMenu() {
   return (
     <>
-      <Navbar style={{padding:"0px 15px"}} expand="lg"  bg="dark" data-bs-theme="dark">
+      <Navbar style={{padding:"0px 15px", backgroundColor:"black"}} expand="lg"  data-bs-theme="dark">
         <Container>
-          <Navbar.Brand as={Link} to="/forum/public/">Manga Marauders</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/forum/public/">
+          <div style={{ display: "flex", alignItems: "center" }}>
+              <img
+                src="images/wolverine.png"
+                alt="Logo"
+                style={{ marginRight: "10px", width: "30px", height: "30px" }} // Ajusta el tamaño según sea necesario
+              />
+          Manga Marauders
+          </div>
+
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className="me-auto">

@@ -105,7 +105,7 @@ const getGenreName = (genreId) => {
                     </div>
                     <div className="col-lg-12">
                         <a href="categoriesForm">
-                            <Button type="submit" id="addCategories">
+                            <Button type="submit" id="addCategories" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
                                 <BsFillPlusCircleFill
                                     style={{ fontSize: "1.5rem" }}
                                 />

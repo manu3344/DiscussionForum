@@ -1,8 +1,10 @@
 /* Login y Registro */
 
 body{
-    background-color:#f0f2f5;
+    background-color:#f0f2f5; 
+    font-family: 'Dancing+Script';
 }
+
 header{
   padding: 10px 32px 32px 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
@@ -80,7 +82,7 @@ a:hover{
     height: 110px;
 }
 .img_rounded_circle{
-    width: 80px;
+    width: 100px;
     margin: 15% auto;
 }
 .rounded-circle:hover{

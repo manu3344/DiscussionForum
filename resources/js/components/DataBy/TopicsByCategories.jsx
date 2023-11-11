@@ -112,7 +112,7 @@ const getCategoryName = (categoryId) => {
                     </div>
                     <div className="col-lg-12">
                         <Link to="/forum/public/topicsForm">
-                            <Button type="submit" id="addTopics">
+                            <Button type="submit" id="addTopics" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
                                 <BsFillPlusCircleFill
                                     style={{ fontSize: "1.5rem" }}
                                 />
