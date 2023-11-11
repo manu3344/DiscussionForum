@@ -9,11 +9,34 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 
 export default function PostsByTopics() {
     const [commentData, setCommentData] = useState([]);
+    
     const [textAreaContent, setTextAreaContent] = useState("");
     const [searchText, setSearchText] = useState("");
     const [forumData, setForumData] = useState([]);
+    
 
     const { id } = useParams();
+
+        // Funcion para mostrar los temas en los posts
+        useEffect(() => {
+            const getForums = async () => {
+                await axios
+                    .get("http://localhost/forum/public/api/topic_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
+                    .then(function (response) {
+                        //Handle success
+                        console.log(response.data);
+                        setForumData(response.data);
+                    })
+                    .catch(function (error) {
+                        //Handle Error
+                        console.log(error);
+                    })
+                    .finally(function () {
+                        //Always Executed
+                    });
+            };
+            getForums();
+        }, []);
 
     //Funcion para mostrar los datos.
     useEffect(() => {
@@ -54,32 +77,18 @@ export default function PostsByTopics() {
             });
     };
 
-    // Funcion para mostrar los temas que pertenecen a los posts.
-    useEffect(() => {
-        const getForums = async () => {
-            await axios
-                .get("http://localhost/forum/public/api/topic_index") //"http://localhost:8000/20238/topicosWeb/api/user_index
-                .then(function (response) {
-                    //Handle success
-                    console.log(response.data);
-                    setForumData(response.data);
-                })
-                .catch(function (error) {
-                    //Handle Error
-                    console.log(error);
-                })
-                .finally(function () {
-                    //Always Executed
-                });
-        };
-        getForums();
-    }, []);
-
     //Funcion para obtener la categoria a la que pertenecen los temas.
     const getForumsName = (topicId) => {
         const topic = forumData.find((topic) => topic.id === topicId);
         return topic ? topic.title : "Desconocido";
     };
+
+    const getForumsImage = (topicId) => {
+    const topic = forumData.find((topic) => topic.id === topicId);
+    return topic ? topic.image_path : "/forum/public/images/default-image.jpg";
+};
+
+
 
     //Spinner
     if (!commentData.length) {
@@ -114,18 +123,17 @@ export default function PostsByTopics() {
                     <Card>
                         <Card.Body>
                           <div>
-                          <Card.Img src="/forum/public/images/hunter.jpg"  style={{
+                          <Card.Img 
+                          src={getForumsImage(commentData[0].topic_id)}
+                          onError={(e) => { e.target.src = `/forum/public/${getForumsImage(commentData[0].topic_id)}`;}}
+                          style={{
                                     maxHeight: "400px",
                                     maxWidth: "400px",
                                 }}/>
                           </div> 
-                            <Card.Title>Aqui ira el titulo del tema</Card.Title>
-                            <Card.Text>
-                                Aqui ira la descripcion del tema
-                            </Card.Text>
-                            <Card.Text>
-                                Aqui ira a la categoria que pertenece
-                            </Card.Text>
+                            <Card.Title>
+                            {getForumsName(commentData[0].topic_id)}
+                            </Card.Title>
                         </Card.Body>
                     </Card>
                     <div>
