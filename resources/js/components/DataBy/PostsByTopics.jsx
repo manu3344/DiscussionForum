@@ -9,8 +9,6 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 
 export default function PostsByTopics() {
     const [commentData, setCommentData] = useState([]);
-    
-    const [textAreaContent, setTextAreaContent] = useState("");
     const [searchText, setSearchText] = useState("");
     const [forumData, setForumData] = useState([]);
     
@@ -160,7 +158,7 @@ export default function PostsByTopics() {
                                 key={comment.id}
                                 postContent={comment.postContent}
                                 topicName={getForumsName(comment.topic_id)}
-                                updateTextArea={setTextAreaContent}
+                                
                                 onDeleteComment={handleDeleteComment}
                                 commentId={comment.id}
                             />

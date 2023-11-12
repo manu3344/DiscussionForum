@@ -108,23 +108,6 @@ const getForumsName = (topicId) => {
                     </div>
                 <h1>Foro de Discusión</h1>
                 <div className="middleContainer">
-                <Card>
-                        <Card.Body>
-                          <div>
-                          <Card.Img src="/forum/public/images/hunter.jpg"  style={{
-                                    maxHeight: "400px",
-                                    maxWidth: "400px",
-                                }}/>
-                          </div> 
-                            <Card.Title>Aqui ira el titulo del tema</Card.Title>
-                            <Card.Text>
-                                Aqui ira la descripcion del tema
-                            </Card.Text>
-                            <Card.Text>
-                                Aqui ira a la categoria que pertenece
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
                     <div>
                         <div>
                             <Link to={`/forum/public/postsForm/`}>

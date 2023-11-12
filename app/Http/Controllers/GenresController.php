@@ -17,7 +17,7 @@ class GenresController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
             'name'=> 'required|string|max:100', 
-            'image_path'=>'required|file'
+            'image_path'=>'required|file|mimes:jpeg,png,gif'
         ]);
 
         if($validator->fails()){
@@ -55,7 +55,7 @@ class GenresController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
-            'image_path' => 'required|file'
+            'image_path' => 'required|file|mimes:jpeg,png,gif'
         ]);
     
         if ($validator->fails()) {

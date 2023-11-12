@@ -5,7 +5,7 @@ export default function Home(){
         <div>
             <div style={{textAlign:"center"}}>
             <h1>Bienvenido a nuestro foro de discusión</h1>
-            <Image src='images/logo.jpeg' style={{width:"70rem"}} fluid/>
+            <Image src='/forum/public/images/logo.jpeg' style={{width:"70rem"}} fluid/>
             </div>
             <div style={{textAlign:"justify", paddingTop:"10px"}}>
             <h4>Deseamos que los usuarios de esta pagina creen y mantengan una comunidad activa 

@@ -26,7 +26,7 @@ class TopicsController extends Controller
         $validator = Validator::make($request->all(),[
             'title'=> 'required|string|max:100', 
             'description'=>'required|string',
-            'image_path'=>'required|file',
+            'image_path'=>'required|file|mimes:jpeg,png,gif',
             'categories_id'=> 'required|exists:categories,id'
         ]);
 

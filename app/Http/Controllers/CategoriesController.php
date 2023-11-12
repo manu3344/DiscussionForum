@@ -25,7 +25,7 @@ class CategoriesController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name'=> 'required|string|max:100', 
-            'image_path'=>'required|file',
+            'image_path'=>'required|file|mimes:jpeg,png,gif',
             'genre_id'=> 'required|exists:genres,id'
         ]);
 
@@ -64,7 +64,7 @@ class CategoriesController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name'=> 'required|string|max:100', 
-            'image_path'=>'required|file',
+            'image_path'=>'required|file|mimes:jpeg,png,gif',
             'genre_id'=> 'required|exists:genres,id'
         ]);
 

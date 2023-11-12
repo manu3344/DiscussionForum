@@ -12,13 +12,12 @@ function NavMenu() {
           <Navbar.Brand as={Link} to="/forum/public/">
           <div style={{ display: "flex", alignItems: "center" }}>
               <img
-                src="images/wolverine.png"
+                src="/forum/public/images/wolverine.png"
                 alt="Logo"
                 style={{ marginRight: "10px", width: "30px", height: "30px" }} // Ajusta el tamaño según sea necesario
               />
           Manga Marauders
           </div>
-
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id='basic-navbar-nav'>
