@@ -16,42 +16,46 @@ use App\Http\Controllers\GenresController;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::view('/{path}','welcome')->where('path','.*'); 
 
+Route::post('register',[RegisterController::class, 'register']);
+Route::post('login',[RegisterController::class, 'login']);
 
-//Routes for posts
-Route::get('/post', [PostsController::class, 'index']);
-Route::post('/postStore', [PostsController::class, 'store']);
+// Mostrar datos
+Route::get('/genres_index', [GenresController::class, 'index']);
+Route::get('/categories_index', [CategoriesController::class, 'index']);
+Route::get('/topic_index', [TopicsController::class, 'index']);
+Route::get('/post_index', [PostsController::class, 'index']);
+
+//Generos de las categorias. 
+Route::get('/categoriesByGenres/{genreId}', [CategoriesController::class, 'categoriesByGenres']);
+Route::get('/topicsByCategories/{categoryId}', [TopicsController::class, 'topicsByCategories']);
+Route::get('/postsByTopics/{commentId}', [PostsController::class, 'postsByTopics']);
+
+
+
+
+// Insertar datos
+Route::post('/genresForm', [GenresController::class, 'store']);
+Route::post('/categoriesForm', [CategoriesController::class, 'store']);
+Route::post('/topicsForm', [TopicsController::class, 'store']);
+Route::post('/postsForm', [PostsController::class, 'store']);
+
+// Borrar datos
+Route::delete('/genres_delete/{id}', [GenresController::class, 'destroy']);
+Route::delete('/categories_delete/{id}', [CategoriesController::class, 'destroy']);
+Route::delete('/topics_delete/{id}', [TopicsController::class, 'destroy']);
+Route::delete('/posts_delete/{id}', [PostsController::class, 'destroy']);
+
+//Editar datos. 
+Route::post('/genresForm/{id}', [GenresController::class, 'update']);
+Route::post('/categoriesForm/{id}', [CategoriesController::class, 'update']);
+Route::post('/topicsForm/{id}', [TopicsController::class, 'update']);
+Route::post('/postsForm/{id}', [PostsController::class, 'update']);
+
+
 Route::get('/token', [PostsController::class, 'token']);
-Route::get('/postShow', [PostsController::class, 'show']);
-Route::post('/postDestroy', [PostsController::class, 'destroy']);
-Route::get("/postEdit/{id}", [PostsController::class,'edit']);
-Route::post('/postUpdate/{id}',[PostsController::class,'update']); 
-
-//Routes for topics
-Route::get('/topic', [TopicsController::class, 'index']);
-Route::post('/topicStore', [TopicsController::class, 'store']);
-Route::get('/token', [TopicsController::class, 'token']);
-Route::get('/topicShow', [TopicsController::class, 'show']);
-Route::post('/topicDestroy', [TopicsController::class, 'destroy']);
-Route::get("/topicEdit/{id}", [TopicsController::class,'edit']);
-Route::post('/topicUpdate/{id}',[TopicsController::class,'update']); 
-
-//Routes for Categories
-Route::get('/categories', [CategoriesController::class, 'index']);
-Route::post('/categoriesStore', [CategoriesController::class, 'store']);
-Route::get('/token', [CategoriesController::class, 'token']);
-Route::get('/categoriesShow', [CategoriesController::class, 'show']);
-Route::post('/categoriesDestroy', [CategoriesController::class, 'destroy']);
-Route::get("/categoriesEdit/{id}", [CategoriesController::class,'edit']);
-Route::post('/categoriesUpdate/{id}',[CategoriesController::class,'update']); 
-
-//Routes for Genres
-Route::get('/genre', [GenresController::class, 'index']);
-Route::post('/genreStore', [GenresController::class, 'store']);
-Route::get('/token', [GenresController::class, 'token']);
-Route::get('/genreShow', [GenresController::class, 'show']);
-Route::post('/genreDestroy', [GenresController::class, 'destroy']);
-Route::get("/genreEdit/{id}", [GenresController::class,'edit']);
-Route::post('/genreUpdate/{id}',[GenresController::class,'update']); 

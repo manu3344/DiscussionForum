@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         Genres::factory(4)->create();
         Categories::factory(4)->create();
         Topics::factory(4)->create();
-        Posts::factory(4)->create();
+        Posts::factory(20)->create();
         
 
 
