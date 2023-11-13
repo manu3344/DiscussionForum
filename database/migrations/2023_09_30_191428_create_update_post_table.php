@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->unsignedBigInteger("topic_id"); 
+            $table->unsignedBigInteger("user_id"); 
             $table->foreign("topic_id")->references("id")->on("topics")->onDelete("cascade");
+            $table->foreign("user_id")->references("id")->on("users");
         });
     }
 
@@ -25,6 +27,8 @@ return new class extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->dropForeign('posts_topic_id_foreign'); 
             $table->dropColumn('topic_id'); 
+            $table->dropForeign('posts_user_id_foreign'); 
+            $table->dropColumn('user_id'); 
         });
     }
 };

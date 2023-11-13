@@ -16,6 +16,7 @@ class PostsSeeder extends Seeder
         $posts = new Posts(); 
         $posts->postContent = "Uno de los mejores animes";  
         $posts->topic_id=1; 
+        $posts->user_id=1;
         $posts->save(); 
     }
 }

@@ -14,4 +14,7 @@ class Posts extends Model
     public function topics(): BelongsTo{
         return $this->belongsTo(Topics::class);
     }
+    public function users(): BelongsTo{
+        return $this->belongsTo(User::class);
+    }
 }

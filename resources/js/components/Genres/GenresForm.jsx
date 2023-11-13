@@ -46,7 +46,7 @@ export default function GenresForm() {
                     console.log("response: ");
                     alert("Genero registrado correctamente");
                     console.log(response);
-                    window.history.back(); 
+                    navigate("/forum/public/genres");  
                 })
                 .catch((error) => {
                     console.log(error);
@@ -67,7 +67,7 @@ export default function GenresForm() {
                     console.log("response: ");
                     alert("Genero actualizado correctamente");
                     console.log(response);
-                    window.history.back(); 
+                    navigate("/forum/public/genres"); 
                 })
                 .catch((error) => {
                     console.log(error);
