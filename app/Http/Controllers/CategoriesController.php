@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Models\Categories;
-use Validator; 
+use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
@@ -24,7 +24,7 @@ class CategoriesController extends Controller
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'name'=> 'required|string|max:100', 
+            'name'=> 'required|string|max:100',
             'image_path'=>'required|file|mimes:jpeg,png,gif',
             'genre_id'=> 'required|exists:genres,id'
         ]);
@@ -34,23 +34,23 @@ class CategoriesController extends Controller
         }
 
         if($request->hasFile('image_path')){
-            $file = $request->file("image_path"); 
-            $destinationPath = "images/"; 
+            $file = $request->file("image_path");
+            $destinationPath = "images/";
             $filename = time() .'-' .$file->getClientOriginalName();
             $uploadSuccess = $request ->file('image_path')->move($destinationPath,$filename);
         }
 
         $categories = Categories::create([
-            "name"=>$request->name, 
+            "name"=>$request->name,
             "image_path" =>$destinationPath . $filename,
             "genre_id"=>$request->genre_id
         ]);
-        $categories->save(); 
+        $categories->save();
         return $request;
     }
 
     public function show(Request $request){
-        $categories = Categories::find($request->id); 
+        $categories = Categories::find($request->id);
         return $categories;
     }
 
@@ -60,10 +60,10 @@ class CategoriesController extends Controller
     }
 
     public function update(Request $request, $id){
-        $categories = Categories::findOrFail($id); 
+        $categories = Categories::findOrFail($id);
 
         $validator = Validator::make($request->all(),[
-            'name'=> 'required|string|max:100', 
+            'name'=> 'required|string|max:100',
             'image_path'=>'required|file|mimes:jpeg,png,gif',
             'genre_id'=> 'required|exists:genres,id'
         ]);
@@ -86,17 +86,17 @@ class CategoriesController extends Controller
             }
         }
 
-        $categories->save(); 
+        $categories->save();
         return $categories;
     }
 
     public function destroy(Request $request){
-        $categories = Categories::where("id", "=", $request->id)->delete(); 
+        $categories = Categories::where("id", "=", $request->id)->delete();
         return $categories;
     }
 
     public function token(){
-        return csrf_token(); 
+        return csrf_token();
     }
 
 }

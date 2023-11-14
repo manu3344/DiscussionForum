@@ -3,35 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; 
-use Validator; 
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
-use Illuminate\Http\JsonResponse; 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends ResponseController
 {
     public function register(Request $request): JsonResponse {
         $validator = Validator::make($request->all(),[
-            'name'=> 'required|min:2|max:100', 
-            'email'=> 'required|email|unique:users,email|max:255', 
-            'password' => 'required|min:8|max:255', 
+            'name'=> 'required|min:2|max:100',
+            'email'=> 'required|email|unique:users,email|max:255',
+            'password' => 'required|min:8|max:255',
             'c_password' => 'required|same:password|max:255'
         ]);
 
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors()
-            ], 422); 
+            ], 422);
        }
 
-        $input = $request->all(); 
-        $input['password'] = bcrypt($input['password']); 
-        $user = User::create($input); 
-        $success['token'] = $user->createToken("MyApp")->accessToken; 
-        $success['name'] = $user->name; 
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        $success['token'] = $user->createToken("MyApp")->accessToken;
+        $success['name'] = $user->name;
 
-        return $this->sendResponse($success, 'User Register Succesfully'); 
+        return $this->sendResponse($success, 'User Register Succesfully');
     }
 
     public function login(Request $request):JsonResponse{
@@ -39,7 +39,7 @@ class RegisterController extends ResponseController
             'email' => 'required|email',
             'password' => 'required|min:8|max:255',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'error' => $validator->errors()
@@ -47,12 +47,12 @@ class RegisterController extends ResponseController
         }
 
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = Auth::user(); 
-            $success['token'] = $user->createToken('MyApp')->accessToken; 
-            $success['name'] = $user->name; 
+            $user = Auth::user();
+            $success['token'] = $user->createToken('MyApp')->accessToken;
+            $success['name'] = $user->name;
 
-            return $this->sendResponse($success, "User login succesfully"); 
-        
+            return $this->sendResponse($success, "User login succesfully");
+
         }else{
             return response()->json([
                 'error' => 'Unauthorized'

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Models\Posts;
-use Validator; 
+use Illuminate\Support\Facades\Validator;
 
 class PostsController extends Controller
 {
@@ -15,15 +15,15 @@ class PostsController extends Controller
     }
 
     public function postsByTopics($commentId) {
-        // Filtrar los comentatios por el ID del tema. 
-        $posts = Posts::with('topics')->where('topic_id', $commentId)->get();
+        // Filtrar los comentatios por el ID del tema.
+        $posts = Posts::with('topic')->where('topic_id', $commentId)->get();
         return $posts;
     }
 
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'postContent'=> 'required|string', 
+            'postContent'=> 'required|string',
             'topic_id'=> 'required|exists:topics,id'
         ]);
 
@@ -36,12 +36,12 @@ class PostsController extends Controller
             "postContent"=>$request->postContent,
             "topic_id"=>$request->topic_id
         ]);
-        $posts->save(); 
+        $posts->save();
         return $request;
     }
 
     public function show(Request $request){
-        $posts = Posts::find($request->id); 
+        $posts = Posts::find($request->id);
         return $posts;
     }
 
@@ -51,10 +51,10 @@ class PostsController extends Controller
     }
 
     public function update(Request $request, $id){
-        $posts = Posts::findOrFail($id); 
+        $posts = Posts::findOrFail($id);
 
         $validator = Validator::make($request->all(),[
-            'postContent'=> 'required|string', 
+            'postContent'=> 'required|string',
             'topic_id'=> 'required|exists:topics,id'
         ]);
 
@@ -65,16 +65,16 @@ class PostsController extends Controller
         $posts->postContent = $request->input('postContent');
         $posts->topic_id=$request->topic_id;
 
-        $posts->save(); 
+        $posts->save();
         return $posts;
     }
 
     public function destroy(Request $request){
-        $posts = Posts::where("id", "=", $request->id)->delete(); 
+        $posts = Posts::where("id", "=", $request->id)->delete();
         return $posts;
     }
 
     public function token(){
-        return csrf_token(); 
+        return csrf_token();
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Models\Genres;
-use Validator; 
+use Illuminate\Support\Facades\Validator;
 
 class GenresController extends Controller
 {
@@ -16,7 +16,7 @@ class GenresController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
-            'name'=> 'required|string|max:100', 
+            'name'=> 'required|string|max:100',
             'image_path'=>'required|file|mimes:jpeg,png,gif'
         ]);
 
@@ -25,23 +25,23 @@ class GenresController extends Controller
         }
 
         if($request->hasFile('image_path')){
-            $file = $request->file("image_path"); 
-            $destinationPath = "images/"; 
+            $file = $request->file("image_path");
+            $destinationPath = "images/";
             $filename = time() .'-' .$file->getClientOriginalName();
             $uploadSuccess = $request ->file('image_path')->move($destinationPath,$filename);
         }
 
         $genres = Genres::create([
-            "name"=>$request->name, 
+            "name"=>$request->name,
             "image_path" =>$destinationPath . $filename
-            
+
         ]);
-        $genres->save(); 
+        $genres->save();
         return $request;
     }
 
     public function show(Request $request){
-        $genres =  Genres::find($request->id); 
+        $genres =  Genres::find($request->id);
         return $genres;
     }
 
@@ -51,19 +51,19 @@ class GenresController extends Controller
     }
 
     public function update(Request $request, $id){
-        $genres =  Genres::findOrFail($id); 
+        $genres =  Genres::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
             'image_path' => 'required|file|mimes:jpeg,png,gif'
         ]);
-    
+
         if ($validator->fails()) {
             return $this->sendError("Validation Error.", $validator->errors());
         }
 
         $genres->name = $request->input('name');
-        
+
         if ($request->hasFile('image_path')) {
             $file = $request->file('image_path');
             $destinationPath = "images/";
@@ -75,16 +75,16 @@ class GenresController extends Controller
             }
         }
 
-        $genres->save(); 
+        $genres->save();
         return $genres;
     }
 
     public function destroy(Request $request){
-        $genres = Genres::where("id", "=", $request->id)->delete(); 
+        $genres = Genres::where("id", "=", $request->id)->delete();
         return $genres;
     }
 
     public function token(){
-        return csrf_token(); 
+        return csrf_token();
     }
 }

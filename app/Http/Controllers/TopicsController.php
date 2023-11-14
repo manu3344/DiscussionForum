@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Models\Topics;
-use Validator; 
+use Illuminate\Support\Facades\Validator;
 
 class TopicsController extends Controller
 {
@@ -17,14 +17,14 @@ class TopicsController extends Controller
 
     public function topicsByCategories($categoryId) {
         // Filtrar los temas por el ID de la categoría
-        $topics = Topics::with('categories')->where('categories_id', $categoryId)->get();
+        $topics = Topics::with('category')->where('categories_id', $categoryId)->get();
         return $topics;
     }
 
     public function store(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'title'=> 'required|string|max:100', 
+            'title'=> 'required|string|max:100',
             'description'=>'required|string',
             'image_path'=>'required|file|mimes:jpeg,png,gif',
             'categories_id'=> 'required|exists:categories,id'
@@ -35,24 +35,24 @@ class TopicsController extends Controller
         }
 
         if($request->hasFile('image_path')){
-            $file = $request->file("image_path"); 
-            $destinationPath = "images/"; 
+            $file = $request->file("image_path");
+            $destinationPath = "images/";
             $filename = time() .'-' .$file->getClientOriginalName();
             $uploadSuccess = $request ->file('image_path')->move($destinationPath,$filename);
         }
 
         $topics = Topics::create([
             "title"=>$request->title,
-            "description"=>$request->description, 
+            "description"=>$request->description,
             "image_path" =>$destinationPath . $filename,
             "categories_id"=>$request->categories_id
         ]);
-        $topics->save(); 
+        $topics->save();
         return $request;
     }
 
     public function show(Request $request){
-        $topics = Topics::find($request->id); 
+        $topics = Topics::find($request->id);
         return $topics;
     }
 
@@ -62,10 +62,10 @@ class TopicsController extends Controller
     }
 
     public function update(Request $request, $id){
-        $topics = Topics::findOrFail($id); 
+        $topics = Topics::findOrFail($id);
 
         $validator = Validator::make($request->all(),[
-            'title'=> 'required|string|max:100', 
+            'title'=> 'required|string|max:100',
             'description'=>'required|string',
             'image_path'=>'required|file',
             'categories_id'=> 'required|exists:categories,id'
@@ -90,16 +90,16 @@ class TopicsController extends Controller
             }
         }
 
-        $topics->save(); 
+        $topics->save();
         return $topics;
     }
 
     public function destroy(Request $request){
-        $topics = Topics::where("id", "=", $request->id)->delete(); 
+        $topics = Topics::where("id", "=", $request->id)->delete();
         return $topics;
     }
 
     public function token(){
-        return csrf_token(); 
+        return csrf_token();
     }
 }
