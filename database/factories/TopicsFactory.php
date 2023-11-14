@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Topics; 
-use App\Models\Categories; 
+use App\Models\Topics;
+use App\Models\Categories;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Topics>
@@ -22,7 +22,8 @@ class TopicsFactory extends Factory
             "title"=>fake()->sentence(),
             "description"=>fake()->words(5,true),
             "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Topics'),
-            "categories_id"=>Categories::all()->random()->id
+            "categories_id"=>Categories::all()->random()->id,
+            "user_id"=>1,
         ];
     }
 }

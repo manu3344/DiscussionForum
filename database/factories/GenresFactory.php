@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Genres; 
+use App\Models\Genres;
 
 
 
@@ -20,10 +20,11 @@ class GenresFactory extends Factory
      */
     public function definition(): array
     {
-        
+
         return [
             "name"=>fake()->words(2,true),
-            "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Genres')
+            "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Genres'),
+            "user_id" => 1,
         ];
     }
 }

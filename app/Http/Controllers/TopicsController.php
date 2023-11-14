@@ -18,6 +18,7 @@ class TopicsController extends Controller
     public function topicsByCategories($categoryId) {
         // Filtrar los temas por el ID de la categoría
         $topics = Topics::with('category')->where('categories_id', $categoryId)->get();
+        $topics->load('category');
         return $topics;
     }
 

@@ -23,12 +23,12 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriesSeeder::class);
         $this->call(TopicsSeeder::class);
         $this->call(PostsSeeder::class);
-        User::factory(4)->create(); 
+        // User::factory(4)->create(); 
         Genres::factory(4)->create();
         Categories::factory(4)->create();
         Topics::factory(4)->create();
         Posts::factory(20)->create();
-        
+
 
 
     }

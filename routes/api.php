@@ -36,6 +36,7 @@ Route::get('/postsByTopics/{commentId}', [PostsController::class, 'postsByTopics
 
 
 
+/* TODO: Use the token for insert, update and delete data */
 // Insertar datos
 Route::post('/genresForm', [GenresController::class, 'store']);
 Route::post('/categoriesForm', [CategoriesController::class, 'store']);

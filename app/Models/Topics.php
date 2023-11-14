@@ -17,7 +17,7 @@ class Topics extends Model
     }
 
     public function category(): BelongsTo {
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Categories::class, 'categories_id');
     }
 
     public function user(): BelongsTo {
