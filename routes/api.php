@@ -7,7 +7,7 @@ use App\Http\Controllers\GenresController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\PostsController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ Route::get('/categories_index', [CategoriesController::class, 'index']);
 Route::get('/topic_index', [TopicsController::class, 'index']);
 Route::get('/post_index', [PostsController::class, 'index']);
 
-//Generos de las categorias. 
+//Generos de las categorias.
 Route::get('/categoriesByGenres/{genreId}', [CategoriesController::class, 'categoriesByGenres']);
 Route::get('/topicsByCategories/{categoryId}', [TopicsController::class, 'topicsByCategories']);
 Route::get('/postsByTopics/{commentId}', [PostsController::class, 'postsByTopics']);
@@ -48,13 +48,16 @@ Route::delete('/categories_delete/{id}', [CategoriesController::class, 'destroy'
 Route::delete('/topics_delete/{id}', [TopicsController::class, 'destroy']);
 Route::delete('/posts_delete/{id}', [PostsController::class, 'destroy']);
 
-//Editar datos. 
+//Editar datos.
 Route::post('/genresForm/{id}', [GenresController::class, 'update']);
 Route::post('/categoriesForm/{id}', [CategoriesController::class, 'update']);
 Route::post('/topicsForm/{id}', [TopicsController::class, 'update']);
 Route::post('/postsForm/{id}', [PostsController::class, 'update']);
 
-//Estas son rutas no permitidas. 
+// TEST
+Route::get('/test', [UserController::class, 'test'])->middleware('auth:api');
+
+//Estas son rutas no permitidas.
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
