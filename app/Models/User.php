@@ -47,7 +47,19 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function posts(): HasMany{
-        return $this->hasMany(Posts::class, 'user_id'); 
+    public function posts(): HasMany {
+        return $this->hasMany(Posts::class, 'user_id');
+    }
+
+    public function categories(): HasMany {
+        return $this->hasMany(Categories::class, 'user_id');
+    }
+
+    public function genres(): HasMany {
+        return $this->hasMany(Genres::class, 'user_id');
+    }
+
+    public function topics(): HasMany {
+        return $this->hasMany(Topics::class, 'user_id');
     }
 }
