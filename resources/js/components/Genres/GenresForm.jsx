@@ -4,15 +4,13 @@ import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
+import { getAuthorization } from 'passport-client'
+
 export default function GenresForm() {
     const [genreValue, setGenreValue] = useState({ name: "", image_path: "" });
     const navigate = useNavigate();
     const { id } = useParams(); //Obtener el ID del genero de la URL
 
-
-
-
-    
     // Si el evento es de tipo file se actualiza el estado genreValue con el archivo seleccionado, si no con los valores de entrada.
     const onChange = (e) => {
         e.persist();
@@ -24,8 +22,11 @@ export default function GenresForm() {
     };
 
     // Funcion para anadir o editar  datos.
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         if (e && e.preventDefault()) e.preventDefault();
+
+        const authorization = await getAuthorization()
+
         const formData = new FormData();
         formData.append("name", genreValue.name);
         formData.append("image_path", genreValue.image_path);
@@ -39,6 +40,7 @@ export default function GenresForm() {
                         headers: {
                             "Content-Type": "multipart/form-data",
                             Accept: "application/json",
+                            ...authorization
                         },
                     }
                 )
@@ -46,7 +48,7 @@ export default function GenresForm() {
                     console.log("response: ");
                     alert("Genero registrado correctamente");
                     console.log(response);
-                    navigate("/forum/public/genres");  
+                    navigate("/forum/public/genres");
                 })
                 .catch((error) => {
                     console.log(error);
@@ -60,6 +62,7 @@ export default function GenresForm() {
                         headers: {
                             "Content-Type": "multipart/form-data",
                             Accept: "application/json",
+                            ...authorization
                         },
                     }
                 )
@@ -67,14 +70,14 @@ export default function GenresForm() {
                     console.log("response: ");
                     alert("Genero actualizado correctamente");
                     console.log(response);
-                    navigate("/forum/public/genres"); 
+                    navigate("/forum/public/genres");
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
     };
-    
+
     return (
         <div>
             <div className="containerBody">

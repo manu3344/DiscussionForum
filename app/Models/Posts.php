@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Posts extends Model
-{
+class Posts extends Model {
     use HasFactory;
-    protected $fillable = ["postContent","topic_id"];
+    protected $fillable = ["postContent", "topic_id", "user_id"];
 
-    public function topics(): BelongsTo{
+    public function topic(): BelongsTo {
         return $this->belongsTo(Topics::class);
     }
-    public function users(): BelongsTo{
+
+    public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
 }

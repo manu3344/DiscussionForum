@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 
 export default function Forum_C(props) {
     const forumTitle = props.title;
-    const forumDescription = props.description; 
+    const forumDescription = props.description;
     const topicImage = props.image_path;
     const forumCategory = props.categoriesName;
+    const isOfTheUser = props.isOfTheUser;
 
     const onDeleteTopics = props.onDeleteTopics;
     const topicId = props.topicId;
@@ -18,7 +19,7 @@ export default function Forum_C(props) {
         onDeleteTopics(topicId);
       };
 
-      
+
 
     return (
       <div style={{padding:"5px"}}>
@@ -41,16 +42,19 @@ export default function Forum_C(props) {
                     {forumDescription}
                 </Card.Text>
                 <Card.Text className="mb-auto">{"Categoria: " + forumCategory}</Card.Text>
-                <div className="row" style={{padding:"0 0 10px"}}>
-                        <div className="col">
-                            <Link to={`/forum/public/topicsForm/${topicId}`}>
-                            <Button variant="warning"><BsPencilSquare /></Button>
-                            </Link>
+
+                {isOfTheUser && (
+                    <div className="row" style={{padding:"0 0 10px"}}>
+                            <div className="col">
+                                <Link to={`/forum/public/topicsForm/${topicId}`}>
+                                <Button variant="warning"><BsPencilSquare /></Button>
+                                </Link>
+                            </div>
+                            <div className="col">
+                                <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
+                            </div>
                         </div>
-                        <div className="col">
-                            <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
-                        </div>
-                    </div>
+                )}
             </Card.Body>
         </Card>
       </div>

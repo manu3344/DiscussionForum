@@ -9,21 +9,21 @@ import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs"
 function Register(){
 
     //Para mostrar y ocultar la contrasena.
-    const [showPasswordR, setShowPasswordR] = useState(false); 
-    const [showCPasswordR, setShowCPasswordR] = useState(false); 
+    const [showPasswordR, setShowPasswordR] = useState(false);
+    const [showCPasswordR, setShowCPasswordR] = useState(false);
 
-    //Para agregar datos. 
+    //Para agregar datos.
     const [formValue, setFormValue] = useState({
-        name: '', 
-        email: '', 
-        password: '', 
+        name: '',
+        email: '',
+        password: '',
         c_password: ''
     })
-    
-    const navigate = useNavigate(); 
+
+    const navigate = useNavigate();
 
     const onChange = (e) =>{
-        e.persist(); 
+        e.persist();
         setFormValue({...formValue, [e.target.name]: e.target.value});
     }
 
@@ -34,6 +34,7 @@ function Register(){
         formData.append("email", formValue.email)
         formData.append("password", formValue.password)
         formData.append("c_password", formValue.c_password)
+        formData.append("role", "user")
         axios.post("http://localhost/forum/public/api/register",
         formData,
         {headers: {'Content-Type': 'multipart/form-data',
@@ -41,7 +42,7 @@ function Register(){
         ).then(response => {
             console.log('response: ');
             console.log(response);
-            alert("Registro exitoso"); 
+            alert("Registro exitoso");
             navigate('/forum/public/login');
         }).catch(error => {
             if (error.response) {
@@ -60,22 +61,22 @@ function Register(){
 
 
     function showOrHide(){
-        let x = document.getElementById("passwordRegister"); 
+        let x = document.getElementById("passwordRegister");
         if(x.type==="password"){
             x.type = "text";
         }else{
             x.type="password"
         }
-        setShowPasswordR(!showPasswordR); 
+        setShowPasswordR(!showPasswordR);
     }
     function showOrHideC(){
-        let x = document.getElementById("c_passwordRegister"); 
+        let x = document.getElementById("c_passwordRegister");
         if(x.type==="password"){
             x.type = "text";
         }else{
             x.type="password"
         }
-        setShowCPasswordR(!showCPasswordR); 
+        setShowCPasswordR(!showCPasswordR);
     }
 
     return (
@@ -133,4 +134,4 @@ function Register(){
 }
 
 
-export default Register; 
+export default Register;

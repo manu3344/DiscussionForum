@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Spinner, Button, Form, Col, Row} from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Category_C from "./Category_C";
 import axios from "axios";
+import { getAuthorization } from 'passport-client'
+import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
 
 export default function Categories() {
+    const { user } = useContext(UserContext)
     const [categoriesData, setCategoriesData] = useState([]);
-    const [genresData, setGenresData] = useState([]); //Muestra el genero perteneciente. 
-    const [searchText, setSearchText] = useState(""); //Busqueda. 
+    const [genresData, setGenresData] = useState([]); //Muestra el genero perteneciente.
+    const [searchText, setSearchText] = useState(""); //Busqueda.
 
 
     // Funcion para mostrar todas las categorias
@@ -31,7 +35,7 @@ export default function Categories() {
         getCategories();
     }, []);
 
-     // Funcion para mostrar el genero al que pertenece la categoria. 
+     // Funcion para mostrar el genero al que pertenece la categoria.
      useEffect(() => {
         const getGenres = async () => {
             await axios
@@ -52,19 +56,26 @@ export default function Categories() {
         getGenres();
     }, []);
 
-    
+
 
     //Function para borrar
-const handleDeleteCategories = (categoryId) => {
-    const updatedCategories = categoriesData.filter((category) => category.id !== categoryId);
-    axios.delete(`http://localhost/forum/public/api/categories_delete/${categoryId}`)
-    .then(function(response){
-        setCategoriesData(updatedCategories);
-        alert("Categoria eliminada exitosamente");
-    }).catch(function(error){
-        console.log(error);
-    });
-  };
+    const handleDeleteCategories = async (categoryId) => {
+        const updatedCategories = categoriesData.filter((category) => category.id !== categoryId);
+
+        const authorization = await getAuthorization();
+
+        axios.delete(`http://localhost/forum/public/api/categories_delete/${categoryId}`, {
+            headers: {
+                ...authorization
+            }
+        })
+        .then(function(response){
+            setCategoriesData(updatedCategories);
+            alert("Categoria eliminada exitosamente");
+        }).catch(function(error){
+            console.log(error);
+        });
+    };
 
 //   Spinner
   if (!categoriesData.length) {
@@ -103,16 +114,20 @@ const getGenreName = (genreId) => {
                     <div className="col=lg-12">
                         <h1>Categorías</h1>
                     </div>
-                    <div className="col-lg-12">
-                        <a href="categoriesForm">
-                            <Button type="submit" id="addCategories" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
-                                <BsFillPlusCircleFill
-                                    style={{ fontSize: "1.5rem" }}
-                                />
-                            </Button>
-                        </a>
-                    </div>
+
+                    {user?.role === 'admin' && (
+                        <div className="col-lg-12">
+                            <Link to="/forum/public/categoriesForm">
+                                <Button type="submit" id="addCategories" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
+                                    <BsFillPlusCircleFill
+                                        style={{ fontSize: "1.5rem" }}
+                                    />
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
+
                 <div className="card-group">
                     {categoriesData.filter((category)=>
                         category.name.toLowerCase().includes(searchText.toLowerCase())
@@ -126,6 +141,7 @@ const getGenreName = (genreId) => {
                             genre_id={category.genreId}
                             genreName={getGenreName(category.genre_id)}
                             onDeleteCategories={handleDeleteCategories}
+                            isOfTheUser={user?.id === category.user_id}
                         />
                     ))}
                 </div>

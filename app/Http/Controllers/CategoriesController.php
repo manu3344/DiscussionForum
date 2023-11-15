@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Models\Categories;
-use Validator; 
+use Illuminate\Support\Facades\Validator;
 
-class CategoriesController extends Controller
-{
+class CategoriesController extends ResponseController {
     public function index(){
         $categories = Categories::all();
         return $categories;
     }
-
 
     public function categoriesByGenres($genreId){
         // Filtrar las categorías por el ID del género
@@ -22,9 +20,10 @@ class CategoriesController extends Controller
     }
 
     public function store(Request $request){
+        $user = $request->user();
 
         $validator = Validator::make($request->all(),[
-            'name'=> 'required|string|max:100', 
+            'name'=> 'required|string|max:100',
             'image_path'=>'required|file|mimes:jpeg,png,gif',
             'genre_id'=> 'required|exists:genres,id'
         ]);
@@ -33,24 +32,31 @@ class CategoriesController extends Controller
             return $this->sendError("Validation Error.", $validator->errors());
         }
 
+        if ($user->role != 'admin') {
+            return response()->json('You are not authorized to create categories.', 401);
+        }
+
         if($request->hasFile('image_path')){
-            $file = $request->file("image_path"); 
-            $destinationPath = "images/"; 
+            $file = $request->file("image_path");
+            $destinationPath = "images/";
             $filename = time() .'-' .$file->getClientOriginalName();
             $uploadSuccess = $request ->file('image_path')->move($destinationPath,$filename);
         }
 
         $categories = Categories::create([
-            "name"=>$request->name, 
+            "name"=>$request->name,
             "image_path" =>$destinationPath . $filename,
-            "genre_id"=>$request->genre_id
+            "genre_id"=>$request->genre_id,
+            "user_id"=>$user->id
         ]);
-        $categories->save(); 
-        return $request;
+
+        $categories->save();
+
+        return response()->json($categories);
     }
 
     public function show(Request $request){
-        $categories = Categories::find($request->id); 
+        $categories = Categories::find($request->id);
         return $categories;
     }
 
@@ -60,10 +66,15 @@ class CategoriesController extends Controller
     }
 
     public function update(Request $request, $id){
-        $categories = Categories::findOrFail($id); 
+        $user = $request->user();
+        $categories = Categories::findOrFail($id);
+
+        if ($categories->user_id != $user->id) {
+            return response()->json('You are not authorized to update this category.', 401);
+        }
 
         $validator = Validator::make($request->all(),[
-            'name'=> 'required|string|max:100', 
+            'name'=> 'required|string|max:100',
             'image_path'=>'required|file|mimes:jpeg,png,gif',
             'genre_id'=> 'required|exists:genres,id'
         ]);
@@ -80,23 +91,30 @@ class CategoriesController extends Controller
             $destinationPath = "images/";
             $filename = time() . '-' . $file->getClientOriginalName();
             $uploadSuccess = $file->move($destinationPath, $filename);
+
             if ($uploadSuccess) {
-                // Actualiza la ruta de la imagen en la base de datos
                 $categories->image_path = $destinationPath . $filename;
             }
         }
 
-        $categories->save(); 
+        $categories->save();
+
         return $categories;
     }
 
     public function destroy(Request $request){
-        $categories = Categories::where("id", "=", $request->id)->delete(); 
+        $user = $request->user();
+        $categories = Categories::where("id", "=", $request->id)->first();
+
+        if ($categories->user_id != $user->id) {
+            return response()->json('You are not authorized to delete this category.', 401);
+        }
+
+        $categories->delete();
         return $categories;
     }
 
     public function token(){
-        return csrf_token(); 
+        return csrf_token();
     }
-
 }

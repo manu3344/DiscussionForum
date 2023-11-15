@@ -4,14 +4,15 @@ import {BsPencilSquare, BsTrashFill} from "react-icons/bs"
 import { Link } from "react-router-dom";
 
 export default function Category_C(props) {
-    
+
     const categoryName = props.name;
-    const categoryImage = props.image_path; 
+    const categoryImage = props.image_path;
     const genreName = props.genreName;
     const categoryId = props.categoryId;
     const onDeleteCategories = props.onDeleteCategories;
+    const isOfTheUser = props.isOfTheUser;
 
-    // Llama a la función de eliminación con el ID de la categoria. 
+    // Llama a la función de eliminación con el ID de la categoria.
     const handleDeleteClick = () => {
         onDeleteCategories(categoryId);
       };
@@ -30,17 +31,19 @@ export default function Category_C(props) {
 
                 <Card.Text className="mb-auto">{categoryName}</Card.Text>
                 <Card.Text className="mb-auto">{"Genero: "+genreName}</Card.Text>
-                
-                <div className="row" style={{padding:"0 0 10px"}}>
-                        <div className="col">
-                            <Link to={`/forum/public/categoriesForm/${categoryId}`}>
-                            <Button variant="warning"><BsPencilSquare /></Button>
-                            </Link>
+
+                {isOfTheUser && (
+                    <div className="row" style={{padding:"0 0 10px"}}>
+                            <div className="col">
+                                <Link to={`/forum/public/categoriesForm/${categoryId}`}>
+                                <Button variant="warning"><BsPencilSquare /></Button>
+                                </Link>
+                            </div>
+                            <div className="col">
+                                <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
+                            </div>
                         </div>
-                        <div className="col">
-                            <Button variant="danger" onClick={handleDeleteClick}><BsTrashFill /></Button>
-                        </div>
-                    </div>
+                )}
             </Card>
         </div>
     );

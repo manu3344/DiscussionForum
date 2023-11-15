@@ -7,7 +7,8 @@
 import  ReactDOM from 'react-dom/client';
 import './bootstrap';
 import { BrowserRouter } from 'react-router-dom';
-import Main from "./components/Main";
+import Main from './components/Main';
+import UserProvider from './context/UserProvider'
 
 /**
  * Next, we will create a fresh React component instance and attach it to
@@ -18,7 +19,11 @@ import Main from "./components/Main";
 import './css/styles.css'
 
 ReactDOM.createRoot(document.getElementById('app')).render(
-    <BrowserRouter>
-        <Main />
-    </BrowserRouter>
+    <>
+        <UserProvider>
+            <BrowserRouter>
+                <Main />
+            </BrowserRouter>
+        </UserProvider>
+    </>
 )

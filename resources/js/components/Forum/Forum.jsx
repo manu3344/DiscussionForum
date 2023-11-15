@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { Spinner, Button, Form, Col, Row } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Forum_C from "./Forum_C";
 import axios from "axios";
 
+import { getAuthorization } from 'passport-client'
+import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
+
 export default function Forum() {
+    const { user } = useContext(UserContext);
     const [forumData, setForumData] = useState([]);
     const [categoriesData, setCategoriesData] = useState([]);
 
@@ -32,7 +37,7 @@ export default function Forum() {
         getForums();
     }, []);
 
-    //Funcion para mostrar las categorias de los temas. 
+    //Funcion para mostrar las categorias de los temas.
     useEffect(() => {
         const getCategories = async () => {
             await axios
@@ -60,11 +65,17 @@ const getCategoryName = (categoryId) => {
 };
 
     // Funcion para borrar los datos
-    const handleDeleteTopics = (topicId) => {
+    const handleDeleteTopics = async (topicId) => {
         const updatedTopics = forumData.filter((topic) => topic.id !== topicId);
+        const authorization = await getAuthorization()
         axios
             .delete(
-                `http://localhost/forum/public/api/topics_delete/${topicId}`
+                `http://localhost/forum/public/api/topics_delete/${topicId}`,
+                {
+                    headers: {
+                        ...authorization
+                    }
+                }
             )
             .then(function (response) {
                 setForumData(updatedTopics);
@@ -108,13 +119,13 @@ const getCategoryName = (categoryId) => {
                         <h1>Foro de discusiones actuales</h1>
                     </div>
                     <div className="col-lg-12">
-                        <a href="topicsForm">
+                        <Link to="/forum/public/topicsForm">
                             <Button type="submit" id="addTopics" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
                                 <BsFillPlusCircleFill
                                     style={{ fontSize: "1.5rem" }}
                                 />
                             </Button>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -135,6 +146,7 @@ const getCategoryName = (categoryId) => {
                             categoriesName={getCategoryName(forum.categories_id)}
                             onDeleteTopics={handleDeleteTopics}
                             topicId={forum.id}
+                            isOfTheUser={user?.id === forum.user_id}
                         />
                     ))}
             </div>

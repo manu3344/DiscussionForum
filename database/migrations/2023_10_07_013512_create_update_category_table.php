@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->unsignedBigInteger("genre_id"); 
-            $table->foreign("genre_id")->references("id")->on("genres")->onDelete("cascade"); 
+            $table->unsignedBigInteger("genre_id");
+            $table->foreign("genre_id")->references("id")->on("genres")->onDelete("cascade");
+            $table->unsignedBigInteger("user_id");
+            $table->foreign("user_id")->references("id")->on("users");
         });
 
     }
@@ -23,10 +25,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        
+
         Schema::table('categories', function (Blueprint $table) {
-            $table->dropForeign('categories_genre_id_foreign'); 
-            $table->dropColumn('genre_id'); 
+            $table->dropForeign('categories_genre_id_foreign');
+            $table->dropColumn('genre_id');
+            $table->dropForeign('categories_user_id_foreign');
+            $table->dropColumn('user_id');
         });
     }
 };
