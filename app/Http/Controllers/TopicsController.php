@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Topics;
 use Illuminate\Support\Facades\Validator;
 
-class TopicsController extends Controller
+class TopicsController extends ResponseController
 {
     public function index(){
         $topics = Topics::all();
@@ -23,6 +23,7 @@ class TopicsController extends Controller
     }
 
     public function store(Request $request){
+        $user = $request->user();
 
         $validator = Validator::make($request->all(),[
             'title'=> 'required|string|max:100',
@@ -46,10 +47,13 @@ class TopicsController extends Controller
             "title"=>$request->title,
             "description"=>$request->description,
             "image_path" =>$destinationPath . $filename,
-            "categories_id"=>$request->categories_id
+            "categories_id"=>$request->categories_id,
+            "user_id"=>$user->id
         ]);
+
         $topics->save();
-        return $request;
+
+        return response()->json($topics);
     }
 
     public function show(Request $request){
@@ -63,7 +67,12 @@ class TopicsController extends Controller
     }
 
     public function update(Request $request, $id){
+        $user = $request->user();
         $topics = Topics::findOrFail($id);
+
+        if ($topics->user_id != $user->id) {
+            return response()->json('You are not authorized to update this topic.', 401);
+        }
 
         $validator = Validator::make($request->all(),[
             'title'=> 'required|string|max:100',
@@ -73,7 +82,8 @@ class TopicsController extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->sendError("Validation Error.", $validator->errors());
+            // return $this->sendError("Validation Error.", $validator->errors());
+            return response()->json($validator->errors());
         }
 
         $topics->title = $request->input('title');
@@ -96,7 +106,14 @@ class TopicsController extends Controller
     }
 
     public function destroy(Request $request){
-        $topics = Topics::where("id", "=", $request->id)->delete();
+        $user = $request->user();
+        $topics = Topics::where("id", "=", $request->id)->first();
+
+        if ($topics->user_id != $user->id) {
+            return response()->json('You are not authorized to delete this topic.', 401);
+        }
+
+        $topics->delete();
         return $topics;
     }
 

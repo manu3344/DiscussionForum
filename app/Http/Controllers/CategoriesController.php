@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Categories;
 use Illuminate\Support\Facades\Validator;
 
-class CategoriesController extends Controller
+class CategoriesController extends ResponseController
 {
     public function index(){
         $categories = Categories::all();
@@ -22,6 +22,7 @@ class CategoriesController extends Controller
     }
 
     public function store(Request $request){
+        $user = $request->user();
 
         $validator = Validator::make($request->all(),[
             'name'=> 'required|string|max:100',
@@ -31,6 +32,10 @@ class CategoriesController extends Controller
 
         if($validator->fails()){
             return $this->sendError("Validation Error.", $validator->errors());
+        }
+
+        if ($user->role != 'admin') {
+            return response()->json('You are not authorized to create categories.', 401);
         }
 
         if($request->hasFile('image_path')){
@@ -43,10 +48,13 @@ class CategoriesController extends Controller
         $categories = Categories::create([
             "name"=>$request->name,
             "image_path" =>$destinationPath . $filename,
-            "genre_id"=>$request->genre_id
+            "genre_id"=>$request->genre_id,
+            "user_id"=>$user->id
         ]);
+
         $categories->save();
-        return $request;
+
+        return response()->json($categories);
     }
 
     public function show(Request $request){
@@ -60,7 +68,12 @@ class CategoriesController extends Controller
     }
 
     public function update(Request $request, $id){
+        $user = $request->user();
         $categories = Categories::findOrFail($id);
+
+        if ($categories->user_id != $user->id) {
+            return response()->json('You are not authorized to update this category.', 401);
+        }
 
         $validator = Validator::make($request->all(),[
             'name'=> 'required|string|max:100',
@@ -91,7 +104,14 @@ class CategoriesController extends Controller
     }
 
     public function destroy(Request $request){
-        $categories = Categories::where("id", "=", $request->id)->delete();
+        $user = $request->user();
+        $categories = Categories::where("id", "=", $request->id)->first();
+
+        if ($categories->user_id != $user->id) {
+            return response()->json('You are not authorized to delete this category.', 401);
+        }
+
+        $categories->delete();
         return $categories;
     }
 

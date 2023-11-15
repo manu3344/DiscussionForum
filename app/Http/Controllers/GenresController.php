@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Genres;
 use Illuminate\Support\Facades\Validator;
 
-class GenresController extends Controller
+class GenresController extends ResponseController
 {
     public function index(){
         $genres = Genres::all();
@@ -15,6 +15,8 @@ class GenresController extends Controller
     }
 
     public function store(Request $request){
+        $user = $request->user();
+
         $validator = Validator::make($request->all(),[
             'name'=> 'required|string|max:100',
             'image_path'=>'required|file|mimes:jpeg,png,gif'
@@ -22,6 +24,10 @@ class GenresController extends Controller
 
         if($validator->fails()){
             return $this->sendError("Validation Error.", $validator->errors());
+        }
+
+        if ($user->role != 'admin') {
+            return response()->json('You are not authorized to create categories.', 401);
         }
 
         if($request->hasFile('image_path')){
@@ -33,11 +39,13 @@ class GenresController extends Controller
 
         $genres = Genres::create([
             "name"=>$request->name,
-            "image_path" =>$destinationPath . $filename
-
+            "image_path" =>$destinationPath . $filename,
+            "user_id" => $user->id
         ]);
+
         $genres->save();
-        return $request;
+
+        return response()->json($genres);
     }
 
     public function show(Request $request){
@@ -51,7 +59,12 @@ class GenresController extends Controller
     }
 
     public function update(Request $request, $id){
+        $user = $request->user();
         $genres =  Genres::findOrFail($id);
+
+        if ($genres->user_id != $user->id) {
+            return response()->json('You are not authorized to update this genre.', 401);
+        }
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
@@ -80,7 +93,14 @@ class GenresController extends Controller
     }
 
     public function destroy(Request $request){
-        $genres = Genres::where("id", "=", $request->id)->delete();
+        $user = $request->user();
+        $genres = Genres::where("id", "=", $request->id)->first();
+
+        if ($genres->user_id != $user->id) {
+            return response()->json('You are not authorized to delete this genre.', 401);
+        }
+
+        $genres->delete();
         return $genres;
     }
 

@@ -19,6 +19,7 @@ use App\Http\Controllers\UserController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::post('register',[RegisterController::class, 'register']);
 Route::post('login',[RegisterController::class, 'login']);
 
@@ -28,32 +29,28 @@ Route::get('/categories_index', [CategoriesController::class, 'index']);
 Route::get('/topic_index', [TopicsController::class, 'index']);
 Route::get('/post_index', [PostsController::class, 'index']);
 
-//Generos de las categorias.
+// Generos de las categorias.
 Route::get('/categoriesByGenres/{genreId}', [CategoriesController::class, 'categoriesByGenres']);
 Route::get('/topicsByCategories/{categoryId}', [TopicsController::class, 'topicsByCategories']);
 Route::get('/postsByTopics/{commentId}', [PostsController::class, 'postsByTopics']);
 
-
-
-
-/* TODO: Use the token for insert, update and delete data */
 // Insertar datos
-Route::post('/genresForm', [GenresController::class, 'store']);
-Route::post('/categoriesForm', [CategoriesController::class, 'store']);
-Route::post('/topicsForm', [TopicsController::class, 'store']);
-Route::post('/postsForm', [PostsController::class, 'store']);
+Route::post('/genresForm', [GenresController::class, 'store'])->middleware('auth:api'); // ya
+Route::post('/categoriesForm', [CategoriesController::class, 'store'])->middleware('auth:api'); // ya
+Route::post('/topicsForm', [TopicsController::class, 'store'])->middleware('auth:api'); // ya
+Route::post('/postsForm', [PostsController::class, 'store'])->middleware('auth:api'); // ya
 
 // Borrar datos
-Route::delete('/genres_delete/{id}', [GenresController::class, 'destroy']);
-Route::delete('/categories_delete/{id}', [CategoriesController::class, 'destroy']);
-Route::delete('/topics_delete/{id}', [TopicsController::class, 'destroy']);
-Route::delete('/posts_delete/{id}', [PostsController::class, 'destroy']);
+Route::delete('/genres_delete/{id}', [GenresController::class, 'destroy'])->middleware('auth:api'); // ya
+Route::delete('/categories_delete/{id}', [CategoriesController::class, 'destroy'])->middleware('auth:api'); // ya
+Route::delete('/topics_delete/{id}', [TopicsController::class, 'destroy'])->middleware('auth:api'); // ya
+Route::delete('/posts_delete/{id}', [PostsController::class, 'destroy'])->middleware('auth:api'); // ya
 
 //Editar datos.
-Route::post('/genresForm/{id}', [GenresController::class, 'update']);
-Route::post('/categoriesForm/{id}', [CategoriesController::class, 'update']);
-Route::post('/topicsForm/{id}', [TopicsController::class, 'update']);
-Route::post('/postsForm/{id}', [PostsController::class, 'update']);
+Route::post('/genresForm/{id}', [GenresController::class, 'update'])->middleware('auth:api'); // ya
+Route::post('/categoriesForm/{id}', [CategoriesController::class, 'update'])->middleware('auth:api'); // ya
+Route::post('/topicsForm/{id}', [TopicsController::class, 'update'])->middleware('auth:api'); // ya
+Route::post('/postsForm/{id}', [PostsController::class, 'update'])->middleware('auth:api'); // ya
 
 // TEST
 Route::get('/test', [UserController::class, 'test'])->middleware('auth:api');
@@ -62,4 +59,3 @@ Route::get('/test', [UserController::class, 'test'])->middleware('auth:api');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-

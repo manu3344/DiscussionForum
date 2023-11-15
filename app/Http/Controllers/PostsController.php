@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Posts;
 use Illuminate\Support\Facades\Validator;
 
-class PostsController extends Controller
+class PostsController extends ResponseController
 {
     public function index(){
         $posts = Posts::all();
@@ -21,6 +21,7 @@ class PostsController extends Controller
     }
 
     public function store(Request $request){
+        $user = $request->user();
 
         $validator = Validator::make($request->all(),[
             'postContent'=> 'required|string',
@@ -34,10 +35,13 @@ class PostsController extends Controller
 
         $posts = Posts::create([
             "postContent"=>$request->postContent,
-            "topic_id"=>$request->topic_id
+            "topic_id"=>$request->topic_id,
+            "user_id" => $user->id
         ]);
+
         $posts->save();
-        return $request;
+
+        return response()->json($posts);
     }
 
     public function show(Request $request){
@@ -51,7 +55,12 @@ class PostsController extends Controller
     }
 
     public function update(Request $request, $id){
+        $user = $request->user();
         $posts = Posts::findOrFail($id);
+
+        if ($posts->user_id != $user->id) {
+            return response()->json('You are not authorized to update this post.', 401);
+        }
 
         $validator = Validator::make($request->all(),[
             'postContent'=> 'required|string',
@@ -70,7 +79,14 @@ class PostsController extends Controller
     }
 
     public function destroy(Request $request){
-        $posts = Posts::where("id", "=", $request->id)->delete();
+        $user = $request->user();
+        $posts = Posts::where("id", "=", $request->id)->first();
+
+        if ($posts->user_id != $user->id) {
+            return response()->json('You are not authorized to delete this post.', 401);
+        }
+
+        $posts->delete();
         return $posts;
     }
 
