@@ -30,9 +30,6 @@ export default function Forum() {
                     //Handle Error
                     console.log(error);
                 })
-                .finally(function () {
-                    //Always Executed
-                });
         };
         getForums();
     }, []);
@@ -51,9 +48,6 @@ export default function Forum() {
                     //Handle Error
                     console.log(error);
                 })
-                .finally(function () {
-                    //Always Executed
-                });
         };
         getCategories();
     }, []);

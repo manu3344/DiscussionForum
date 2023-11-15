@@ -17,7 +17,8 @@ function Register(){
         name: '',
         email: '',
         password: '',
-        c_password: ''
+        c_password: '', 
+        role: ''
     })
 
     const navigate = useNavigate();
@@ -27,6 +28,10 @@ function Register(){
         setFormValue({...formValue, [e.target.name]: e.target.value});
     }
 
+    const handleRoleChange = (e) => {
+        setFormValue({...formValue, role: e.target.value});
+    }
+
     const handleSubmit = (e) => {
         if(e && e.preventDefault()) e.preventDefault();
         const formData = new FormData();
@@ -34,7 +39,7 @@ function Register(){
         formData.append("email", formValue.email)
         formData.append("password", formValue.password)
         formData.append("c_password", formValue.c_password)
-        formData.append("role", "user")
+        formData.append("role", formValue.role)
         axios.post("http://localhost/forum/public/api/register",
         formData,
         {headers: {'Content-Type': 'multipart/form-data',
@@ -119,6 +124,18 @@ function Register(){
                                             </Button>
                                         </div>
                                     </div>
+                                </Form.Group>
+                                <Form.Group className="form-group">
+                                    <Form.Label htmlFor="role">Rol</Form.Label>
+                                    <Form.Select
+                                        name="role"
+                                        value={formValue.role}
+                                        onChange={handleRoleChange}
+                                    >
+                                        <option value="">Tipo de Usuario</option>
+                                        <option value="user">Usuario</option>
+                                        <option value="admin">Administrador</option>
+                                    </Form.Select>
                                 </Form.Group>
                                 <div className='row'>
                                     <div className='col' style={{textAlign:"center"}}>

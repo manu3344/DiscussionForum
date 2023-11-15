@@ -26,13 +26,13 @@ export default function Forum_C(props) {
         <Card style={{ width: "16rem", height:"28rem" }}>
             <Card.Body className="d-flex flex-column">
                 <Link to={`/forum/public/postsByTopics/${topicId}`}>
-                <Card.Img
-                    src={topicImage}
-                    onError={(e) => { e.target.src = `/forum/public/${topicImage}`;}}
-                    alt={forumTitle}
-                    style={{ height: "200px", objectFit: "cover" }}
-                    className="mb-auto"
-                />
+                    <Card.Img
+                        src={topicImage}
+                        onError={(e) => { e.target.src = `/forum/public/${topicImage}`;}}
+                        alt={forumTitle}
+                        style={{ height: "200px", objectFit: "cover" }}
+                        className="mb-auto"
+                    />
                 </Link>
 
                 <Card.Title className="mb-auto">

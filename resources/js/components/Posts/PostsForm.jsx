@@ -126,12 +126,7 @@ export default function PostsForm() {
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
-                                <div
-                                    style={{
-                                        padding: "15px 0px",
-                                        textAlign: "center",
-                                    }}
-                                >
+                                <div style={{ padding: "15px 0px", textAlign: "center"}}>
                                     <div className="row">
                                         <div className="col">
                                             <Link to="#" onClick={()=>window.history.back()}>
@@ -141,10 +136,7 @@ export default function PostsForm() {
                                             </Link>
                                         </div>
                                         <div className="col">
-                                            <Button
-                                                type="submit"
-                                                variant="dark"
-                                            >
+                                            <Button type="submit" variant="dark">
                                                 {id?"Guardar cambios":"Registrar"}
                                             </Button>
                                         </div>

@@ -15,8 +15,6 @@ export default function TopicsForm() {
     });
     const [categoriesData, setCategoriesData] = useState([]);
 
-    const navigate = useNavigate();
-
     const { id } = useParams(); //Obtener el ID del tema de discusion de la URL
 
 

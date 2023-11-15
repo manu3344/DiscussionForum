@@ -32,9 +32,7 @@ export default function Comments(props) {
                 {isOfTheUser && (
                     <div className="col-2 mb-auto">
                         <div className="row mb-auto" style={{ padding: "10px" }}>
-                            <Button
-                                variant="warning"
-                                onClick={() =>
+                            <Button variant="warning" onClick={() =>
                                     navigate(`/forum/public/postsForm/${commentId}`)
                                 }
                             >
