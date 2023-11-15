@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import {Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
+import { getAuthorization } from 'passport-client'
 
 export default function PostsForm() {
-
-    const [forumData, setForumData] = useState([]); 
+    const [forumData, setForumData] = useState([]);
 
     const [postsValue, setPostsValue] = useState({
         postContent: "",
@@ -16,60 +16,60 @@ export default function PostsForm() {
 
     const { id } = useParams(); //Obtener el ID del post de la URL
 
-
     const onChange = (e) => {
         e.persist();
         setPostsValue({ ...postsValue, [e.target.name]: e.target.value });
     };
 
-    // Funcion para anadir datos. 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         if (e && e.preventDefault()) e.preventDefault();
+
+        const authorization = await getAuthorization()
+
         const formData = new FormData();
         formData.append("postContent", postsValue.postContent);
         formData.append("topic_id", postsValue.topic_id);
-        if(!id){
+
+        if(!id) {
             axios
-            .post("http://localhost/forum/public/api/postsForm", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Accept: "application/json",
-                },
-            })
-            .then((response) => {
-                alert("Comentario registrado correctamente"); 
-                console.log("response: ");
-                console.log(response);
-                window.history.back(); 
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        }else{
+                .post("http://localhost/forum/public/api/postsForm", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Accept: "application/json",
+                        ...authorization
+                    },
+                })
+                .then((response) => {
+                    alert("Comentario registrado correctamente");
+                    console.log("response: ");
+                    console.log(response);
+                    window.history.back();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
             axios
-            .post(`http://localhost/forum/public/api/postsForm/${id}`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Accept: "application/json",
-                },
-            })
-            .then((response) => {
-                alert("Comentario actualizado correctamente");
-                console.log("response: ");
-                console.log(response);
-                window.history.back(); 
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                .post(`http://localhost/forum/public/api/postsForm/${id}`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Accept: "application/json",
+                        ...authorization
+                    },
+                })
+                .then((response) => {
+                    alert("Comentario actualizado correctamente");
+                    console.log("response: ");
+                    console.log(response);
+                    window.history.back();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
-       
     };
 
-
-
-    // Funcion para mostrar los temas a los que pertenecen los comentarios en el formulario
-    useEffect(()=>{ 
+    useEffect(()=>{
       const getForums = async () =>{
           await  axios.get("http://localhost/forum/public/api/topic_index")  //"http://localhost:8000/20238/topicosWeb/api/user_index
           .then(function(response){
@@ -83,7 +83,7 @@ export default function PostsForm() {
           })
           .finally(function(){
               //Always Executed
-          });        
+          });
       };
       getForums();
   },[]);

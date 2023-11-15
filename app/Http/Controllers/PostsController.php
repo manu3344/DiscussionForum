@@ -7,20 +7,18 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Posts;
 use Illuminate\Support\Facades\Validator;
 
-class PostsController extends ResponseController
-{
-    public function index(){
+class PostsController extends ResponseController {
+    public function index() {
         $posts = Posts::all();
         return $posts;
     }
 
     public function postsByTopics($commentId) {
-        // Filtrar los comentatios por el ID del tema.
         $posts = Posts::with('topic')->where('topic_id', $commentId)->get();
         return $posts;
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
         $user = $request->user();
 
         $validator = Validator::make($request->all(),[
@@ -31,7 +29,6 @@ class PostsController extends ResponseController
         if($validator->fails()){
             return $this->sendError("Validation Error.", $validator->errors());
         }
-
 
         $posts = Posts::create([
             "postContent"=>$request->postContent,
@@ -44,17 +41,17 @@ class PostsController extends ResponseController
         return response()->json($posts);
     }
 
-    public function show(Request $request){
+    public function show(Request $request) {
         $posts = Posts::find($request->id);
         return $posts;
     }
 
-    public function edit($id){
+    public function edit($id) {
         $posts = Posts::findOrFail($id);
         return $posts;
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id) {
         $user = $request->user();
         $posts = Posts::findOrFail($id);
 
@@ -67,7 +64,7 @@ class PostsController extends ResponseController
             'topic_id'=> 'required|exists:topics,id'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError("Validation Error.", $validator->errors());
         }
 
@@ -75,10 +72,11 @@ class PostsController extends ResponseController
         $posts->topic_id=$request->topic_id;
 
         $posts->save();
+
         return $posts;
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request) {
         $user = $request->user();
         $posts = Posts::where("id", "=", $request->id)->first();
 
@@ -87,10 +85,11 @@ class PostsController extends ResponseController
         }
 
         $posts->delete();
+
         return $posts;
     }
 
-    public function token(){
+    public function token() {
         return csrf_token();
     }
 }

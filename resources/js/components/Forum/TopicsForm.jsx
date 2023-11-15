@@ -4,11 +4,13 @@ import axios from "axios";
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 
+import { getAuthorization } from 'passport-client'
+
 export default function TopicsForm() {
     const [topicsValue, setTopicsValue] = useState({
         title: "",
         description: "",
-        image_path: "", 
+        image_path: "",
         categories_id: ""
     });
     const [categoriesData, setCategoriesData] = useState([]);
@@ -27,27 +29,32 @@ export default function TopicsForm() {
         }
     };
 
-    // Funcion para anadir datos. 
-    const handleSubmit = (e) => {
+    // Funcion para anadir datos.
+    const handleSubmit = async (e) => {
         if (e && e.preventDefault()) e.preventDefault();
+
+        const authorization = await getAuthorization()
+
         const formData = new FormData();
         formData.append("title", topicsValue.title);
         formData.append("description", topicsValue.description);
         formData.append("image_path", topicsValue.image_path)
         formData.append("categories_id", topicsValue.categories_id);
+
         if(!id){
             axios
             .post("http://localhost/forum/public/api/topicsForm", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Accept: "application/json",
+                    ...authorization
                 },
             })
             .then((response) => {
                 console.log("response: ");
                 alert("Tema registrado correctamente");
                 console.log(response);
-                window.history.back(); 
+                window.history.back();
             })
             .catch((error) => {
                 console.log(error);
@@ -58,19 +65,20 @@ export default function TopicsForm() {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Accept: "application/json",
+                    ...authorization
                 },
             })
             .then((response) => {
                 alert("Tema actualizado correctamente");
                 console.log("response: ");
                 console.log(response);
-                window.history.back(); 
+                window.history.back();
             })
             .catch((error) => {
                 console.log(error);
             });
         }
-       
+
     };
 
     // Funcion para mostrar las categorias a las que pertenecen los temas en el formulario

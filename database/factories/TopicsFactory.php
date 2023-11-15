@@ -9,15 +9,13 @@ use App\Models\Categories;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Topics>
  */
-class TopicsFactory extends Factory
-{
+class TopicsFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
             "title"=>fake()->sentence(),
             "description"=>fake()->words(5,true),

@@ -7,22 +7,21 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Genres;
 use Illuminate\Support\Facades\Validator;
 
-class GenresController extends ResponseController
-{
-    public function index(){
+class GenresController extends ResponseController {
+    public function index() {
         $genres = Genres::all();
         return $genres;
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
         $user = $request->user();
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name'=> 'required|string|max:100',
             'image_path'=>'required|file|mimes:jpeg,png,gif'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError("Validation Error.", $validator->errors());
         }
 
@@ -30,7 +29,7 @@ class GenresController extends ResponseController
             return response()->json('You are not authorized to create categories.', 401);
         }
 
-        if($request->hasFile('image_path')){
+        if ($request->hasFile('image_path')){
             $file = $request->file("image_path");
             $destinationPath = "images/";
             $filename = time() .'-' .$file->getClientOriginalName();
@@ -48,17 +47,17 @@ class GenresController extends ResponseController
         return response()->json($genres);
     }
 
-    public function show(Request $request){
+    public function show(Request $request) {
         $genres =  Genres::find($request->id);
         return $genres;
     }
 
-    public function edit($id){
+    public function edit($id) {
         $genres =  Genres::findOrFail($id);
         return $genres;
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id) {
         $user = $request->user();
         $genres =  Genres::findOrFail($id);
 
@@ -89,10 +88,11 @@ class GenresController extends ResponseController
         }
 
         $genres->save();
+
         return $genres;
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request) {
         $user = $request->user();
         $genres = Genres::where("id", "=", $request->id)->first();
 
@@ -101,10 +101,11 @@ class GenresController extends ResponseController
         }
 
         $genres->delete();
+
         return $genres;
     }
 
-    public function token(){
+    public function token() {
         return csrf_token();
     }
 }

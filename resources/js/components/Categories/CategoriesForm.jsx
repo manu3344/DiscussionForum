@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
+import { getAuthorization } from 'passport-client'
 
 export default function CategoriesForm() {
     const [categoriesValue, setCategoriesValue] = useState({
@@ -34,12 +35,16 @@ export default function CategoriesForm() {
     };
 
     // Funcion para anadir datos
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         if (e && e.preventDefault()) e.preventDefault();
+
+        const authorization = await getAuthorization()
+
         const formData = new FormData();
         formData.append("name", categoriesValue.name);
         formData.append("image_path", categoriesValue.image_path);
         formData.append("genre_id", categoriesValue.genre_id);
+
         if (!id) {
             axios
                 .post(
@@ -49,6 +54,7 @@ export default function CategoriesForm() {
                         headers: {
                             "Content-Type": "multipart/form-data",
                             Accept: "application/json",
+                            ...authorization
                         },
                     }
                 )
@@ -56,7 +62,7 @@ export default function CategoriesForm() {
                     alert("Categoria registrada correctamente");
                     console.log("response: ");
                     console.log(response);
-                    window.history.back(); 
+                    window.history.back();
                 })
                 .catch((error) => {
                     console.log(error);
@@ -70,6 +76,7 @@ export default function CategoriesForm() {
                         headers: {
                             "Content-Type": "multipart/form-data",
                             Accept: "application/json",
+                            ...authorization
                         },
                     }
                 )
@@ -77,7 +84,7 @@ export default function CategoriesForm() {
                     alert("Categoria actualizada correctamente");
                     console.log("response: ");
                     console.log(response);
-                    window.history.back(); 
+                    window.history.back();
                 })
                 .catch((error) => {
                     console.log(error);

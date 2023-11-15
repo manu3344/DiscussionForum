@@ -7,8 +7,8 @@
 import  ReactDOM from 'react-dom/client';
 import './bootstrap';
 import { BrowserRouter } from 'react-router-dom';
-import Main from "./components/Main";
-import UserProvider from "./context/UserProvider"
+import Main from './components/Main';
+import UserProvider from './context/UserProvider'
 
 /**
  * Next, we will create a fresh React component instance and attach it to

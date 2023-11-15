@@ -1,5 +1,4 @@
-
-export default function Header(){
+export default function Header() {
     return (
         <div style={{backgroundColor:"#001C30", borderBottom:"1px ridge white"}}>
             <header>

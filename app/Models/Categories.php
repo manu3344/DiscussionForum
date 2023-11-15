@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Categories extends Model
-{
+class Categories extends Model {
     use HasFactory;
     protected $fillable = ["name", "categories_id", "image_path", "genre_id", "user_id"];
 

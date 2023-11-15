@@ -18,6 +18,5 @@ class GenresSeeder extends Seeder
         $genres->image_path = "images/com.png";
         $genres->user_id = 1;
         $genres->save();
-
     }
 }

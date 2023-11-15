@@ -10,8 +10,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

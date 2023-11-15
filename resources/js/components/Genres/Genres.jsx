@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Spinner, Button, Form, Row, Col } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import axios from "axios";
 import Genre_C from "./Genre_C";
+import { getAuthorization } from 'passport-client'
+import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
 
 export default function Genres() {
+    const { user } = useContext(UserContext)
     const [genresData, setGenresData] = useState([]);
     const [searchText, setSearchText] = useState(""); //Estado para buscar
 
@@ -30,13 +34,21 @@ export default function Genres() {
     }, []);
 
     // Funcion para borrar los generos
-    const handleDeleteGenres = (genreId) => {
+    const handleDeleteGenres = async (genreId) => {
         const updatedGenres = genresData.filter(
             (genre) => genre.id !== genreId
         );
+
+        const authorization = await getAuthorization()
+
         axios
             .delete(
-                `http://localhost/forum/public/api/genres_delete/${genreId}`
+                `http://localhost/forum/public/api/genres_delete/${genreId}`,
+                {
+                    headers: {
+                        ...authorization
+                    }
+                }
             )
             .then(function (response) {
                 setGenresData(updatedGenres);
@@ -77,18 +89,22 @@ export default function Genres() {
                             </Row>
                         </Form>
                     </div>
+
                     <div className="col-lg-12">
                         <h1>Géneros</h1>
                     </div>
-                    <div className="col-lg-12">
-                        <a href="genresForm">
-                            <Button type="submit" id="addGenres" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
-                                <BsFillPlusCircleFill
-                                    style={{ fontSize: "1.5rem" }}
-                                />
-                            </Button>
-                        </a>
-                    </div>
+
+                    {user?.role === 'admin' && (
+                        <div className="col-lg-12">
+                            <Link to="/forum/public/genresForm">
+                                <Button type="submit" id="addGenres" style={{backgroundColor:"#E95793", border:"0.5px solid black"}}>
+                                    <BsFillPlusCircleFill
+                                        style={{ fontSize: "1.5rem" }}
+                                    />
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
                 <div className="card-group">
                     {/* Aqui estamos filtrando los nombres para la barra de busqueda */}
@@ -105,6 +121,7 @@ export default function Genres() {
                                 image_path={genre.image_path}
                                 onDeleteGenres={handleDeleteGenres}
                                 genreId={genre.id}
+                                isOfTheUser={user?.id === genre.user_id}
                             />
                         ))}
                 </div>

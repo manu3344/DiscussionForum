@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { Spinner, Button, Form, Col, Row } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Forum_C from "../Forum/Forum_C";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import { getAuthorization } from 'passport-client'
+import { UserContext } from "../../context/UserContext";
 
 export default function TopicsByCategories() {
+    const { user } = useContext(UserContext)
     const [forumData, setForumData] = useState([]);
     const [categoriesData, setCategoriesData] = useState([]);
 
     const [searchText, setSearchText] = useState("");
 
-    const {id} = useParams(); 
+    const {id} = useParams();
 
     // Funcion para mostrar los datos
     useEffect(() => {
@@ -35,7 +38,7 @@ export default function TopicsByCategories() {
         getForums();
     }, []);
 
-    //Funcion para mostrar las categorias de los temas. 
+    //Funcion para mostrar las categorias de los temas.
     useEffect(() => {
         const getCategories = async () => {
             await axios
@@ -63,11 +66,17 @@ const getCategoryName = (categoryId) => {
 };
 
     // Funcion para borrar los datos
-    const handleDeleteTopics = (topicId) => {
+    const handleDeleteTopics = async (topicId) => {
         const updatedTopics = forumData.filter((topic) => topic.id !== topicId);
+        const authorization = await getAuthorization()
         axios
             .delete(
-                `http://localhost/forum/public/api/topics_delete/${topicId}`
+                `http://localhost/forum/public/api/topics_delete/${topicId}`,
+                {
+                    headers: {
+                        ...authorization
+                    }
+                }
             )
             .then(function (response) {
                 setForumData(updatedTopics);
@@ -138,6 +147,7 @@ const getCategoryName = (categoryId) => {
                             categoriesName={getCategoryName(forum.categories_id)}
                             onDeleteTopics={handleDeleteTopics}
                             topicId={forum.id}
+                            isOfTheUser={user?.id === forum.user_id}
                         />
                     ))}
             </div>

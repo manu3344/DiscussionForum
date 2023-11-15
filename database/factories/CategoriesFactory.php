@@ -9,15 +9,13 @@ use App\Models\Genres;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categories>
  */
-class CategoriesFactory extends Factory
-{
+class CategoriesFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
             "name"=>fake()->words(2,true),
             "image_path"=>fake()->imageUrl($width = "80px", $height = "80px", 'Categories'),

@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Posts extends Model
-{
+class Posts extends Model {
     use HasFactory;
     protected $fillable = ["postContent", "topic_id", "user_id"];
 

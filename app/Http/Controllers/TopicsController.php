@@ -7,36 +7,33 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Topics;
 use Illuminate\Support\Facades\Validator;
 
-class TopicsController extends ResponseController
-{
-    public function index(){
+class TopicsController extends ResponseController {
+    public function index() {
         $topics = Topics::all();
         return $topics;
-        //        return $topics->posts;
     }
 
     public function topicsByCategories($categoryId) {
-        // Filtrar los temas por el ID de la categoría
         $topics = Topics::with('category')->where('categories_id', $categoryId)->get();
         $topics->load('category');
         return $topics;
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
         $user = $request->user();
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'title'=> 'required|string|max:100',
             'description'=>'required|string',
             'image_path'=>'required|file|mimes:jpeg,png,gif',
             'categories_id'=> 'required|exists:categories,id'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError("Validation Error.", $validator->errors());
         }
 
-        if($request->hasFile('image_path')){
+        if ($request->hasFile('image_path')) {
             $file = $request->file("image_path");
             $destinationPath = "images/";
             $filename = time() .'-' .$file->getClientOriginalName();
@@ -56,17 +53,17 @@ class TopicsController extends ResponseController
         return response()->json($topics);
     }
 
-    public function show(Request $request){
+    public function show(Request $request) {
         $topics = Topics::find($request->id);
         return $topics;
     }
 
-    public function edit($id){
+    public function edit($id) {
         $topics = Topics::findOrFail($id);
         return $topics;
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id) {
         $user = $request->user();
         $topics = Topics::findOrFail($id);
 
@@ -81,9 +78,8 @@ class TopicsController extends ResponseController
             'categories_id'=> 'required|exists:categories,id'
         ]);
 
-        if($validator->fails()){
-            // return $this->sendError("Validation Error.", $validator->errors());
-            return response()->json($validator->errors());
+        if ($validator->fails()) {
+            return $this->sendError("Validation Error.", $validator->errors());
         }
 
         $topics->title = $request->input('title');
@@ -102,10 +98,11 @@ class TopicsController extends ResponseController
         }
 
         $topics->save();
+
         return $topics;
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request) {
         $user = $request->user();
         $topics = Topics::where("id", "=", $request->id)->first();
 
@@ -114,10 +111,11 @@ class TopicsController extends ResponseController
         }
 
         $topics->delete();
+
         return $topics;
     }
 
-    public function token(){
+    public function token() {
         return csrf_token();
     }
 }
