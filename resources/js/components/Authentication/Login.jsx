@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form} from 'react-bootstrap';
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs"
-
+import { login } from 'passport-client'
+import { UserContext } from '../../context/UserContext';
 
 function Login(){
+    const { user, authUser } = useContext(UserContext)
     const [showPassword, setShowPassword] = useState(false);
 
-    //Iniciar sesion. 
+    //Iniciar sesion.
     const [formValue,setFormValue] = useState({
         email: '',
         password: ''
@@ -20,31 +22,25 @@ function Login(){
         e.persist();
         setFormValue({...formValue, [e.target.name]: e.target.value});
     }
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         if(e && e.preventDefault()) e.preventDefault();
-        const formData = new FormData();
-        formData.append("email", formValue.email)
-        formData.append("password", formValue.password)
-        axios.post("http://localhost/forum/public/api/login",
-        formData,
-        {headers: {'Content-Type': 'multipart/form-data',
-        'Accept':'application/json'}}
-        ).then(response => {
+
+        const response = await login(formValue.email, formValue.password, 'http://localhost/forum/public/api/login')
+
+        if (response != null) {
+            await authUser(response);
+            
             alert("Bienvenido!!!");
-            console.log('response: ');
-            console.log(response);
             navigate('/forum/public/');
-        }).catch(error => {
-            alert("Tu email o contraseña son incorrectos"); 
-            console.log(error);
-        });
+        } else {
+            alert("Tu email o contraseña son incorrectos");
+        }
     };
 
-
-
-    //Mostrar y ocultar contrasena. 
+    //Mostrar y ocultar contrasena.
     function showOrHide(){
-        let x = document.getElementById("password"); 
+        let x = document.getElementById("password");
         if(x.type==="password"){
             x.type = "text";
         }else{
@@ -94,5 +90,4 @@ function Login(){
     )
 }
 
-
-export default Login; 
+export default Login;

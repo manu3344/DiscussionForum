@@ -1,8 +1,8 @@
 import React from "react";
 import Categories from "./Categories/Categories";
 import Genres from "./Genres/Genres";
-import Nav from "./Nav"; 
-import {Routes, Route, Navigate} from "react-router-dom"; 
+import Nav from "./Nav";
+import {Routes, Route, Navigate} from "react-router-dom";
 import Forum from "./Forum/Forum";
 import DiscussionForum from "./Posts/DiscussionForum";
 import Header from "../partials/Header";
@@ -23,6 +23,7 @@ function Main(){
     return(
         <div>
         <Header />
+
         <Routes>
             <Route path="/forum/public" element={<Nav />}>
                 <Route path="" element={<Home />} />

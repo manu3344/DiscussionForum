@@ -24,7 +24,7 @@ class RegisterController extends ResponseController
             return response()->json([
                 'error' => $validator->errors()
             ], 422);
-       }
+        }
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
@@ -57,6 +57,17 @@ class RegisterController extends ResponseController
             return response()->json([
                 'error' => 'Unauthorized'
             ], 401); // 401 Unauthorized
+        }
+    }
+
+    public function getToken(Request $request) {
+        $this->middleware('auth:api');
+        
+        if (Auth::check()) {
+            $token = auth()->user()->createToken('MyApp')->accessToken;
+            return response()->json(['token' => $token], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
 }
